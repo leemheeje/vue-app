@@ -1,30 +1,72 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+    <div class="viewport">
+        <div id="container" class="container gray">
+            <div class="contents">
+                <div class="jbPstGlbaArea">
+                    <!-- 채용공고 헤더영역:S -->
+                    <div class="jbHeadersArea">
+                        <div class="jbHdRowsArn">
+                            <div class="jbGlInners">
+                                <!-- 이전공고 불러오기 selectbox:S -->
+                                <JobpostSelect />
+                                <!-- 이전공고 불러오기 selectbox:E -->
+                                <!-- 버튼그룹:S -->
+                                <div class="btnwWrap">
+                                    <button class="htd_btn outline">
+                                        미리보기
+                                    </button>
+                                    <button class="htd_btn org">
+                                        저장하기
+                                    </button>
+                                </div>
+                                <!-- 버튼그룹:E -->
+                            </div>
+                            <Gnb />
+                        </div>
+                        <div class="jbHdRowsBrn" v-if="false">
+                            <!-- 미등록식 보이는 영역:S-->
+                            <div class="mtValueChkArea">
+                                <div class="jbGlInners">
+                                    <div class="inxwTxs">
+                                        <!-- foreach:S -->
+                                        <button class="inbt">모집분야</button>
+                                        <button class="inbt">모집분야1</button>
+                                        <button class="inbt">모집분야2</button>
+                                        <!-- foreach:E -->
+                                        <span class="tlbw"
+                                            >이 등록되지 않았습니다.</span
+                                        >
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 미등록식 보이는 영역:E -->
+                        </div>
+                    </div>
+                    <!-- 채용공고 헤더영역:E -->
+
+                    <!-- 채용공고 컨텐츠 영역:S -->
+                    <div class="jbContentsArea">
+                        <div class="jbGlInners">
+                            <router-view />
+                        </div>
+                    </div>
+                    <!-- 채용공고 컨텐츠 영역:E -->
+                </div>
+            </div>
+        </div>
+        <Footer />
+    </div>
 </template>
 
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
-
-nav {
-  padding: 30px;
-}
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
-}
-
-nav a.router-link-exact-active {
-  color: #42b983;
-}
-</style>
+<script>
+import Footer from "@/views/Footer";
+import JobpostSelect from "@/components/Navigator/JobpostSelect";
+import Gnb from "@/components/Navigator/Gnb";
+export default {
+    components: {
+        Footer,
+        Gnb,
+        JobpostSelect,
+    },
+};
+</script>
