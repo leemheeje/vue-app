@@ -173,7 +173,7 @@ body:not(#companyWrap) .header.userCompanyHeader:not(.headerFixed){position: sta
 .jbPstGlbaArea .fbOriStvsArea .fboTpsw{text-align: left; float: left; margin-right: 15px;}
 .jbPstGlbaArea .fbOriStvsArea .fboTpsw.block{float: none;}
 .jbPstGlbaArea .fbOriStvsArea .wlbwx{font-size: 15px; line-height: 30px; display: inline-block; vertical-align: middle; color: #333;}
-.jbPstGlbaArea .fbOriStvsArea .wlbde{width: 17px; height: 17px; background: transparent no-repeat center center ; border: none; display: inline-block; vertical-align: middle;}
+.jbPstGlbaArea .fbOriStvsArea .wlbde{width: 17px; height: 17px; background: gray no-repeat center center ; border: none; display: inline-block; vertical-align: middle;}
 
 
 
