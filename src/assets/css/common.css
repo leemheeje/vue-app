@@ -285,7 +285,7 @@ body:not(#companyWrap) .header.userCompanyHeader:not(.headerFixed){position: sta
 .jbPstGlbaArea .jbForm.switch input[type="checkbox"]:checked+.lb:before{left: auto; right: 7px; background: #fff;}
 .jbPstGlbaArea .jbForm.switch input[type="checkbox"]:checked+.lb:after{right: auto; left: 13px; content: 'ON';}
 .jbPstGlbaArea .jbForm.sm .lb{font-size: 13px; line-height: 16px; padding: 1px 0; padding-left: 24px;}
-.jbPstGlbaArea .jbForm.sm input[type="checkbox"]+.lb:before{width: 18px; height: 18px; background-image: ;}
+.jbPstGlbaArea .jbForm.sm input[type="checkbox"]+.lb:before{width: 18px; height: 18px; background-image: url(../images/icosWhiteCheck_8.png);}
 .jbPstGlbaArea .jbForm.sm input[type="checkbox"]:checked+.lb:before{background-color: #5f9dff; border-color: #5f9dff;}
 .jbPstGlbaArea .jbForm.chkGroup{font-size: 0;}
 .jbPstGlbaArea .jbForm.chkGroup input[type="radio"]+.lb{background: #fff; min-width: 95px; height: 44px; line-height: 34px; padding-left: 47px; border-radius: 2px; margin-left: -1px; position: relative; font-size: 14px;}

@@ -152,9 +152,41 @@
                     <!-- 근무부서:E -->
                     <!-- 직급/직책:S -->
                     <RowLayout title="직급/직책" class="MT20">
-                        <UiSelectedBox>
-                            <template v-slot:UiSelectedBox-tooltip>
-                                <UiSelectedBoxTooltip :params="jcjg" />
+                        <UiSelectedBox :selected="jcjgSelected">
+                            <template
+                                v-slot:UiSelectedBox-tooltip
+                                v-if="jc && jg"
+                            >
+                                <UiSelectedBoxTooltip
+                                    :titleName="[jc.name, jg.name]"
+                                >
+                                    <template v-slot:slot-jc>
+                                        <div
+                                            class="colst w3"
+                                            v-for="(item, index) in jc.data"
+                                            :key="index"
+                                        >
+                                            <Checkbox
+                                                :model-value="item.code"
+												@change="jcjgSelectedBind"
+                                                >{{ item.name }}</Checkbox
+                                            >
+                                        </div>
+                                    </template>
+                                    <template v-slot:slot-jg>
+                                        <div
+                                            class="colst w3"
+                                            v-for="(item, index) in jg.data"
+                                            :key="index"
+                                        >
+                                            <Checkbox
+                                                :model-value="item.code"
+												@change="jcjgSelectedBind"
+                                                >{{ item.name }}</Checkbox
+                                            >
+                                        </div>
+                                    </template>
+                                </UiSelectedBoxTooltip>
                             </template>
                         </UiSelectedBox>
                     </RowLayout>
@@ -829,21 +861,16 @@ import RowLayout from "@/components/Layout/RowLayout";
 import Row from "@/components/Layout/Row";
 import Col from "@/components/Layout/Col";
 import Input from "@/components/Form/Input";
+import Checkbox from "@/components/Form/Checkbox";
 import UiSelectedBox from "@/components/UiComponents/UiSelectedBox";
 import UiSelectedBoxTooltip from "@/components/UiComponents/UiSelectedBoxTooltip";
 export default {
     data() {
         return {
-            asdfasdfasdf: "이므히재",
-            jc: {},
-            jg: {},
+            jc: null,
+            jg: null,
+			jcjgSelected : []
         };
-    },
-    computed: {
-        jcjg() {
-			// console.log(this.jc);
-            return [{...this.jc}, {...this.jg}];
-        },
     },
     components: {
         RowLayout,
@@ -851,13 +878,14 @@ export default {
         Col,
         UiSelectedBox,
         Input,
+        Checkbox,
         RowLayout,
         UiSelectedBoxTooltip,
     },
     async created() {
         await this.$http.get(`${this.API_PATH_STATIC}/jc.json`).then((data) => {
             if (data && data.data) {
-                this.jc = {...data.data};
+                this.jc = data.data;
             }
         });
         await this.$http.get(`${this.API_PATH_STATIC}/jg.json`).then((data) => {
@@ -866,13 +894,18 @@ export default {
             }
         });
     },
-	mounted(){
-		console.log(this.jcjg);
-	},
+    mounted() {},
     methods: {
         test($event) {
             console.log($event.target.value);
         },
+		jcjgSelectedBind($event){
+			let target = $event.target;
+			let value = target.value;
+            if(target.checked){
+				this.jcjgSelected = [...this.jcjgSelected, ]
+			}
+		}
     },
 };
 </script>

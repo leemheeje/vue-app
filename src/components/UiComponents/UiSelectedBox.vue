@@ -3,19 +3,29 @@
     <div class="jbChicCmArea extend">
         <!-- 툴팁 확장시 extend-->
         <div class="tmATInn">
-            <!-- 선택된영역이있을때:S -->
-            <div class="fbOriStvsArea">
-                <!-- foreach:S -->
-                <div class="fboTpsw">
-                    <span class="wlbwx">책임연구원</span>
-                    <button class="wlbde" title="삭제"></button>
+            <template v-if="Object.keys(selected).length">
+                <!-- 선택된영역이있을때:S -->
+                <div class="fbOriStvsArea">
+                    <!-- foreach:S -->
+                    <div
+                        class="fboTpsw"
+                        v-for="(item, index) in selected"
+                        :key="index"
+                    >
+                        <span class="wlbwx">{{ item }}</span>
+                        <button class="wlbde" title="삭제"></button>
+                    </div>
+                    <!-- foreach:E -->
                 </div>
-                <!-- foreach:E -->
-            </div>
-            <!-- 선택된영역이있을때:E -->
-            <!-- 선택된영역이없을때:S -->
-            <!-- <div class="tmNulIns">직급/직책을 선택해주세요. (3개까지 입력 가능)</div> -->
-            <!-- 선택된영역이없을때:E -->
+                <!-- 선택된영역이있을때:E -->
+            </template>
+            <template v-else>
+                <!-- 선택된영역이없을때:S -->
+                <div class="tmNulIns">
+                    직급/직책을 선택해주세요. (3개까지 입력 가능)
+                </div>
+                <!-- 선택된영역이없을때:E -->
+            </template>
             <slot name="UiSelectedBox-tooltip" />
         </div>
         <div class="btnwArea">
@@ -42,6 +52,13 @@
 
 <script>
 export default {
+    props: {
+        selected: {
+            type: Object,
+            default: () => [],
+        },
+    },
+    created() {},
     components: {},
 };
 </script>
