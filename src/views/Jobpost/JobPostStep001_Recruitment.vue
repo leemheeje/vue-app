@@ -152,7 +152,13 @@
                     <!-- 근무부서:E -->
                     <!-- 직급/직책:S -->
                     <RowLayout title="직급/직책" class="MT20">
-                        <UiSelectedBox :selected="jcjgSelected">
+                        <UiSelectedBox
+                            :selected="jcjgSelected"
+                            nullMsg="직급/직책을 선택해주세요. (3개까지 입력 가능)"
+                            @update:selectBindDelete="
+                                (e) => jcjgSelectedDelete(e.target.value)
+                            "
+                        >
                             <template
                                 v-slot:UiSelectedBox-tooltip
                                 v-if="jc && jg"
@@ -168,7 +174,14 @@
                                         >
                                             <Checkbox
                                                 :model-value="item.code"
-												@change="jcjgSelectedBind"
+                                                :data-name="item.name"
+                                                :checked="
+                                                    jcjgSelected.find(
+                                                        (d, i) =>
+                                                            item.code === d.code
+                                                    )
+                                                "
+                                                @change="jcjgSelectedBind"
                                                 >{{ item.name }}</Checkbox
                                             >
                                         </div>
@@ -181,7 +194,14 @@
                                         >
                                             <Checkbox
                                                 :model-value="item.code"
-												@change="jcjgSelectedBind"
+                                                :data-name="item.name"
+                                                :checked="
+                                                    jcjgSelected.find(
+                                                        (d, i) =>
+                                                            item.code === d.code
+                                                    )
+                                                "
+                                                @change="jcjgSelectedBind"
                                                 >{{ item.name }}</Checkbox
                                             >
                                         </div>
@@ -869,8 +889,27 @@ export default {
         return {
             jc: null,
             jg: null,
-			jcjgSelected : []
+            limitJcJgSelectedLength: 3,
+            jcjgSelected: [
+                {
+                    code: "JC0004",
+                    name: "임원",
+                },
+                {
+                    code: "JC0007",
+                    name: "선임연구원",
+                },
+            ],
         };
+    },
+    computed: {
+        isLimitJcJgSelectedLength() {
+            if (this.jcjgSelected.length >= this.limitJcJgSelectedLength) {
+                return true;
+            } else {
+                return false;
+            }
+        },
     },
     components: {
         RowLayout,
@@ -899,13 +938,34 @@ export default {
         test($event) {
             console.log($event.target.value);
         },
-		jcjgSelectedBind($event){
-			let target = $event.target;
-			let value = target.value;
-            if(target.checked){
-				this.jcjgSelected = [...this.jcjgSelected, ]
-			}
-		}
+        jcjgSelectedBind($event) {
+            let target = $event.target;
+            let code = target.value;
+            let name = target.dataset.name;
+            if (target.checked) {
+                if (!this.isLimitJcJgSelectedLength) {
+                    this.jcjgSelected = [
+                        ...this.jcjgSelected,
+                        {
+                            code,
+                            name,
+                        },
+                    ];
+                } else {
+					$event.target.checked = false;
+                    alert(
+                        `직급/직책은 ${this.limitJcJgSelectedLength}개 까지 선택가능합니다.`
+                    );
+                }
+            } else {
+                this.jcjgSelectedDelete(code);
+            }
+        },
+        jcjgSelectedDelete(code) {
+            this.jcjgSelected = this.jcjgSelected.filter(
+                (object) => object.code !== code
+            );
+        },
     },
 };
 </script>

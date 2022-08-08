@@ -42,7 +42,7 @@
 
 <script>
 export default {
-    props: ['titleName'],
+    props: ["titleName"],
     components: {},
     created() {},
     methods: {
