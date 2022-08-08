@@ -27,7 +27,7 @@
             </div>
             <div class="jbcBtAec">
                 <div class="btwGrs">
-                    <button class="jbbtns md outline">
+                    <button class="jbbtns md outline" @click="test">
                         <span class="intxtsw">취소</span>
                     </button>
                     <button class="jbbtns md">
@@ -47,7 +47,8 @@ export default {
     created() {},
     methods: {
         test() {
-            console.log(event.target.value);
+            console.log(123123);
+            //this.$emit("update:toggleButtonConfirm", event);
         },
     },
 };

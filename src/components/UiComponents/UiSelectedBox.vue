@@ -17,7 +17,7 @@
                             class="wlbde"
                             title="삭제"
                             :value="item.code"
-                            @click="fnSelectBindDelete"
+                            @click="selectBindDelete"
                         ></button>
                     </div>
                     <!-- foreach:E -->
@@ -34,23 +34,11 @@
             <slot name="UiSelectedBox-tooltip" />
         </div>
         <div class="btnwArea">
-            <button class="jbbtns sm" @click="fnSelectBoxBindExtend">
+            <button class="jbbtns sm" @click="selectBoxBindExtend">
                 <span class="intxtsw">전체보기</span>
             </button>
         </div>
-        <div class="useBtArea">
-            <span class="tpwLabs">자주 사용하는 직급/직책 선택</span>
-            <div class="tpwGroups">
-                <!-- foreach:S -->
-                <div class="tpws">
-                    <label class="tweb_bt">
-                        <input type="checkbox" name="" value="" id="" />
-                        <span class="lb">+사원</span>
-                    </label>
-                </div>
-                <!-- foreach:E -->
-            </div>
-        </div>
+		<slot name="UiSelectedBox-favorite"/>
     </div>
     <!-- 선택영역UI:E -->
 </template>
@@ -58,13 +46,19 @@
 <script>
 export default {
     props: {
+        title: {
+            type: String,
+            default: "",
+        },
         selected: {
             type: Object,
             default: () => [],
         },
         nullMsg: {
             type: String,
-            default: "직급/직책을 선택해주세요. (3개까지 입력 가능)",
+            default() {
+                return this.title ? `${this.title}을(를) 선택해주세요.` : "";
+            },
         },
     },
     computed: {},
@@ -75,10 +69,13 @@ export default {
     },
     created() {},
     methods: {
-        fnSelectBoxBindExtend() {
+		test(){
+			console.dir(event.target);
+		},
+        selectBoxBindExtend() {
             this.selectBoxExtend = !this.selectBoxExtend;
         },
-        fnSelectBindDelete(e) {
+        selectBindDelete(e) {
             this.$emit("update:selectBindDelete", e);
         },
     },

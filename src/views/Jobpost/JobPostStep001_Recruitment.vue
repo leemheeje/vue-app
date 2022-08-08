@@ -153,7 +153,13 @@
                     <!-- 직급/직책:S -->
                     <RowLayout title="직급/직책" class="MT20">
                         <UiSelectedBox
+                            title="직급/직책"
                             :selected="jcjgSelected"
+                            :favoriteItems="
+                                jcFavorite && jgFavorite
+                                    ? favoriteItemsArray
+                                    : false
+                            "
                             nullMsg="직급/직책을 선택해주세요. (3개까지 입력 가능)"
                             @update:selectBindDelete="
                                 (e) => jcjgSelectedDelete(e.target.value)
@@ -207,6 +213,52 @@
                                         </div>
                                     </template>
                                 </UiSelectedBoxTooltip>
+                            </template>
+                            <template
+                                v-slot:UiSelectedBox-favorite
+                                v-if="favoriteItemsArray"
+                            >
+                                <UiSelectedBoxFavorite title="직급/직책">
+                                    <template v-slot:slot-favorite>
+                                        <div
+                                            class="tpws"
+                                            v-for="(
+                                                item, index
+                                            ) in favoriteItemsArray"
+                                            :key="index"
+                                        >
+                                            <label class="tweb_bt">
+                                                <input
+                                                    type="checkbox"
+                                                    :name="item.name"
+                                                    :value="item.code"
+                                                    :checked="
+                                                        jcjgSelected.find(
+                                                            (o) =>
+                                                                item.code ===
+                                                                o.code
+                                                        )
+                                                    "
+                                                    @change="
+                                                        (e) =>
+                                                            e.target.checked
+                                                                ? jcjgSelectedBind(
+                                                                      e
+                                                                  )
+                                                                : jcjgSelectedDelete(
+                                                                      e.target
+                                                                          .value
+                                                                  )
+                                                    "
+                                                    id=""
+                                                />
+                                                <span class="lb"
+                                                    >+{{ item.name }}</span
+                                                >
+                                            </label>
+                                        </div>
+                                    </template>
+                                </UiSelectedBoxFavorite>
                             </template>
                         </UiSelectedBox>
                     </RowLayout>
@@ -884,6 +936,7 @@ import Input from "@/components/Form/Input";
 import Checkbox from "@/components/Form/Checkbox";
 import UiSelectedBox from "@/components/UiComponents/UiSelectedBox";
 import UiSelectedBoxTooltip from "@/components/UiComponents/UiSelectedBoxTooltip";
+import UiSelectedBoxFavorite from "@/components/UiComponents/UiSelectedBoxFavorite";
 export default {
     data() {
         return {
@@ -891,6 +944,10 @@ export default {
             jg: null,
             limitJcJgSelectedLength: 3,
             jcjgSelected: [
+                {
+                    code: "JC0017",
+                    name: "계장",
+                },
                 {
                     code: "JC0004",
                     name: "임원",
@@ -900,12 +957,21 @@ export default {
                     name: "선임연구원",
                 },
             ],
+            jcFavorite: null,
+            jgFavorite: null,
         };
     },
     computed: {
         isLimitJcJgSelectedLength() {
             if (this.jcjgSelected.length >= this.limitJcJgSelectedLength) {
                 return true;
+            } else {
+                return false;
+            }
+        },
+        favoriteItemsArray() {
+            if (this.jcFavorite && this.jgFavorite) {
+                return [...this.jcFavorite, ...this.jgFavorite];
             } else {
                 return false;
             }
@@ -920,16 +986,23 @@ export default {
         Checkbox,
         RowLayout,
         UiSelectedBoxTooltip,
+        UiSelectedBoxFavorite,
     },
     async created() {
         await this.$http.get(`${this.API_PATH_STATIC}/jc.json`).then((data) => {
             if (data && data.data) {
                 this.jc = data.data;
+                if (data.data.favorite) {
+                    this.jcFavorite = data.data.favorite;
+                }
             }
         });
         await this.$http.get(`${this.API_PATH_STATIC}/jg.json`).then((data) => {
             if (data && data.data) {
                 this.jg = data.data;
+                if (data.data.favorite) {
+                    this.jgFavorite = data.data.favorite;
+                }
             }
         });
     },
@@ -941,7 +1014,7 @@ export default {
         jcjgSelectedBind($event) {
             let target = $event.target;
             let code = target.value;
-            let name = target.dataset.name;
+            let name = target.name || target.dataset.name;
             if (target.checked) {
                 if (!this.isLimitJcJgSelectedLength) {
                     this.jcjgSelected = [
@@ -952,7 +1025,7 @@ export default {
                         },
                     ];
                 } else {
-					$event.target.checked = false;
+                    $event.target.checked = false;
                     alert(
                         `직급/직책은 ${this.limitJcJgSelectedLength}개 까지 선택가능합니다.`
                     );
