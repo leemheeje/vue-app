@@ -173,7 +173,7 @@ body:not(#companyWrap) .header.userCompanyHeader:not(.headerFixed){position: sta
 .jbPstGlbaArea .fbOriStvsArea .fboTpsw{text-align: left; float: left; margin-right: 15px;}
 .jbPstGlbaArea .fbOriStvsArea .fboTpsw.block{float: none;}
 .jbPstGlbaArea .fbOriStvsArea .wlbwx{font-size: 15px; line-height: 30px; display: inline-block; vertical-align: middle; color: #333;}
-.jbPstGlbaArea .fbOriStvsArea .wlbde{width: 17px; height: 17px; background: gray no-repeat center center ; border: none; display: inline-block; vertical-align: middle;}
+.jbPstGlbaArea .fbOriStvsArea .wlbde{width: 17px; height: 17px; background: transparent no-repeat center center url(../images/icosBlackClose_7.png); border: none; display: inline-block; vertical-align: middle;}
 
 
 
@@ -522,11 +522,11 @@ body:not(#companyWrap) .header.userCompanyHeader:not(.headerFixed){position: sta
 .jbPstGlbaArea .jbChkLavwArea .jbcColLt .ltsLst .tpw{}
 .jbPstGlbaArea .jbChkLavwArea .jbcColLt .ltsLst .tpw+.tpw{border-top: 1px solid #eaeaea;}
 .jbPstGlbaArea .jbChkLavwArea .jbcColLt .ltsLst .dic_bt{text-align: left; border: none; background: none; padding: 15px 21px; position: relative; display: block; width: 100%;}
-.jbPstGlbaArea .jbChkLavwArea .jbcColLt .ltsLst .dic_bt:after{width: 6px; height: 100%; position: absolute; right: 21px; top: 0; background: no-repeat center center ; }
+.jbPstGlbaArea .jbChkLavwArea .jbcColLt .ltsLst .dic_bt:after{width: 6px; height: 100%; position: absolute; right: 21px; top: 0; background: no-repeat center center url(../images/dic_bt.png) ; }
 .jbPstGlbaArea .jbChkLavwArea .jbcColLt .ltsLst .dic_bt .d_intx{font-size: 14px; text-align: left; line-height: 17px; padding-left: 27px; position: relative; font-weight: normal; color: #333;}
-.jbPstGlbaArea .jbChkLavwArea .jbcColLt .ltsLst .dic_bt .d_intx:before{content: ''; width: 27px; height: 100%; position: absolute; left: 0; top: 0; background: no-repeat left center ;}
+.jbPstGlbaArea .jbChkLavwArea .jbcColLt .ltsLst .dic_bt .d_intx:before{content: ''; width: 27px; height: 100%; position: absolute; left: 0; top: 0; background: no-repeat left center url(../images/icoslGrayCircleCheck_20_20.png) ;}
 .jbPstGlbaArea .jbChkLavwArea .jbcColLt .ltsLst .dic_bt.active .d_intx{color: #007eff; font-weight: bold;}
-.jbPstGlbaArea .jbChkLavwArea .jbcColLt .ltsLst .dic_bt.active .d_intx:before{background-image: ;}
+.jbPstGlbaArea .jbChkLavwArea .jbcColLt .ltsLst .dic_bt.active .d_intx:before{background-image: url(../images/icoslBlueCircleCheck_20_20.png);}
 .jbPstGlbaArea .jbChkLavwArea .jbcColLt .ltsLst .dic_bt.active:after{content: '';}
 .jbPstGlbaArea .jbChkLavwArea .jbcColRt .ltsTits{font-size: 16px; line-height: 17px; text-indent: -16px; color: #333; font-weight: bold; text-align: left; display: block; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; padding: 15px 30px 2px}
 .jbPstGlbaArea .jbChkLavwArea .jbcColRt .ltsLst{padding: 15px 30px;}
@@ -593,7 +593,7 @@ body:not(#companyWrap) .header.userCompanyHeader:not(.headerFixed){position: sta
 .dialogJobPostArea .djFotAre{padding: 20px 0;}
 .dialogJobPostArea .djFotAre .btwGrp{text-align: center; font-size: 0;}
 .dialogJobPostArea .djFotAre .btwGrp .jbbtns+.jbbtns{margin-left: 5px;}
-.dialogJobPostArea .djFotAre .diClse{width: 35px; height: 35px; background: transparent no-repeat center center ; border: none; position: absolute; right: 25px; top: 25px;}
+.dialogJobPostArea .djFotAre .diClse{width: 35px; height: 35px; background: transparent no-repeat center center url(../images/djFotAre.png); border: none; position: absolute; right: 25px; top: 25px;}
 .dialogJobPostArea .djConAre{}
 .dialogJobPostArea .djConAre .djCnTbl{border-top: 1px solid #454545;}
 .dialogJobPostArea .djConAre .djCnTbl table{table-layout: fixed; width: 100%;}

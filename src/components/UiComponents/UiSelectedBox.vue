@@ -1,54 +1,52 @@
 <template>
     <!-- 선택영역UI:S -->
-    <div :class="`jbChicCmArea ${selectBoxExtend ? 'extend' : ''}`">
+    <div :class="`jbChicCmArea`">
         <!-- 툴팁 확장시 extend-->
         <div class="tmATInn">
             <template v-if="Object.keys(selected).length">
                 <!-- 선택된영역이있을때:S -->
                 <div class="fbOriStvsArea">
                     <!-- foreach:S -->
-                    <div
-                        class="fboTpsw"
-                        v-for="(item, index) in selected"
-                        :key="index"
-                    >
-                        <span class="wlbwx">{{ item.name }}</span>
-                        <button
-                            class="wlbde"
-                            title="삭제"
+                    <template v-for="(item, index) in selected" :key="index">
+                        <Selected
                             :value="item.code"
                             @click="selectBindDelete"
-                        ></button>
-                    </div>
+                            >{{ item.name }}</Selected
+                        >
+                    </template>
                     <!-- foreach:E -->
                 </div>
                 <!-- 선택된영역이있을때:E -->
             </template>
             <template v-else>
                 <!-- 선택된영역이없을때:S -->
-                <div class="tmNulIns">
-                    {{ nullMsg }}
-                </div>
+                <Nullmsg>{{ nullMsg }}</Nullmsg>
                 <!-- 선택된영역이없을때:E -->
             </template>
             <slot name="UiSelectedBox-tooltip" />
         </div>
         <div class="btnwArea">
-            <button class="jbbtns sm" @click="selectBoxBindExtend">
+            <button
+                type="button"
+                class="jbbtns sm"
+                @click="selectBoxBindExtend"
+            >
                 <span class="intxtsw">전체보기</span>
             </button>
         </div>
-		<slot name="UiSelectedBox-favorite"/>
+        <slot name="UiSelectedBox-favorite" />
     </div>
     <!-- 선택영역UI:E -->
 </template>
 
 <script>
+import Selected from "@/components/Form/Selected";
+import Nullmsg from "@/components/Form/Nullmsg";
 export default {
     props: {
         title: {
             type: String,
-            default: "",
+            default: "타이틀",
         },
         selected: {
             type: Object,
@@ -62,23 +60,15 @@ export default {
         },
     },
     computed: {},
-    data() {
-        return {
-            selectBoxExtend: false,
-        };
-    },
     created() {},
     methods: {
-		test(){
-			console.dir(event.target);
-		},
         selectBoxBindExtend() {
-            this.selectBoxExtend = !this.selectBoxExtend;
+            this.$emit("click:afButtonBind");
         },
         selectBindDelete(e) {
             this.$emit("update:selectBindDelete", e);
         },
     },
-    components: {},
+    components: { Selected, Nullmsg },
 };
 </script>
