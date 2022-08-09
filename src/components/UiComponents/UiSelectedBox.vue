@@ -63,7 +63,7 @@ export default {
     created() {},
     methods: {
         selectBoxBindExtend() {
-            this.$emit("click:afButtonBind");
+            this.$emit("click:afRightButtonBind");
         },
         selectBindDelete(e) {
             this.$emit("update:selectBindDelete", e);

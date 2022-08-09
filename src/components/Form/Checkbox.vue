@@ -15,7 +15,7 @@
         </div>
     </template>
     <template v-else>
-        <div :class="`jbForm ${size}`">
+        <div :class="`jbForm ${size !== 'default' ? size : ''}`">
             <label>
                 <input
                     type="checkbox"

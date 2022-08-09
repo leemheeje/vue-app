@@ -27,10 +27,10 @@
             </div>
             <div class="jbcBtAec">
                 <div class="btwGrs">
-                    <button class="jbbtns md outline" @click="test">
+                    <button class="jbbtns md outline" @click="visibleToggle">
                         <span class="intxtsw">취소</span>
                     </button>
-                    <button class="jbbtns md">
+                    <button class="jbbtns md" @click="visibleToggle">
                         <span class="intxtsw">확인</span>
                     </button>
                 </div>
@@ -46,9 +46,8 @@ export default {
     components: {},
     created() {},
     methods: {
-        test() {
-            console.log(123123);
-            //this.$emit("update:toggleButtonConfirm", event);
+        visibleToggle() {
+            this.$emit('click:visibleToggle');
         },
     },
 };
