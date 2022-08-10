@@ -9,7 +9,10 @@
     >
         <!-- 레이어팝선택UI:S -->
         <div class="jbChkLavwArea">
-            <div class="jbcRowsCont">
+            <template v-if="isDialogHeader">
+                <slot name="dialogHeader" />
+            </template>
+            <div class="jbcRowsCont" v-if="isDialogContent">
                 <div class="jbcColLt">
                     <div class="jbcInConte">
                         <div class="ltsLst">
@@ -67,7 +70,7 @@
                     </div>
                 </div>
             </div>
-            <div class="jbcRowsRest">
+            <div class="jbcRowsRest" v-if="isDialogFooter">
                 <div class="jbresInner">
                     <div class="rexwConte">
                         <!-- 선택된영역이있을때:S -->
@@ -158,6 +161,18 @@ export default {
                     name: "아랍어가능자",
                 },
             ],
+        },
+        isDialogHeader: {
+            type: Boolean,
+            default: false,
+        },
+        isDialogContent: {
+            type: Boolean,
+            default: true,
+        },
+        isDialogFooter: {
+            type: Boolean,
+            default: true,
         },
         limitSelectedLength: 0,
     },

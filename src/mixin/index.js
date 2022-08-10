@@ -7,6 +7,16 @@ export default {
 	mounted() {
 	},
 	methods: {
+		__fnComputeFavorite(dataName){
+			if (this[dataName]) {
+                return this[dataName]
+                    .filter((item) => item.favorite.length)
+                    .map((item) => item.favorite)
+                    .reduce((prv, cur) => [...prv, ...cur]);
+            } else {
+                return [];
+            }
+		},
 		__fnIsLimitSelectBoxCheck(o = [], n = 0) {
 			if (n && o.length >= n) {
 				return true;

@@ -292,8 +292,8 @@ export default {
     data() {
         return {
             mzbyTitle: "",
-            jc: null,
-            jg: null,
+            jc: undefined,
+            jg: undefined,
             limitJcJgSelectedLength: 3,
             jcjgSelected: [
                 {
@@ -305,10 +305,10 @@ export default {
                     name: "임원",
                 },
             ],
-            jcFavorite: null,
-            jgFavorite: null,
+            jcFavorite: undefined,
+            jgFavorite: undefined,
             isJcjgTooltipVisible: false,
-            woodae: null,
+            woodae: undefined,
             woodaeSelected: [
                 {
                     code: "WD005012",
@@ -332,12 +332,7 @@ export default {
             }
         },
         favoriteItemsArrayWoodae() {
-            if (this.woodae) {
-                return this.woodae
-                    .filter(({ favorite }) => favorite.length)
-                    .map((item) => item.favorite)
-                    .reduce((prv, cur) => [...prv, ...cur]);
-            }
+			return this.__fnComputeFavorite('woodae');
         },
     },
     components: {

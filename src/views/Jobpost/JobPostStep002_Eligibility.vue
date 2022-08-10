@@ -22,12 +22,25 @@
         </RowLayout>
         <!-- 학력:E -->
         <!-- 외국어:S -->
-        <RowLayout title="외국어" :subtitle="`(${langageSelected.length}/6)`" class="MT30">
+        <RowLayout
+            title="외국어"
+            :subtitle="`(${langageSelected.length}/6)`"
+            class="MT30"
+        >
             <UiSelectedBox
                 title="외국어"
                 :selected="langageSelected"
                 @click:afRightButtonBind="isLangageDialogVisible = true"
                 @update:selectBindDelete="
+                    (e) =>
+                        lcFnSelectedDelete({
+                            code: e.target.value,
+                            seleted: 'langageSelected',
+                        })
+                "
+                :isJumsuTemplate="true"
+                :jumsuList="langageSelected"
+                @click:jumsuListDelete="
                     (e) =>
                         lcFnSelectedDelete({
                             code: e.target.value,
@@ -70,7 +83,7 @@
                     @click:dialogVisibleToggle="
                         (isVisible) => (isLangageDialogVisible = isVisible)
                     "
-					@update:selectedbind="lanagebind"
+                    @update:selectedbind="lanagebind"
                     @update:selecteddelete="
                         (e) =>
                             lcFnSelectedDelete({
@@ -81,857 +94,147 @@
                 />
             </template>
         </RowLayout>
-        <div class="jbLayoutLabs MT20">
-            <div class="jblabs">
-                <span class="ints">외국어<small class="sm">(0/6)</small></span>
-            </div>
-            <div class="jbDivs">
-                <!-- 선택영역UI:S -->
-                <div class="jbChicCmArea">
-                    <!-- 점수 입력 영역:S -->
-                    <div class="jbAddFormArea mdlb MT10">
-                        <div class="jbaFormInners">
-                            <!-- foreach:S -->
-                            <div class="jbTps">
-                                <div class="jblts">
-                                    <span class="intx">ㆍJLPT</span>
-                                </div>
-                                <div class="jbcots">
-                                    <div
-                                        class="jbForm inline MR05"
-                                        style="width: 200px"
-                                    >
-                                        <input
-                                            type="number"
-                                            name=""
-                                            id=""
-                                            value=""
-                                            class=""
-                                            placeholder="점수입력"
-                                        />
-                                    </div>
-                                    <span class="jbStatText MR45"
-                                        >급(점) 이상</span
-                                    >
-                                    <div class="jbForm chkGroup inline MR05">
-                                        <label>
-                                            <input
-                                                type="radio"
-                                                name="enChk1"
-                                                id=""
-                                                value=""
-                                            />
-                                            <span class="lb">필수</span>
-                                        </label>
-                                        <label>
-                                            <input
-                                                type="radio"
-                                                name="enChk1"
-                                                id=""
-                                                value=""
-                                                checked
-                                            />
-                                            <span class="lb">우대</span>
-                                        </label>
-                                    </div>
-                                    <button
-                                        class="jbls_de"
-                                        title="삭제"
-                                    ></button>
-                                </div>
-                            </div>
-                            <div class="jbTps">
-                                <div class="jblts">
-                                    <span class="intx">ㆍTEPS</span>
-                                </div>
-                                <div class="jbcots">
-                                    <div
-                                        class="jbForm inline MR05"
-                                        style="width: 200px"
-                                    >
-                                        <input
-                                            type="number"
-                                            name=""
-                                            id=""
-                                            value=""
-                                            class=""
-                                            placeholder="점수입력"
-                                        />
-                                    </div>
-                                    <span class="jbStatText MR45"
-                                        >급(점) 이상</span
-                                    >
-                                    <div class="jbForm chkGroup inline MR05">
-                                        <label>
-                                            <input
-                                                type="radio"
-                                                name="enChk2"
-                                                id=""
-                                                value=""
-                                            />
-                                            <span class="lb">필수</span>
-                                        </label>
-                                        <label>
-                                            <input
-                                                type="radio"
-                                                name="enChk2"
-                                                id=""
-                                                value=""
-                                                checked
-                                            />
-                                            <span class="lb">우대</span>
-                                        </label>
-                                    </div>
-                                    <button
-                                        class="jbls_de"
-                                        title="삭제"
-                                    ></button>
-                                </div>
-                            </div>
-                            <!-- foreach:E -->
-                        </div>
-                    </div>
-                    <!-- 점수 입력 영역:E -->
-                </div>
-                <!-- 선택영역UI:E -->
-            </div>
-        </div>
         <!-- 외국어:E -->
         <!-- 자격증:S -->
-        <div class="jbLayoutLabs MT20">
-            <div class="jblabs">
-                <span class="ints">자격증<small class="sm">(0/3)</small></span>
-            </div>
-            <div class="jbDivs">
-                <!-- 선택영역UI:S -->
-                <div class="jbChicCmArea">
-                    <div class="tmATInn">
-                        <!-- 선택된영역이있을때:S -->
-                        <!-- <div class="fbOriStvsArea">
-												<div class="fboTpsw block">
-													<span class="wlbwx">해당 선택된 내용명</span>
-													<button class="wlbde" title="삭제"></button>
-												</div>
-												<div class="fboTpsw block">
-													<span class="wlbwx">해당 선택된 내용명</span>
-													<button class="wlbde" title="삭제"></button>
-												</div>
-											</div> -->
-                        <!-- 선택된영역이있을때:E -->
-                        <!-- 선택된영역이없을때:S -->
-                        <div class="tmNulIns">
-                            자격증를 선택해주세요. (3개까지 입력 가능)
-                        </div>
-                        <!-- 선택된영역이없을때:E -->
-                    </div>
-                    <div class="btnwArea">
-                        <button class="jbbtns sm">
-                            <span class="intxtsw">전체보기</span>
-                        </button>
-                    </div>
-                    <div class="useBtArea">
-                        <span class="tpwLabs">자주 사용하는 자격증 선택</span>
-                        <div class="tpwGroups">
-                            <!-- foreach:S -->
-                            <div class="tpws">
-                                <label class="tweb_bt">
-                                    <input
-                                        type="checkbox"
-                                        name=""
-                                        value=""
-                                        id=""
+        <RowLayout
+            title="자격증"
+            :subtitle="`(${licenseSelected.length}/3)`"
+            class="MT30"
+        >
+            <UiSelectedBox
+                title="자격증"
+                :selected="licenseSelected"
+                @click:afRightButtonBind="isLicenseDialogVisible = true"
+                @update:selectBindDelete="
+                    (e) =>
+                        lcFnSelectedDelete({
+                            code: e.target.value,
+                            seleted: 'licenseSelected',
+                        })
+                "
+            >
+                <template v-slot:UiSelectedBox-favorite>
+                    <UiSelectedBoxFavorite title="자격증">
+                        <template v-slot:slot-favorite>
+                            <template
+                                v-for="(item, index) in licenseFavorite"
+                                :key="index"
+                            >
+                                <Checkbox
+                                    :addSelectButton="true"
+                                    :name="item.name"
+                                    :model-value="item.code"
+                                    :checked="
+                                        licenseSelected.find(
+                                            ({ code }) => code === item.code
+                                        )
+                                    "
+                                    @change="licensebind"
+                                    >{{ item.name }}</Checkbox
+                                >
+                            </template>
+                        </template>
+                    </UiSelectedBoxFavorite>
+                </template>
+            </UiSelectedBox>
+            <template v-if="license">
+                <UiSelectedBoxDialog
+                    title="자격증"
+                    subtitle="최대 3개까지 선택 가능"
+                    :selectLists="license"
+                    :selectedLists="licenseSelected"
+                    :visible="isLicenseDialogVisible"
+                    :isDialogHeader="true"
+                    :isDialogContent="false"
+                    @click:selectedInitializeButton="licenseSelected = []"
+                    @click:dialogVisibleToggle="
+                        (isVisible) => (isLicenseDialogVisible = isVisible)
+                    "
+                    @update:selectedbind="licensebind"
+                    @update:selecteddelete="
+                        (e) =>
+                            lcFnSelectedDelete({
+                                code: e.target.value,
+                                seleted: 'licenseSelected',
+                            })
+                    "
+                >
+                    <template v-slot:dialogHeader>
+                        <SearchBar
+                            placeholder="자격증명을 입력하세요."
+                            :modelValue="keyword"
+                            @update:modelValue="fnKeyword"
+                        >
+                            <template v-slot:list>
+                                <template
+                                    v-for="(item, index) in keywordData"
+                                    :key="index"
+                                >
+                                    <SearchBarListItems
+                                        :id="`chk_${item.code}_${index}`"
+                                        :name="item.name"
+                                        :keyword="keyword"
+                                        :code="item.code"
+                                        @change="licensebind"
                                     />
-                                    <span class="lb">+1종 보통 운전면허</span>
-                                </label>
-                            </div>
-                            <div class="tpws">
-                                <label class="tweb_bt">
-                                    <input
-                                        type="checkbox"
-                                        name=""
-                                        value=""
-                                        id=""
-                                    />
-                                    <span class="lb">+정보처리기사</span>
-                                </label>
-                            </div>
-                            <div class="tpws">
-                                <label class="tweb_bt">
-                                    <input
-                                        type="checkbox"
-                                        name=""
-                                        value=""
-                                        id=""
-                                    />
-                                    <span class="lb">+웹디자인기능사</span>
-                                </label>
-                            </div>
-                            <div class="tpws">
-                                <label class="tweb_bt">
-                                    <input
-                                        type="checkbox"
-                                        name=""
-                                        value=""
-                                        id=""
-                                    />
-                                    <span class="lb">+전산세무2급</span>
-                                </label>
-                            </div>
-                            <div class="tpws">
-                                <label class="tweb_bt">
-                                    <input
-                                        type="checkbox"
-                                        name=""
-                                        value=""
-                                        id=""
-                                    />
-                                    <span class="lb">+1종 보통 운전면허</span>
-                                </label>
-                            </div>
-                            <!-- foreach:E -->
-                        </div>
-                    </div>
-                    <!-- 팝업UI:S -->
-                    <div class="dialogJobPostArea fnDialogJobPost">
-                        <div class="dimm"></div>
-                        <div class="djGiContents">
-                            <div class="djGiInners" style="width: 735px">
-                                <div class="djHedAre">
-                                    <div class="dintx">
-                                        <span class="inw"
-                                            >자격증<small class="sm"
-                                                >최대 3개까지 선택 가능</small
-                                            ></span
-                                        >
-                                    </div>
-                                </div>
-                                <div class="djConAre">
-                                    <!-- 검색어UI:S -->
-                                    <div class="jbAutoSearchArea">
-                                        <div class="inpArea">
-                                            <input
-                                                type="text"
-                                                value=""
-                                                id=""
-                                                name=""
-                                                placeholder="자격증명을 입력하세요."
-                                            />
-                                        </div>
-                                        <div class="resArea">
-                                            <div class="reSinner">
-                                                <!-- 연관검색있을때:S -->
-                                                <!-- foreach:S -->
-                                                <div class="asTps">
-                                                    <button class="iewx">
-                                                        한국산업인력공단-아스팔트믹싱플랜트<em
-                                                            class="ant"
-                                                            >운전</em
-                                                        >기능사
-                                                    </button>
-                                                </div>
-                                                <!-- foreach:E -->
-                                                <!-- 연관검색있을때:E -->
-                                                <!-- 연관검색없을때:S -->
-                                                <div class="asTps">
-                                                    <div class="asNutx">
-                                                        연관 검색어가 없습니다
-                                                    </div>
-                                                </div>
-                                                <!-- 연관검색없을때:E -->
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- 검색어UI:E -->
-
-                                    <!-- 레이어팝선택UI:S -->
-                                    <div class="jbChkLavwArea MT10">
-                                        <div class="jbcRowsRest">
-                                            <div class="jbresInner">
-                                                <div class="rexwConte">
-                                                    <!-- 선택된영역이있을때:S -->
-                                                    <div class="fbOriStvsArea">
-                                                        <!-- foreach:S -->
-                                                        <div class="fboTpsw">
-                                                            <span class="wlbwx"
-                                                                >한국산업인력공단-아스팔트믹싱플랜트</span
-                                                            >
-                                                            <button
-                                                                class="wlbde"
-                                                                title="삭제"
-                                                            ></button>
-                                                        </div>
-                                                        <div class="fboTpsw">
-                                                            <span class="wlbwx"
-                                                                >한국산업인력공단</span
-                                                            >
-                                                            <button
-                                                                class="wlbde"
-                                                                title="삭제"
-                                                            ></button>
-                                                        </div>
-                                                        <!-- foreach:E -->
-                                                    </div>
-                                                    <!-- 선택된영역이있을때:E -->
-                                                    <!-- 선택된영역이없을때:S -->
-                                                    <div class="tmNulIns">
-                                                        선택한 항목이 없습니다.
-                                                    </div>
-                                                    <!-- 선택된영역이없을때:E -->
-                                                </div>
-                                                <div class="rexwBte">
-                                                    <button
-                                                        class="jbbtns sm gray"
-                                                    >
-                                                        <span class="intxtsw"
-                                                            >초기화</span
-                                                        >
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- 레이어팝선택UI:E -->
-                                </div>
-                                <div class="djFotAre">
-                                    <div class="btwGrp">
-                                        <button class="jbbtns md outline">
-                                            <span class="intxtsw">취소</span>
-                                        </button>
-                                        <button class="jbbtns md">
-                                            <span class="intxtsw">확인</span>
-                                        </button>
-                                        <button
-                                            class="diClse"
-                                            title="팝업닫기"
-                                        ></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 팝업UI:E -->
-                </div>
-                <!-- 선택영역UI:E -->
-            </div>
-        </div>
+                                </template>
+                            </template>
+                        </SearchBar>
+                    </template>
+                </UiSelectedBoxDialog>
+            </template>
+        </RowLayout>
         <!-- 자격증:E -->
         <!-- 우대전공:S -->
-        <div class="jbLayoutLabs MT20">
-            <div class="jblabs">
-                <span class="ints"
-                    >우대전공<small class="sm">(0/6)</small></span
-                >
-            </div>
-            <div class="jbDivs">
-                <!-- 선택영역UI:S -->
-                <div class="jbChicCmArea">
-                    <div class="tmATInn">
-                        <!-- 선택된영역이있을때:S -->
-                        <!-- <div class="fbOriStvsArea">
-												<div class="fboTpsw block">
-													<span class="wlbwx">해당 선택된 내용명</span>
-													<button class="wlbde" title="삭제"></button>
-												</div>
-												<div class="fboTpsw block">
-													<span class="wlbwx">해당 선택된 내용명</span>
-													<button class="wlbde" title="삭제"></button>
-												</div>
-											</div> -->
-                        <!-- 선택된영역이있을때:E -->
-                        <!-- 선택된영역이없을때:S -->
-                        <div class="tmNulIns">
-                            우대전공를 선택해주세요. (6개까지 입력 가능)
-                        </div>
-                        <!-- 선택된영역이없을때:E -->
-                    </div>
-                    <div class="btnwArea">
-                        <button class="jbbtns sm">
-                            <span class="intxtsw">전체보기</span>
-                        </button>
-                    </div>
-                    <div class="useBtArea">
-                        <span class="tpwLabs">자주 사용하는 우대전공 선택</span>
-                        <div class="tpwGroups">
-                            <!-- foreach:S -->
-                            <div class="tpws">
-                                <label class="tweb_bt">
-                                    <input
-                                        type="checkbox"
-                                        name=""
-                                        value=""
-                                        id=""
-                                    />
-                                    <span class="lb">+화학</span>
-                                </label>
-                            </div>
-                            <div class="tpws">
-                                <label class="tweb_bt">
-                                    <input
-                                        type="checkbox"
-                                        name=""
-                                        value=""
-                                        id=""
-                                    />
-                                    <span class="lb">+토목공학</span>
-                                </label>
-                            </div>
-                            <div class="tpws">
-                                <label class="tweb_bt">
-                                    <input
-                                        type="checkbox"
-                                        name=""
-                                        value=""
-                                        id=""
-                                    />
-                                    <span class="lb">+컴퓨터공학</span>
-                                </label>
-                            </div>
-                            <div class="tpws">
-                                <label class="tweb_bt">
-                                    <input
-                                        type="checkbox"
-                                        name=""
-                                        value=""
-                                        id=""
-                                    />
-                                    <span class="lb">+산업디자인</span>
-                                </label>
-                            </div>
-                            <div class="tpws">
-                                <label class="tweb_bt">
-                                    <input
-                                        type="checkbox"
-                                        name=""
-                                        value=""
-                                        id=""
-                                    />
-                                    <span class="lb">+보건학</span>
-                                </label>
-                            </div>
-                            <!-- foreach:E -->
-                        </div>
-                    </div>
-                    <!-- 팝업UI:S -->
-                    <div class="dialogJobPostArea fnDialogJobPost">
-                        <div class="dimm"></div>
-                        <div class="djGiContents">
-                            <div class="djGiInners">
-                                <div class="djHedAre">
-                                    <div class="dintx">
-                                        <span class="inw"
-                                            >우대전공<small class="sm"
-                                                >최대 6개까지 선택 가능</small
-                                            ></span
-                                        >
-                                    </div>
-                                </div>
-                                <div class="djConAre">
-                                    <!-- 레이어팝선택UI:S -->
-                                    <div class="jbChkLavwArea">
-                                        <div class="jbcRowsCont">
-                                            <div class="jbcColLt">
-                                                <div class="jbcInConte">
-                                                    <div class="ltsLst">
-                                                        <!-- foreach:S -->
-                                                        <div class="tpw">
-                                                            <button
-                                                                class="
-                                                                    dic_bt
-                                                                    active
-                                                                "
-                                                            >
-                                                                <span
-                                                                    class="
-                                                                        d_intx
-                                                                    "
-                                                                    >상경계열</span
-                                                                >
-                                                            </button>
-                                                        </div>
-                                                        <div class="tpw">
-                                                            <button
-                                                                class="dic_bt"
-                                                            >
-                                                                <span
-                                                                    class="
-                                                                        d_intx
-                                                                    "
-                                                                    >수당제도</span
-                                                                >
-                                                            </button>
-                                                        </div>
-                                                        <div class="tpw">
-                                                            <button
-                                                                class="dic_bt"
-                                                            >
-                                                                <span
-                                                                    class="
-                                                                        d_intx
-                                                                    "
-                                                                    >교육/연수</span
-                                                                >
-                                                            </button>
-                                                        </div>
-                                                        <div class="tpw">
-                                                            <button
-                                                                class="dic_bt"
-                                                            >
-                                                                <span
-                                                                    class="
-                                                                        d_intx
-                                                                    "
-                                                                    >사내시설</span
-                                                                >
-                                                            </button>
-                                                        </div>
-                                                        <div class="tpw">
-                                                            <button
-                                                                class="dic_bt"
-                                                            >
-                                                                <span
-                                                                    class="
-                                                                        d_intx
-                                                                    "
-                                                                    >휴가/휴무</span
-                                                                >
-                                                            </button>
-                                                        </div>
-                                                        <div class="tpw">
-                                                            <button
-                                                                class="dic_bt"
-                                                            >
-                                                                <span
-                                                                    class="
-                                                                        d_intx
-                                                                    "
-                                                                    >생활/편의</span
-                                                                >
-                                                            </button>
-                                                        </div>
-                                                        <!-- foreach:E -->
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="jbcColRt">
-                                                <div
-                                                    class="
-                                                        jbcInConte
-                                                        bordernone
-                                                    "
-                                                >
-                                                    <div class="ltsTits">
-                                                        ㆍ상경계열
-                                                    </div>
-                                                    <div class="ltsLst">
-                                                        <!-- foreach:S -->
-                                                        <div class="tpw">
-                                                            <div
-                                                                class="
-                                                                    jbForm
-                                                                    sm
-                                                                "
-                                                            >
-                                                                <label>
-                                                                    <input
-                                                                        type="checkbox"
-                                                                        id=""
-                                                                        name=""
-                                                                        value=""
-                                                                    />
-                                                                    <span
-                                                                        class="
-                                                                            lb
-                                                                        "
-                                                                        >경조휴가제</span
-                                                                    >
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="tpw">
-                                                            <div
-                                                                class="
-                                                                    jbForm
-                                                                    sm
-                                                                "
-                                                            >
-                                                                <label>
-                                                                    <input
-                                                                        type="checkbox"
-                                                                        id=""
-                                                                        name=""
-                                                                        value=""
-                                                                    />
-                                                                    <span
-                                                                        class="
-                                                                            lb
-                                                                        "
-                                                                        >창립일휴무</span
-                                                                    >
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="tpw">
-                                                            <div
-                                                                class="
-                                                                    jbForm
-                                                                    sm
-                                                                "
-                                                            >
-                                                                <label>
-                                                                    <input
-                                                                        type="checkbox"
-                                                                        id=""
-                                                                        name=""
-                                                                        value=""
-                                                                    />
-                                                                    <span
-                                                                        class="
-                                                                            lb
-                                                                        "
-                                                                        >Refresh휴가</span
-                                                                    >
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="tpw">
-                                                            <div
-                                                                class="
-                                                                    jbForm
-                                                                    sm
-                                                                "
-                                                            >
-                                                                <label>
-                                                                    <input
-                                                                        type="checkbox"
-                                                                        id=""
-                                                                        name=""
-                                                                        value=""
-                                                                    />
-                                                                    <span
-                                                                        class="
-                                                                            lb
-                                                                        "
-                                                                        >반차</span
-                                                                    >
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="tpw">
-                                                            <div
-                                                                class="
-                                                                    jbForm
-                                                                    sm
-                                                                "
-                                                            >
-                                                                <label>
-                                                                    <input
-                                                                        type="checkbox"
-                                                                        id=""
-                                                                        name=""
-                                                                        value=""
-                                                                    />
-                                                                    <span
-                                                                        class="
-                                                                            lb
-                                                                        "
-                                                                        >연차</span
-                                                                    >
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="tpw">
-                                                            <div
-                                                                class="
-                                                                    jbForm
-                                                                    sm
-                                                                "
-                                                            >
-                                                                <label>
-                                                                    <input
-                                                                        type="checkbox"
-                                                                        id=""
-                                                                        name=""
-                                                                        value=""
-                                                                    />
-                                                                    <span
-                                                                        class="
-                                                                            lb
-                                                                        "
-                                                                        >월차</span
-                                                                    >
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="tpw">
-                                                            <div
-                                                                class="
-                                                                    jbForm
-                                                                    sm
-                                                                "
-                                                            >
-                                                                <label>
-                                                                    <input
-                                                                        type="checkbox"
-                                                                        id=""
-                                                                        name=""
-                                                                        value=""
-                                                                    />
-                                                                    <span
-                                                                        class="
-                                                                            lb
-                                                                        "
-                                                                        >정기휴가</span
-                                                                    >
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="tpw">
-                                                            <div
-                                                                class="
-                                                                    jbForm
-                                                                    sm
-                                                                "
-                                                            >
-                                                                <label>
-                                                                    <input
-                                                                        type="checkbox"
-                                                                        id=""
-                                                                        name=""
-                                                                        value=""
-                                                                    />
-                                                                    <span
-                                                                        class="
-                                                                            lb
-                                                                        "
-                                                                        >위로휴가</span
-                                                                    >
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="tpw">
-                                                            <div
-                                                                class="
-                                                                    jbForm
-                                                                    sm
-                                                                "
-                                                            >
-                                                                <label>
-                                                                    <input
-                                                                        type="checkbox"
-                                                                        id=""
-                                                                        name=""
-                                                                        value=""
-                                                                    />
-                                                                    <span
-                                                                        class="
-                                                                            lb
-                                                                        "
-                                                                        >노동절휴무</span
-                                                                    >
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="tpw">
-                                                            <div
-                                                                class="
-                                                                    jbForm
-                                                                    sm
-                                                                "
-                                                            >
-                                                                <label>
-                                                                    <input
-                                                                        type="checkbox"
-                                                                        id=""
-                                                                        name=""
-                                                                        value=""
-                                                                    />
-                                                                    <span
-                                                                        class="
-                                                                            lb
-                                                                        "
-                                                                        >휴가비지원</span
-                                                                    >
-                                                                </label>
-                                                            </div>
-                                                        </div>
-                                                        <!-- foreach:E -->
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="jbcRowsRest">
-                                            <div class="jbresInner">
-                                                <div class="rexwConte">
-                                                    <!-- 선택된영역이있을때:S -->
-                                                    <div class="fbOriStvsArea">
-                                                        <!-- foreach:S -->
-                                                        <div class="fboTpsw">
-                                                            <span class="wlbwx"
-                                                                >경영.기획 >
-                                                                경리.세무.회계 >
-                                                                경리</span
-                                                            >
-                                                            <button
-                                                                class="wlbde"
-                                                                title="삭제"
-                                                            ></button>
-                                                        </div>
-                                                        <div class="fboTpsw">
-                                                            <span class="wlbwx"
-                                                                >마케팅.광고 >
-                                                                홍보.PR.사보 >
-                                                                언론홍보</span
-                                                            >
-                                                            <button
-                                                                class="wlbde"
-                                                                title="삭제"
-                                                            ></button>
-                                                        </div>
-                                                        <!-- foreach:E -->
-                                                    </div>
-                                                    <!-- 선택된영역이있을때:E -->
-                                                    <!-- 선택된영역이없을때:S -->
-                                                    <div class="tmNulIns">
-                                                        선택한 항목이 없습니다.
-                                                    </div>
-                                                    <!-- 선택된영역이없을때:E -->
-                                                </div>
-                                                <div class="rexwBte">
-                                                    <button
-                                                        class="jbbtns sm gray"
-                                                    >
-                                                        <span class="intxtsw"
-                                                            >초기화</span
-                                                        >
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- 레이어팝선택UI:E -->
-                                </div>
-                                <div class="djFotAre">
-                                    <div class="btwGrp">
-                                        <button class="jbbtns md outline">
-                                            <span class="intxtsw">취소</span>
-                                        </button>
-                                        <button class="jbbtns md">
-                                            <span class="intxtsw">확인</span>
-                                        </button>
-                                        <button
-                                            class="diClse"
-                                            title="팝업닫기"
-                                        ></button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- 팝업UI:E -->
-                </div>
-                <!-- 선택영역UI:E -->
-            </div>
-        </div>
+        <RowLayout title="우대전공" class="MT30">
+            <UiSelectedBox
+                title="우대전공"
+                :selected="woodaeUniSelected"
+                @click:afRightButtonBind="isWoodaeUniDialogVisible = true"
+                @update:selectBindDelete="
+                    (e) =>
+                        lcFnSelectedDelete({
+                            code: e.target.value,
+                            seleted: 'woodaeUniSelected',
+                        })
+                "
+            >
+                <template v-slot:UiSelectedBox-favorite>
+                    <UiSelectedBoxFavorite>
+                        <template v-slot:slot-favorite>
+                            <template
+                                v-for="(item, index) in woodaeUniFavorite"
+                                :key="index"
+                            >
+                                <Checkbox
+                                    :addSelectButton="true"
+                                    :name="item.name"
+                                    :value="item.code"
+                                    :checked="
+                                        woodaeUniSelected.find(
+                                            ({ code }) => item.code === code
+                                        )
+                                    "
+                                    @change="woodaeUnibind"
+                                    >{{ item.name }}</Checkbox
+                                >
+                            </template>
+                        </template>
+                    </UiSelectedBoxFavorite>
+                </template>
+            </UiSelectedBox>
+            <UiSelectedBoxDialog
+                title="우대전공"
+                subtitle="6개까지 입력 가능"
+                :visible="isWoodaeUniDialogVisible"
+                :selectLists="woodaeUni"
+                :selectedLists="woodaeUniSelected"
+                @click:dialogVisibleToggle="isWoodaeUniDialogVisible = false"
+                @click:selectedInitializeButton="woodaeUniSelected = []"
+                @update:selectedbind="woodaeUnibind"
+            />
+        </RowLayout>
+
         <!-- 우대전공:E -->
         <!-- 성별제한:S -->
         <div class="jbLayoutLabs MT20">
@@ -1415,33 +718,65 @@ import UiSelectedBox from "@/components/UiComponents/UiSelectedBox";
 import UiSelectedBoxTooltip from "@/components/UiComponents/UiSelectedBoxTooltip";
 import UiSelectedBoxFavorite from "@/components/UiComponents/UiSelectedBoxFavorite";
 import UiSelectedBoxDialog from "@/components/UiComponents/UiSelectedBoxDialog";
+import SearchBar from "@/components/UiComponents/SearchBar";
+import SearchBarListItems from "@/components/UiComponents/SearchBarListItems";
 import mixin from "@/mixin";
 export default {
     mixins: [mixin],
     data() {
         return {
-            langage: null,
+            langage: undefined,
             langageSelected: [
                 {
-                    code: "LA002002",
-                    name: "JLPT",
+                    code: "LA003001",
+                    name: "HSK",
+                    required: false,
+                    rate: 3,
                 },
                 {
                     code: "LA002003",
                     name: "JLRT",
+                    required: true,
+                    rate: 2,
                 },
             ],
             isLangageDialogVisible: false,
             limitLangageSelectedLength: 6,
+            license: undefined,
+            licenseSelected: [
+                {
+                    name: "IBA세계경호협회-특수경호실무사(경호 1,2,3급)",
+                    code: "LIC0165",
+                },
+                {
+                    name: "(재)종이문화재단-고지공예지도사(마스터, 1,2급)",
+                    code: "LIC0166",
+                },
+            ],
+            isLicenseDialogVisible: false,
+            limitLicenseSelectedLength: 3,
+
+            //우대전공
+            woodaeUni: undefined,
+            woodaeUniSelected: [],
+            isWoodaeUniDialogVisible: false,
+            limitWoodaeUniSelectedLength: 6,
+
+            //테스트
+            keywordData: undefined,
+            keyword: "",
         };
     },
     computed: {
         langageFavorite() {
-            if (this.langage) {
-                return this.langage
-                    .filter((item) => item.favorite.length)
-                    .map((item) => item.favorite)
-                    .reduce((prv, cur) => [...prv, ...cur]);
+            return this.__fnComputeFavorite("langage");
+        },
+        woodaeUniFavorite() {
+            return this.__fnComputeFavorite("woodaeUni");
+        },
+        licenseFavorite() {
+            if (this.license) {
+                return this.license.favorite;
             } else {
                 return [];
             }
@@ -1451,8 +786,31 @@ export default {
         await this.$http
             .get(`${this.API_PATH_STATIC}/langage.json`)
             .then(({ data, ...props }) => (this.langage = data));
+        await this.$http
+            .get(`${this.API_PATH_STATIC}/license.json`)
+            .then(({ data, ...props }) => {
+                this.license = data;
+                this.keywordData = data.data;
+            });
+        await this.$http
+            .get(`${this.API_PATH_STATIC}/woodae_univers.json`)
+            .then(({ data, ...props }) => (this.woodaeUni = data));
     },
     methods: {
+        woodaeUnibind(e) {
+            this.lcFnBind(e, {
+                seleted: "woodaeUniSelected",
+                selectedLengh: "limitWoodaeUniSelectedLength",
+                alertMsg: `우대전공은 ${this.limitWoodaeUniSelectedLength}개 까지 선택가능합니다.`,
+            });
+        },
+        licensebind(e) {
+            this.lcFnBind(e, {
+                seleted: "licenseSelected",
+                selectedLengh: "limitLicenseSelectedLength",
+                alertMsg: `자격증은 ${this.limitLicenseSelectedLength}개 까지 선택가능합니다.`,
+            });
+        },
         lanagebind(e) {
             this.lcFnBind(e, {
                 seleted: "langageSelected",
@@ -1468,12 +826,13 @@ export default {
             );
             if (e.target.checked) {
                 if (!__limit) {
-                    __chkBind.isChecked((e, { code, name }) => {
+                    __chkBind.isChecked((e, { code, name, ...props }) => {
                         this[seleted] = [
                             ...this[seleted],
                             {
                                 code,
                                 name,
+                                ...props,
                             },
                         ];
                     });
@@ -1495,6 +854,16 @@ export default {
                 (object) => object.code !== code
             );
         },
+        fnKeyword(e) {
+            let keyword = e.target.value;
+            this.keywordData = this.license.data.filter(
+                ({ name }, index) => name.indexOf(keyword) != -1
+            );
+            this.keyword = keyword;
+        },
+        fnSearchListItems(e) {
+            console.log(e);
+        },
     },
     components: {
         RowLayout,
@@ -1508,10 +877,8 @@ export default {
         UiSelectedBoxTooltip,
         UiSelectedBoxFavorite,
         UiSelectedBoxDialog,
+        SearchBar,
+        SearchBarListItems,
     },
 };
 </script>
-
-<style>
-
-</style>
