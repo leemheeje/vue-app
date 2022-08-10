@@ -55,7 +55,7 @@ export default {
         nullMsg: {
             type: String,
             default() {
-                return this.title ? `${this.title}을(를) 선택해주세요.` : "";
+                //return this.title ? `${this.title}을(를) 선택해주세요.` : "";
             },
         },
     },

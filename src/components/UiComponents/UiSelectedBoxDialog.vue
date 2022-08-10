@@ -1,10 +1,12 @@
 <template>
-    <Dialog 
-	:title="title" 
-	:subtitle="subtitle" 
-	:visible="visible"
-	@click:dialogVisibleToggle="(bool)=>$emit('click:dialogVisibleToggle', bool)"
-	>
+    <Dialog
+        :title="title"
+        :subtitle="subtitle"
+        :visible="visible"
+        @click:dialogVisibleToggle="
+            (bool) => $emit('click:dialogVisibleToggle', bool)
+        "
+    >
         <!-- 레이어팝선택UI:S -->
         <div class="jbChkLavwArea">
             <div class="jbcRowsCont">
@@ -99,7 +101,13 @@
                         <!-- 선택된영역이없을때:E -->
                     </div>
                     <div class="rexwBte">
-                        <button class="jbbtns sm gray">
+                        <button
+                            type="button"
+                            class="jbbtns sm gray"
+                            @click="
+                                $emit('click:selectedInitializeButton', $event)
+                            "
+                        >
                             <span class="intxtsw">초기화</span>
                         </button>
                     </div>
@@ -140,6 +148,7 @@ export default {
         selectLists: {
             type: Object,
             default: () => [],
+            required: true,
         },
         selectedLists: {
             type: Object,
