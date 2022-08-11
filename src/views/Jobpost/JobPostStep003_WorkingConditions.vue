@@ -574,6 +574,26 @@
         </RowLayout>
         <!-- 근무요일:E -->
         <!-- 근무시간:S -->
+        <RowLayout title="근무시간">
+            <AddToggleBox
+                @click:AddToggleBox="workTimeAddEvent"
+                @click:MinToggleBox="workTimeMinEvent"
+                :toggleArray="workTimeToggleArray"
+            >
+                <template v-slot:AddToggleBoxDivision>
+                    <Input v-model="asdfasdasf"  />
+                </template>
+                <template v-slot:AddToggleBoxButtonArea>
+                    <Radio name="adf" value="true" v-model="enenen">ched</Radio>
+                    <Radio name="adf" value="false" v-model="enenen">ched</Radio>
+                </template>
+                <template v-slot:AddToggleBoxAntArea>
+                    AddToggleBox-antArea
+                </template>
+            </AddToggleBox>
+        </RowLayout>
+		{{asdfasdasf}}
+		{{enenen}}
         <div class="jbLayoutLabs MT20">
             <div class="jblabs"><span class="ints">근무시간</span></div>
             <div class="jbDivs">
@@ -718,6 +738,7 @@ import SearchBarListItems from "@/components/UiComponents/SearchBarListItems";
 import RadioGroup from "@/components/Form/RadioGroup";
 import Radio from "@/components/Form/Radio";
 import Dialog from "@/components/Dialog/Dialog";
+import AddToggleBox from "@/components/UiComponents/AddToggleBox";
 import mixin from "@/mixin";
 export default {
     mixins: [mixin],
@@ -932,6 +953,10 @@ export default {
             //근무요일
             workDayGubun: 1,
             workDayCheckCustom: false,
+            //근무시간
+            workTimeToggleArray: [{}],
+			asdfasdasf:'임희재',
+			enenen:false
         };
     },
     computed: {
@@ -954,6 +979,13 @@ export default {
                 );
             }
         },
+        workTimeAddEvent(e) {
+            console.log(e.target.value);
+            this.workTimeToggleArray.push({});
+        },
+        workTimeMinEvent(e) {
+            this.workTimeToggleArray = this.workTimeToggleArray.filter((item,index)=>index != e.target.value);
+        },
     },
     components: {
         RowLayout,
@@ -972,6 +1004,7 @@ export default {
         RadioGroup,
         Radio,
         Dialog,
+        AddToggleBox,
     },
 };
 </script>
