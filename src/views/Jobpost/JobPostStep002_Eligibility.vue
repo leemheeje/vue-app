@@ -9,7 +9,13 @@
             <Row class="FLEX">
                 <Col class="col35">
                     <Select>
-                        <option value="">학력무관</option>
+                        <option value="0" selected="">학력무관</option>
+                        <option value="6">고등학교 미만 졸업</option>
+                        <option value="1">고등학교 졸업</option>
+                        <option value="2">대학(2,3)년 졸업</option>
+                        <option value="3">대학교(4년) 졸업</option>
+                        <option value="4">대학원 (석사수료)</option>
+                        <option value="5">대학원 (박사수료)</option>
                     </Select>
                 </Col>
                 <Col class="col00" style="width: 350px">
@@ -237,471 +243,296 @@
 
         <!-- 우대전공:E -->
         <!-- 성별제한:S -->
-        <div class="jbLayoutLabs MT20">
-            <div class="jblabs smpadding">
-                <span class="ints">성별제한</span>
-            </div>
-            <div class="jbDivs">
-                <div class="row">
-                    <div class="col00">
-                        <div class="jbForm inline MR25">
-                            <label>
-                                <input
-                                    type="radio"
-                                    id=""
-                                    name="chk1"
-                                    value=""
-                                    checked
-                                />
-                                <span class="lb">성별무관</span>
-                            </label>
-                        </div>
-                        <div class="jbForm inline MR25">
-                            <label>
-                                <input
-                                    type="radio"
-                                    id=""
-                                    name="chk1"
-                                    value=""
-                                />
-                                <span class="lb">남자</span>
-                            </label>
-                        </div>
-                        <div class="jbForm inline MR25">
-                            <label>
-                                <input
-                                    type="radio"
-                                    id=""
-                                    name="chk1"
-                                    value=""
-                                />
-                                <span class="lb">여자</span>
-                            </label>
-                        </div>
+        <RowLayout title="성별제한" class="MT30">
+            <Row class="FLEX ALIGN_ITEM_CENTER JUSTIFY_ITEM_CENTER">
+                <Col class="col00 MT10" style="margin-right: auto">
+                    <RadioGroup>
+                        <Radio
+                            v-model="jenderGubun"
+                            name="jender_gubun"
+                            label="성별무관"
+                            value="99"
+                            checked
+                        />
+                        <Radio
+                            v-model="jenderGubun"
+                            name="jender_gubun"
+                            label="남자"
+                            cssClass="ML20"
+                            value="man"
+                        />
+                        <Radio
+                            v-model="jenderGubun"
+                            name="jender_gubun"
+                            label="여자"
+                            cssClass="ML20"
+                            value="woman"
+                        />
+                    </RadioGroup>
+                </Col>
+                <Col class="col00" style="margin-left: auto">
+                    <div class="jbAntoTxts TXTR">
+                        <span class="lbwx">성차별금지 - </span>
+                        <button
+                            class="antx"
+                            @click="ediDialogVisible001 = true"
+                        >
+                            남녀고용평등에 관한 법률보기
+                        </button>
                     </div>
-                    <div class="col00 FLOATR">
-                        <div class="jbAntoTxts TXTR">
-                            <span class="lbwx">성차별금지 - </span>
-                            <button
-                                class="antx fnDialogButton"
-                                data-params="dumm_dia001"
-                            >
-                                남녀고용평등에 관한 법률보기
-                            </button>
+                    <Dialog
+                        title="성차별법금지 주요내용"
+                        :visible="ediDialogVisible001"
+                        @click:dialogVisibleToggle="ediDialogVisible001 = false"
+                        v-if="ediDialogVisible001"
+                    >
+                        <div class="jbInfos tp2 MT10">
+                            <div class="inf_tx noindent">
+                                모집.채용에서 남녀를 차별하거나, 여성근로자를
+                                채용할 때 직무 수행이 불필요한 용모, 키,
+                                체중등의 신체조건, 미혼조건을 제시 또는 요구하는
+                                경우 남녀고용평등과 일·가정 양립 지원에 관한
+                                법률 위반에 따른
+                                <span class="cb">500만원 이하의 벌금</span>이
+                                부과될 수 있습니다.
+                            </div>
                         </div>
-                    </div>
-                </div>
+                        <div class="djCnTbl tleft MT25">
+                            <table>
+                                <colgroup>
+                                    <col width="150px" />
+                                    <col width="auto" />
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <th>관련법령</th>
+                                        <td>
+                                            <div class="jbInfos tp2">
+                                                <div class="inf_tx noindent">
+                                                    남녀고용평등과 일·가정 양립
+                                                    지원에 관한 법률 제7조 1항에
+                                                    의거 근로자를 모집하거나
+                                                    채용 시 합리적인 이유없이
+                                                    남녀를 차별할 수 없음<br />
+                                                    <span class="cb"
+                                                        >&lt;차별 시 500만원
+                                                        이하 벌금&gt;</span
+                                                    >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>차별사례</th>
+                                        <td>
+                                            <div class="jbInfos tp2">
+                                                <div class="inf_tx noindent">
+                                                    특정성을 지칭하는 직종명 등
+                                                    사용하는 경우, 특정성
+                                                    배제<br />
+                                                    <span class="cg"
+                                                        >- 남성 선반공, 병역필
+                                                        남, 여성 비서, 미용사
+                                                        &lt;여성 환영&gt;
+                                                        등</span
+                                                    >
+                                                </div>
+                                                <br />
+                                                <div class="inf_tx noindent">
+                                                    직종 등 남녀 분리모집 등<br />
+                                                    <span class="cg"
+                                                        >- 관리·사무직 남성
+                                                        10명, 판매직 여성
+                                                        5명</span
+                                                    >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>차별로 보지않는 사례</th>
+                                        <td>
+                                            <div class="jbInfos tp2">
+                                                <div class="inf_tx noindent">
+                                                    직무성질상 특정한 성이
+                                                    불가피한 경우<br />
+                                                    <span class="cg"
+                                                        >- 남성역할 위한
+                                                        배우·모델 등</span
+                                                    ><br />
+                                                    <span class="cg"
+                                                        >- 여성 목욕탕의 여성
+                                                        목욕관리사, 여성
+                                                        장애인·여성 환자의
+                                                        도우미 등</span
+                                                    ><br />
+                                                    <span class="cg"
+                                                        >- 여성 기숙사의
+                                                        여성사감 등</span
+                                                    ><br /><br />
 
-                <!-- 팝업UI:S -->
-                <div
-                    class="dialogJobPostArea fnDialogJobPost"
-                    data-params="dumm_dia001"
-                >
-                    <div class="dimm"></div>
-                    <div class="djGiContents">
-                        <div class="djGiInners">
-                            <div class="djHedAre">
-                                <div class="dintx">
-                                    <span class="inw lg"
-                                        >성차별법금지 주요내용</span
-                                    >
-                                </div>
-                            </div>
-                            <div class="djConAre">
-                                <div class="jbInfos tp2 MT10">
-                                    <div class="inf_tx noindent">
-                                        모집.채용에서 남녀를 차별하거나,
-                                        여성근로자를 채용할 때 직무 수행이
-                                        불필요한 용모, 키, 체중등의 신체조건,
-                                        미혼조건을 제시 또는 요구하는 경우
-                                        남녀고용평등과 일·가정 양립 지원에 관한
-                                        법률 위반에 따른
-                                        <span class="cb"
-                                            >500만원 이하의 벌금</span
-                                        >이 부과될 수 있습니다.
-                                    </div>
-                                </div>
-                                <div class="djCnTbl tleft MT25">
-                                    <table>
-                                        <colgroup>
-                                            <col width="150px" />
-                                            <col width="auto" />
-                                        </colgroup>
-                                        <tbody>
-                                            <tr>
-                                                <th>관련법령</th>
-                                                <td>
-                                                    <div class="jbInfos tp2">
-                                                        <div
-                                                            class="
-                                                                inf_tx
-                                                                noindent
-                                                            "
-                                                        >
-                                                            남녀고용평등과
-                                                            일·가정 양립 지원에
-                                                            관한 법률 제7조
-                                                            1항에 의거 근로자를
-                                                            모집하거나 채용 시
-                                                            합리적인 이유없이
-                                                            남녀를 차별할 수
-                                                            없음<br />
-                                                            <span class="cb"
-                                                                >&lt;차별 시
-                                                                500만원 이하
-                                                                벌금&gt;</span
-                                                            >
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>차별사례</th>
-                                                <td>
-                                                    <div class="jbInfos tp2">
-                                                        <div
-                                                            class="
-                                                                inf_tx
-                                                                noindent
-                                                            "
-                                                        >
-                                                            특정성을 지칭하는
-                                                            직종명 등 사용하는
-                                                            경우, 특정성 배제<br />
-                                                            <span class="cg"
-                                                                >- 남성 선반공,
-                                                                병역필 남, 여성
-                                                                비서, 미용사
-                                                                &lt;여성
-                                                                환영&gt;
-                                                                등</span
-                                                            >
-                                                        </div>
-                                                        <br />
-                                                        <div
-                                                            class="
-                                                                inf_tx
-                                                                noindent
-                                                            "
-                                                        >
-                                                            직종 등 남녀
-                                                            분리모집 등<br />
-                                                            <span class="cg"
-                                                                >- 관리·사무직
-                                                                남성 10명,
-                                                                판매직 여성
-                                                                5명</span
-                                                            >
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>차별로 보지않는 사례</th>
-                                                <td>
-                                                    <div class="jbInfos tp2">
-                                                        <div
-                                                            class="
-                                                                inf_tx
-                                                                noindent
-                                                            "
-                                                        >
-                                                            직무성질상 특정한
-                                                            성이 불가피한
-                                                            경우<br />
-                                                            <span class="cg"
-                                                                >- 남성역할 위한
-                                                                배우·모델
-                                                                등</span
-                                                            ><br />
-                                                            <span class="cg"
-                                                                >- 여성 목욕탕의
-                                                                여성 목욕관리사,
-                                                                여성 장애인·여성
-                                                                환자의 도우미
-                                                                등</span
-                                                            ><br />
-                                                            <span class="cg"
-                                                                >- 여성 기숙사의
-                                                                여성사감
-                                                                등</span
-                                                            ><br /><br />
-
-                                                            현존하는 차별
-                                                            없애거나 고용평등
-                                                            촉진위해 잠정적으로
-                                                            특정성 우대하는
-                                                            조치를 하는 경우
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="djFotAre">
-                                <div class="btwGrp">
-                                    <button
-                                        class="jbbtns md"
-                                        onclick="$(this).closest('.fnDialogJobPost').toggleClass('show');"
-                                    >
-                                        <span class="intxtsw"
-                                            >내용 확인하였습니다.</span
-                                        >
-                                    </button>
-                                    <button
-                                        class="diClse"
-                                        title="팝업닫기"
-                                    ></button>
-                                </div>
-                            </div>
+                                                    현존하는 차별 없애거나
+                                                    고용평등 촉진위해 잠정적으로
+                                                    특정성 우대하는 조치를 하는
+                                                    경우
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                    </div>
-                </div>
-                <!-- 팝업UI:E -->
-            </div>
-        </div>
+                    </Dialog>
+                </Col>
+            </Row>
+        </RowLayout>
         <!-- 성별제한:E -->
         <!-- 연령제한:S -->
-        <div class="jbLayoutLabs MT20">
-            <div class="jblabs smpadding">
-                <span class="ints">연령제한</span>
-            </div>
-            <div class="jbDivs">
-                <div class="row">
-                    <div class="col00">
-                        <div class="jbForm inline MR25">
-                            <label>
-                                <input
-                                    type="radio"
-                                    id=""
-                                    name="chk2"
-                                    value=""
-                                    checked
-                                />
-                                <span class="lb">연령무관</span>
-                            </label>
+        <RowLayout title="연령제한">
+            <Row class="FLEX ALIGN_ITEM_CENTER">
+                <Col class="col00 MT10" style="margin-right: auto">
+                    <RadioGroup>
+                        <Radio
+                            label="연령무관"
+                            name="limit_age_gubun"
+                            value="N"
+                            v-model="limitAgeGubun"
+                            checked
+                        />
+                        <Radio
+                            label="연령제한"
+                            name="limit_age_gubun"
+                            cssClass="ML20"
+                            value="Y"
+                            v-model="limitAgeGubun"
+                        />
+                    </RadioGroup>
+                </Col>
+                <Col class="col00" style="margin-left: auto">
+                    <div class="jbAntoTxts TXTR">
+                        <span class="lbwx">연령별금지 - </span>
+                        <button
+                            class="antx"
+                            @click="ediDialogVisible002 = true"
+                        >
+                            고용상 연령차별 금지에 관한 법률보기
+                        </button>
+                    </div>
+                    <Dialog
+                        title="연령차별금지 주요내용"
+                        :visible="ediDialogVisible002"
+                        @click:dialogVisibleToggle="ediDialogVisible002 = false"
+                        v-if="ediDialogVisible002"
+                    >
+                        <div class="jbInfos tp2 MT10">
+                            <div class="inf_tx noindent">
+                                채용공고에 합리적인 이유 없이 “○○세 이하“.
+                                “19○○년 이후 출생자”, “20○○년 졸업자”, “대학
+                                졸업 후 2년 이내”등 직·간적적인 연령제한을 할 수
+                                없게 되었습니다. 모집·채용에서
+                                <span class="cb">불합리한 연령 제한 시</span>
+                                고용상 연령차별 금지 및 고령자 고용촉진에 관한
+                                법률 위반에 따른
+                                <span class="cb">500만원 이하의 벌금</span>이
+                                부과될 수 있습니다.
+                            </div>
                         </div>
-                        <div class="jbForm inline MR25">
-                            <label>
-                                <input
-                                    type="radio"
-                                    id=""
-                                    name="chk2"
-                                    value=""
-                                />
-                                <span class="lb">연령제한</span>
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col00 FLOATR">
-                        <div class="jbAntoTxts TXTR">
-                            <span class="lbwx">연령별금지 - </span>
-                            <button
-                                class="antx fnDialogButton"
-                                data-params="dumm_dia002"
-                            >
-                                고용상 연령차별 금지에 관한 법률보기
-                            </button>
-                        </div>
-                    </div>
-                </div>
-                <div class="row MT20">
-                    <div class="col00">
-                        <div class="jbForm" style="width: 120px">
-                            <input
-                                type="number"
-                                name=""
-                                value=""
-                                id=""
-                                placeholder="숫자"
-                            />
-                        </div>
-                    </div>
-                    <div class="col00">
-                        <span class="jbStatText MT15">세 이상 ~</span>
-                    </div>
-                    <div class="col00">
-                        <div class="jbForm" style="width: 120px">
-                            <input
-                                type="number"
-                                name=""
-                                value=""
-                                id=""
-                                placeholder="숫자"
-                            />
-                        </div>
-                    </div>
-                    <div class="col00">
-                        <span class="jbStatText MT15">세 이하</span>
-                    </div>
-                </div>
+                        <div class="djCnTbl tleft MT25">
+                            <table>
+                                <colgroup>
+                                    <col width="150px" />
+                                    <col width="auto" />
+                                </colgroup>
+                                <tbody>
+                                    <tr>
+                                        <th>관련법령</th>
+                                        <td>
+                                            <div class="jbInfos tp2">
+                                                <div class="inf_tx noindent">
+                                                    고용상 연령차별 금지 및
+                                                    고령자 고용촉진에 관한
+                                                    법률<br />
+                                                    제4조의 4 제1항 제1호의 의거
+                                                    근로자를 모집하거나 채용 시
+                                                    합리적인 이유 없이 연령을
+                                                    이유로 차별할 수 없음<br />
+                                                    <span class="cb"
+                                                        >&lt;차별 시 500만원
+                                                        이하 벌금&gt;</span
+                                                    ><br />
+                                                    <span class="cb"
+                                                        >&lt;시정명령 불이행 시
+                                                        3천만원 이하의 과태료
+                                                        부과&gt;</span
+                                                    >
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>차별사례</th>
+                                        <td>
+                                            <div class="jbInfos tp2">
+                                                <div class="inf_tx noindent">
+                                                    원자의 나이를 제한하거나
+                                                    특정 연령층을 선호하는 경우
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th>차별로 보지않는 사례</th>
+                                        <td>
+                                            <div class="jbInfos tp2">
+                                                <div class="inf_tx noindent">
+                                                    직무 성질상 특정 연령기준이
+                                                    불가피한 경우
+                                                    (진정직업자격)<br />
+                                                    <span class="cg"
+                                                        >- 연극·영화에서 청년
+                                                        역할의 수행을 위한 연령
+                                                        제한 등</span
+                                                    ><br />
+                                                    <span class="cg"
+                                                        >- 여성 목욕탕의 여성
+                                                        목욕관리사,여성
+                                                        장애인·여성 환자의
+                                                        도우미 등</span
+                                                    ><br />
+                                                    <span class="cg"
+                                                        >- 여성 기숙사의
+                                                        여성사감 등</span
+                                                    ><br /><br />
 
-                <!-- 팝업UI:S -->
-                <div
-                    class="dialogJobPostArea fnDialogJobPost"
-                    data-params="dumm_dia002"
-                >
-                    <div class="dimm"></div>
-                    <div class="djGiContents">
-                        <div class="djGiInners">
-                            <div class="djHedAre">
-                                <div class="dintx">
-                                    <span class="inw lg"
-                                        >연령차별금지 주요내용</span
-                                    >
-                                </div>
-                            </div>
-                            <div class="djConAre">
-                                <div class="jbInfos tp2 MT10">
-                                    <div class="inf_tx noindent">
-                                        채용공고에 합리적인 이유 없이 “○○세
-                                        이하“. “19○○년 이후 출생자”, “20○○년
-                                        졸업자”, “대학 졸업 후 2년 이내”등
-                                        직·간적적인 연령제한을 할 수 없게
-                                        되었습니다. 모집·채용에서
-                                        <span class="cb"
-                                            >불합리한 연령 제한 시</span
-                                        >
-                                        고용상 연령차별 금지 및 고령자
-                                        고용촉진에 관한 법률 위반에 따른
-                                        <span class="cb"
-                                            >500만원 이하의 벌금</span
-                                        >이 부과될 수 있습니다.
-                                    </div>
-                                </div>
-                                <div class="djCnTbl tleft MT25">
-                                    <table>
-                                        <colgroup>
-                                            <col width="150px" />
-                                            <col width="auto" />
-                                        </colgroup>
-                                        <tbody>
-                                            <tr>
-                                                <th>관련법령</th>
-                                                <td>
-                                                    <div class="jbInfos tp2">
-                                                        <div
-                                                            class="
-                                                                inf_tx
-                                                                noindent
-                                                            "
-                                                        >
-                                                            고용상 연령차별 금지
-                                                            및 고령자 고용촉진에
-                                                            관한 법률<br />
-                                                            제4조의 4 제1항
-                                                            제1호의 의거
-                                                            근로자를 모집하거나
-                                                            채용 시 합리적인
-                                                            이유 없이 연령을
-                                                            이유로 차별할 수
-                                                            없음<br />
-                                                            <span class="cb"
-                                                                >&lt;차별 시
-                                                                500만원 이하
-                                                                벌금&gt;</span
-                                                            ><br />
-                                                            <span class="cb"
-                                                                >&lt;시정명령
-                                                                불이행 시
-                                                                3천만원 이하의
-                                                                과태료
-                                                                부과&gt;</span
-                                                            >
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>차별사례</th>
-                                                <td>
-                                                    <div class="jbInfos tp2">
-                                                        <div
-                                                            class="
-                                                                inf_tx
-                                                                noindent
-                                                            "
-                                                        >
-                                                            원자의 나이를
-                                                            제한하거나 특정
-                                                            연령층을 선호하는
-                                                            경우
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                                <th>차별로 보지않는 사례</th>
-                                                <td>
-                                                    <div class="jbInfos tp2">
-                                                        <div
-                                                            class="
-                                                                inf_tx
-                                                                noindent
-                                                            "
-                                                        >
-                                                            직무 성질상 특정
-                                                            연령기준이 불가피한
-                                                            경우
-                                                            (진정직업자격)<br />
-                                                            <span class="cg"
-                                                                >- 연극·영화에서
-                                                                청년 역할의
-                                                                수행을 위한 연령
-                                                                제한 등</span
-                                                            ><br />
-                                                            <span class="cg"
-                                                                >- 여성 목욕탕의
-                                                                여성
-                                                                목욕관리사,여성
-                                                                장애인·여성
-                                                                환자의 도우미
-                                                                등</span
-                                                            ><br />
-                                                            <span class="cg"
-                                                                >- 여성 기숙사의
-                                                                여성사감
-                                                                등</span
-                                                            ><br /><br />
-
-                                                            현존하는 차별을
-                                                            없애거나 고용평등
-                                                            촉진을 위해
-                                                            잠정적으로 특정성
-                                                            우대하는 조치를 하는
-                                                            경우 등
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                            <div class="djFotAre">
-                                <div class="btwGrp">
-                                    <button
-                                        class="jbbtns md"
-                                        onclick="$(this).closest('.fnDialogJobPost').toggleClass('show');"
-                                    >
-                                        <span class="intxtsw"
-                                            >내용 확인하였습니다.</span
-                                        >
-                                    </button>
-                                    <button
-                                        class="diClse"
-                                        title="팝업닫기"
-                                    ></button>
-                                </div>
-                            </div>
+                                                    현존하는 차별을 없애거나
+                                                    고용평등 촉진을 위해
+                                                    잠정적으로 특정성 우대하는
+                                                    조치를 하는 경우 등
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
                         </div>
-                    </div>
-                </div>
-                <!-- 팝업UI:E -->
-            </div>
-        </div>
+                    </Dialog>
+                </Col>
+            </Row>
+            <Row class="MT15" v-if="limitAgeGubun == 'Y'">
+                <Col class="col00">
+                    <Input type="number" placeholder="숫자" />
+                </Col>
+                <Col class="col00">
+                    <span class="jbStatText MT15">세 이상 ~</span>
+                </Col>
+                <Col class="col00">
+                    <Input type="number" placeholder="숫자" />
+                </Col>
+                <Col class="col00">
+                    <span class="jbStatText MT15">세 이하</span>
+                </Col>
+            </Row>
+        </RowLayout>
         <!-- 연령제한:E -->
     </div>
     <!-- 지원자격:E -->
@@ -720,6 +551,9 @@ import UiSelectedBoxFavorite from "@/components/UiComponents/UiSelectedBoxFavori
 import UiSelectedBoxDialog from "@/components/UiComponents/UiSelectedBoxDialog";
 import SearchBar from "@/components/UiComponents/SearchBar";
 import SearchBarListItems from "@/components/UiComponents/SearchBarListItems";
+import RadioGroup from "@/components/Form/RadioGroup";
+import Radio from "@/components/Form/Radio";
+import Dialog from "@/components/Dialog/Dialog";
 import mixin from "@/mixin";
 export default {
     mixins: [mixin],
@@ -761,6 +595,12 @@ export default {
             woodaeUniSelected: [],
             isWoodaeUniDialogVisible: false,
             limitWoodaeUniSelectedLength: 6,
+
+            //성차별법금지
+            ediDialogVisible001: false,
+            ediDialogVisible002: false,
+            limitAgeGubun: "N",
+            jenderGubun: "99",
 
             //테스트
             keywordData: undefined,
@@ -879,6 +719,9 @@ export default {
         UiSelectedBoxDialog,
         SearchBar,
         SearchBarListItems,
+        RadioGroup,
+        Radio,
+        Dialog,
     },
 };
 </script>

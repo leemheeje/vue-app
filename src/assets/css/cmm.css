@@ -301,4 +301,5 @@
 .HIDDEN{position: absolute; left: -999em; top: -999em; width: 0; height: 0; overflow: hidden; visibility: hidden; position: absolute;}
 .FLEX{display: flex;}
 .ALIGN_ITEM_CENTER{align-items: center;}
+.JUSTIFY_ITEM_CENTER{justify-items: center;}
 .NOWRAP{white-space: nowrap;}

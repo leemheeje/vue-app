@@ -1,13 +1,13 @@
 <template>
-    <div :class="`jbLayoutLabs ${required && 'required'}`">
+    <div :class="`jbLayoutLabs ${required ? 'required' : ''}`">
         <div class="jblabs">
             <span class="ints">
-				{{ title }}
-				<small class="sm" v-if="subtitle">{{subtitle}}</small>
-			</span>
+                {{ title }}
+                <small class="sm" v-if="subtitle">{{ subtitle }}</small>
+            </span>
         </div>
         <div class="jbDivs">
-			<slot />
+            <slot />
         </div>
     </div>
 </template>
@@ -16,7 +16,7 @@
 export default {
     props: {
         title: String,
-		subtitle: String,
+        subtitle: String,
         required: Boolean,
     },
 };
