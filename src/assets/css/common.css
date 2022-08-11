@@ -203,8 +203,8 @@ body:not(#companyWrap) .header.userCompanyHeader:not(.headerFixed){position: sta
 .jbPstGlbaArea .jbAddMinArea .amSectBtnAre{float: left; padding-left: 10px; margin-top: 4px;}
 .jbPstGlbaArea .jbAddMinArea .amSectBtnAre .ansbtn{background: transparent no-repeat center center; border: 1px solid #cbd1db; border-radius: 2px; font-size: 0; height: 46px; width: 46px; display: inline-block; vertical-align: middle;}
 .jbPstGlbaArea .jbAddMinArea .amSectBtnAre .ansbtn+.ansbtn{margin-left: 2px;}
-.jbPstGlbaArea .jbAddMinArea .amSectBtnAre .ansbtn.mn{background-image: ;}
-.jbPstGlbaArea .jbAddMinArea .amSectBtnAre .ansbtn.ad{background-image: ;}
+.jbPstGlbaArea .jbAddMinArea .amSectBtnAre .ansbtn.mn{background-image: url(../images/ansbtn_mn.png);}
+.jbPstGlbaArea .jbAddMinArea .amSectBtnAre .ansbtn.ad{background-image: url(../images/ansbtn_ad.png);}
 .jbPstGlbaArea .jbAddMinArea .amSectAntAre{clear: both; display: block; margin-top: 5px; float: left; width: 100%;}
 .jbPstGlbaArea .jbAddMinArea .amSectListsArea{}
 .jbPstGlbaArea .jbAddMinArea .amSectListsArea+.amSectListsArea{margin-top: 5px;}
@@ -250,7 +250,8 @@ body:not(#companyWrap) .header.userCompanyHeader:not(.headerFixed){position: sta
 .jbPstGlbaArea .jbForm input[type="email"]:read-only,
 .jbPstGlbaArea .jbForm input[type="password"]:read-only,
 .jbPstGlbaArea .jbForm input[type="number"]:read-only,
-.jbPstGlbaArea .jbForm .textarea:read-only{background-color: #f1f3f5;}
+.jbPstGlbaArea .jbForm select:disabled,
+.jbPstGlbaArea .jbForm .textarea:read-only{background-color: #f1f3f5; cursor: not-allowed;}
 .jbPstGlbaArea .jbForm select{padding-right: 30px; background-position-x: calc(100% - 15px)}
 .jbPstGlbaArea .jbForm .textarea{text-indent: 0; padding: 15px 20px; min-height: 200px; resize: vertical; overflow-y: auto;}
 .jbPstGlbaArea .jbForm .customSelectWrap{background-color: #fff;}

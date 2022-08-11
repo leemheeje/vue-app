@@ -5,9 +5,8 @@
                 type="radio"
                 id=""
                 name=""
-                value=""
-                v-model="vModel"
-                @input="$emit('update:modelValue', $event)"
+                :value="modelValue"
+                @input="$emit('update:modelValue', $event.target.value)"
                 v-bind="$attrs"
             />
             <span class="lb">{{ label }}</span>
@@ -20,7 +19,7 @@ export default {
     inheritAttrs: false,
     props: {
         label: "",
-        vModel: {},
+        modelValue: {},
         cssClass: {
             type: String,
             default: "",

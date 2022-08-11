@@ -7,7 +7,7 @@
                     :id="id"
                     :name="name"
                     :value="modelValue"
-                    @input="$emit('update:modelValue', $event)"
+                    @input="$emit('update:modelValue', $event.target.value)"
                     v-bind="$attrs"
                 />
                 <span class="lb">+<slot /></span>
@@ -22,7 +22,7 @@
                     :id="id"
                     :name="name"
                     :value="modelValue"
-                    @input="$emit('update:modelValue', $event)"
+                    @input="$emit('update:modelValue', $event.target.value)"
                     v-bind="$attrs"
                 />
                 <span class="lb"><slot /></span>

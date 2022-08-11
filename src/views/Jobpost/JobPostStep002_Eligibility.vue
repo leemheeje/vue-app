@@ -8,8 +8,8 @@
         <RowLayout title="학력">
             <Row class="FLEX">
                 <Col class="col35">
-                    <Select>
-                        <option value="0" selected="">학력무관</option>
+                    <Select v-model="hckGubun">
+                        <option value="0">학력무관</option>
                         <option value="6">고등학교 미만 졸업</option>
                         <option value="1">고등학교 졸업</option>
                         <option value="2">대학(2,3)년 졸업</option>
@@ -559,6 +559,9 @@ export default {
     mixins: [mixin],
     data() {
         return {
+            //학력
+            hckGubun: 0,
+            //외국어
             langage: undefined,
             langageSelected: [
                 {

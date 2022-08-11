@@ -1,15 +1,16 @@
 <template>
-    <div class="jbForm">
+    <div :class="`jbForm ${isInlabel}`">
         <input
             :type="type || 'text'"
             :id="id"
             :class="cssClass"
-            :placeholder="placeholder || '입력해주세요'"
+            :placeholder="placeholder"
             :name="name"
             :value="modelValue"
-            @input="$emit('update:modelValue', $event)"
+            @input="$emit('update:modelValue', $event.target.value)"
             v-bind="$attrs"
         />
+        <slot name="inl" />
     </div>
 </template>
 
@@ -17,6 +18,12 @@
 //model-value="inint value" , @update:model-value="test" attrs 넘겨받기(v-model 등 기타 내장객체 사용목적)
 export default {
     props: ["modelValue", "type", "placeholder", "name", "id", "cssClass"],
+    computed: {
+        isInlabel() {
+            return this.$slots.inl ? "inlabel" : "";
+        },
+    },
     inheritAttrs: false,
+    created() {},
 };
 </script>
