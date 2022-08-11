@@ -104,7 +104,7 @@
                     </RowLayout>
                     <!-- 근무부서:E -->
                     <!-- 직급/직책:S -->
-                    <RowLayout title="직급/직책" class="MT20">
+                    <RowLayout title="직급/직책" :subtitle="`(${jcjgSelected.length}/3)`" class="MT20">
                         <UiSelectedBox
                             title="직급/직책"
                             :selected="jcjgSelected"
@@ -202,7 +202,7 @@
                     </RowLayout>
                     <!-- 직급/직책:E -->
                     <!-- 우대조건:S -->
-                    <RowLayout title="우대조건" class="MT20 MB40">
+                    <RowLayout title="우대조건" :subtitle="`(${woodaeSelected.length}/6)`" class="MT20 MB40">
                         <UiSelectedBox
                             title="우대조건"
                             :selected="woodaeSelected"
