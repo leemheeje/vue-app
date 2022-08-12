@@ -514,7 +514,7 @@ export default {
             this[seleted] = this[seleted].filter((object) => object.code !== code);
         },
         fnKeyword(e) {
-            let keyword = e.target.value;
+            let keyword = e;
             this.keywordData = this.license.data.filter(({ name }, index) => name.indexOf(keyword) != -1);
             this.keyword = keyword;
         },

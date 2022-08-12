@@ -104,12 +104,7 @@ export default {
         },
         selectedLists: {
             type: Object,
-            default: () => [
-                {
-                    code: "WD005012",
-                    name: "아랍어가능자",
-                },
-            ],
+            default: () => [],
         },
         isDialogHeader: {
             type: Boolean,

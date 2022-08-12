@@ -1,7 +1,7 @@
 <template>
-    <div class="jbAutoSearchArea">
+    <div :class="`jbAutoSearchArea ${cssClass}`">
         <div class="inpArea">
-            <input type="text" :value="modelValue" id="" name="" placeholder="자격증명을 입력하세요." @input="$emit('update:modelValue', $event)" v-bind="$attrs" />
+            <input type="text" :value="modelValue" id="" name="" :placeholder="placeholder" @input="$emit('update:modelValue', $event.target.value)" v-bind="$attrs" />
         </div>
         <div class="resArea" v-if="modelValue">
             <div class="reSinner">
@@ -20,12 +20,15 @@
 
 <script>
 export default {
+    inheritAttrs: false,
     props: {
+        placeholder: {
+            default: "자격증명을 입력하세요.",
+        },
         modelValue: "",
+        cssClass: "",
     },
-    created() {
-        console.log(this.$slots);
-    },
+    created() {},
 };
 </script>
 

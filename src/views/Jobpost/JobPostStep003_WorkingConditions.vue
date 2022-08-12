@@ -291,7 +291,41 @@
         </div>
         <!-- 근무지 주소:E -->
         <!-- 근무지역:S -->
-        <RowLayout title="근무지역" required class="MT20"> </RowLayout>
+        <RowLayout title="근무지역" required class="MT20">
+            <UiSelectedBox
+                title="근무지역"
+                :selected="workAdressSelected"
+                @click:afRightButtonBind="isWorkAdressDialogVisible = true"
+                @update:selectBindDelete="(e) => workAdressSelectedDelete(e.target.value)"
+            />
+            <UiSelectedBoxDialog
+                title="근무지역"
+                subtitle="최대 6개까지 선택 가능"
+                :selectLists="workAdressList"
+                :selectedLists="workAdressSelected"
+                :visible="isWorkAdressDialogVisible"
+                :isDialogHeader="true"
+                @click:dialogVisibleToggle="isWorkAdressDialogVisible = false"
+                @update:selectedbind="workAdressbind"
+                @update:selecteddelete="(e) => workAdressSelectedDelete(e.target.value)"
+                @click:selectedInitializeButton="workAdressSelected = []"
+                v-if="workAdressList"
+            >
+                <template v-slot:dialogHeader>
+                    <SearchBar v-model="workAdressSearchBarModel" cssClass="MB10" placeholder="지역명을 입력하세요.">
+                        <template v-slot:list>
+                            <SearchBarListItems
+                                v-for="(item, index) in workAdressSearchBarList"
+                                :key="index"
+                                :keyword="workAdressSearchBarModel"
+                                :code="item.code"
+                                :name="item.name"
+                            />
+                        </template>
+                    </SearchBar>
+                </template>
+            </UiSelectedBoxDialog>
+        </RowLayout>
         <!-- 근무지역:E -->
         <!-- 인근지하철:S -->
         <RowLayout title="인근지하철" class="MT20"> </RowLayout>
@@ -370,8 +404,24 @@
                     </Row>
                 </template>
                 <template v-slot:AddToggleBoxButtonArea>
-                    <Checkbox size="lg" cssClass="ML10" :checked="item.work_flexible">탄력근무제 가능</Checkbox>
-                    <Checkbox size="lg" cssClass="ML10" :checked="item.etc_ischecked">기타사항입력</Checkbox>
+                    <Checkbox
+                        size="lg"
+                        cssClass="ML10"
+                        :value="item.sq_code"
+                        @change="(e) => (e.target.checked ? (item.work_flexible = true) : (item.work_flexible = false))"
+                        :checked="item.work_flexible"
+                        v-if="item.hasOwnProperty('etc_ischecked')"
+                        >탄력근무제 가능</Checkbox
+                    >
+                    <Checkbox
+                        size="lg"
+                        cssClass="ML10"
+                        :value="item.sq_code"
+                        @change="(e) => (e.target.checked ? (item.etc_ischecked = true) : (item.etc_ischecked = false))"
+                        :checked="item.etc_ischecked"
+                        v-if="item.hasOwnProperty('etc_ischecked')"
+                        >기타사항입력</Checkbox
+                    >
                 </template>
                 <template v-slot:AddToggleBoxAntArea v-if="item.etc_ischecked">
                     <Input placeholder="기타사항을 입력해 주세요" v-model="item.etc_input" />
@@ -655,21 +705,76 @@ export default {
                     start_minu: 0,
                     end_hour: 9,
                     end_minu: 0,
-                    etc_ischecked: false,
-                    etc_input: "",
-                    work_flexible: false,
                 },
             ],
+            //근무지역
+            workAdressList: undefined, //axios
+            workAdressSelected: [
+                {
+                    code: "AR020051",
+                    name: "콩고민주공화국",
+                },
+                {
+                    code: "AR020052",
+                    name: "탄자니아",
+                },
+            ],
+            isWorkAdressDialogVisible: false,
+            limitWorkAdresselectedLength: 6,
+            workAdressSearchBarModel: "",
         };
     },
     computed: {
+        workAdressSearchBarList() {
+            let _d = this.workAdressList.map((item) => item.data).reduce((p, c) => [...p, ...c]);
+            return _d.filter((item) => item.name.indexOf(this.workAdressSearchBarModel) != -1);
+        },
         workGubunFilterAddForm() {
             return this.workGubunCheckbox.filter(({ add_form, ...props }) => add_form);
         },
     },
-    created() {},
+    async created() {
+        await this.$http.get(`${this.API_PATH_STATIC}/area.json`).then(({ data }) => {
+            this.workAdressList = data;
+        });
+    },
     mounted() {},
     methods: {
+        workAdressbind(e) {
+            this.lcFnBind(e, {
+                seleted: "workAdressSelected",
+                selectedLengh: "limitWorkAdresselectedLength",
+                alertMsg: `근무지역은 ${this.limitWorkAdresselectedLength}개 까지 선택가능합니다.`,
+            });
+        },
+        workAdressSelectedDelete(code) {
+            this.lcFnSelectedDelete({ code, seleted: "workAdressSelected" });
+        },
+        lcFnBind(e, { seleted, selectedLengh, ...props }) {
+            let __chkBind = this.__fnSelectBoxCheckBind(e);
+            let __limit = this.__fnIsLimitSelectBoxCheck(this[seleted], this[selectedLengh]);
+            if (e.target.checked) {
+                if (!__limit) {
+                    __chkBind.isChecked((e, { code, name }) => {
+                        this[seleted] = [
+                            ...this[seleted],
+                            {
+                                code,
+                                name,
+                            },
+                        ];
+                    });
+                } else {
+                    e.target.checked = false;
+                    alert(props.alertMsg);
+                }
+            } else {
+                __chkBind.unChecked((e, { code, name }) => (this[seleted] = this[seleted].filter((object) => object.code !== code)));
+            }
+        },
+        lcFnSelectedDelete({ code, seleted, ...props }) {
+            this[seleted] = this[seleted].filter((object) => object.code !== code);
+        },
         fnWorkGubunChecked(e) {
             let value = e.target.value ? JSON.parse(e.target.value) : {};
             if (e.target.checked) {
@@ -699,9 +804,6 @@ export default {
         },
         workTimeMinEvent(code) {
             this.workTimeToggleArray = this.workTimeToggleArray.filter((item, index) => item.sq_code != code);
-        },
-        asdfasdfasdf(e) {
-            console.log(e);
         },
     },
     components: {
