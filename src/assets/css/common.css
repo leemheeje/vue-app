@@ -207,7 +207,7 @@ body:not(#companyWrap) .header.userCompanyHeader:not(.headerFixed){position: sta
 .jbPstGlbaArea .jbAddMinArea .amSectBtnAre .ansbtn.ad{background-image: url(../images/ansbtn_ad.png);}
 .jbPstGlbaArea .jbAddMinArea .amSectAntAre{clear: both; display: block; margin-top: 5px; float: left; width: 100%;}
 .jbPstGlbaArea .jbAddMinArea .amSectListsArea{}
-.jbPstGlbaArea .jbAddMinArea .amSectListsArea+.amSectListsArea{margin-top: 5px;}
+.jbPstGlbaArea .jbAddMinArea+.jbAddMinArea{margin-top: 5px;}
 .jbPstGlbaArea .jbAddMinArea .amSectListsArea:after{content: ''; clear: both; display: table;}
 .jbPstGlbaArea .jbLabeGroups{}
 .jbPstGlbaArea .jbLabeGroups:after{content: ''; display: table; clear: both;}
