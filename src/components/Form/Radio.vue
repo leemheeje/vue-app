@@ -1,14 +1,7 @@
 <template>
     <div :class="`jbForm ${cssClass}`">
         <label>
-            <input
-                type="radio"
-                id=""
-                name=""
-                :value="modelValue"
-                @input="$emit('update:modelValue', $event.target.value)"
-                v-bind="$attrs"
-            />
+            <input type="radio" id="" name="" :value="modelValue" @input="$emit('update:modelValue', $event.target.value)" v-bind="$attrs" />
             <span class="lb">{{ label }}</span>
         </label>
     </div>

@@ -1,6 +1,6 @@
 <template>
     <div class="tmNulIns">
-        <slot/>
+        <slot />
     </div>
 </template>
 

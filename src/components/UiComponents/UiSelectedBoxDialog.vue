@@ -1,12 +1,5 @@
 <template>
-    <Dialog
-        :title="title"
-        :subtitle="subtitle"
-        :visible="visible"
-        @click:dialogVisibleToggle="
-            (bool) => $emit('click:dialogVisibleToggle', bool)
-        "
-    >
+    <Dialog :title="title" :subtitle="subtitle" :visible="visible" @click:dialogVisibleToggle="(bool) => $emit('click:dialogVisibleToggle', bool)">
         <!-- 레이어팝선택UI:S -->
         <div class="jbChkLavwArea">
             <template v-if="isDialogHeader">
@@ -17,15 +10,8 @@
                     <div class="jbcInConte">
                         <div class="ltsLst">
                             <!-- foreach:S -->
-                            <div
-                                class="tpw"
-                                v-for="({ name }, index) in selectLists"
-                                :key="index"
-                            >
-                                <button
-                                    type="button"
-                                    :class="`dic_bt ${index === 0 && 'active'}`"
-                                >
+                            <div class="tpw" v-for="({ name }, index) in selectLists" :key="index">
+                                <button type="button" :class="`dic_bt ${index === 0 && 'active'}`">
                                     <!-- 활성화:active -->
                                     <span class="d_intx">{{ name }}</span>
                                 </button>
@@ -36,31 +22,17 @@
                 </div>
                 <div class="jbcColRt">
                     <div class="jbcInConte bordernone">
-                        <template
-                            v-for="(item, index) in selectLists"
-                            :key="index"
-                        >
+                        <template v-for="(item, index) in selectLists" :key="index">
                             <div class="ltsTits">ㆍ{{ item.name }}</div>
                             <div class="ltsLst">
                                 <!-- foreach:S -->
-                                <div
-                                    class="tpw"
-                                    v-for="(_item, i) in item.data"
-                                    :key="i"
-                                >
+                                <div class="tpw" v-for="(_item, i) in item.data" :key="i">
                                     <Checkbox
                                         id=""
                                         :name="_item.name"
                                         :model-value="_item.code"
-                                        :checked="
-                                            selectedLists.find(
-                                                ({ code }) =>
-                                                    code === _item.code
-                                            )
-                                        "
-                                        @change="
-                                            $emit('update:selectedbind', $event)
-                                        "
+                                        :checked="selectedLists.find(({ code }) => code === _item.code)"
+                                        @change="$emit('update:selectedbind', $event)"
                                         >{{ _item.name }}</Checkbox
                                     >
                                 </div>
@@ -74,43 +46,20 @@
                 <div class="jbresInner">
                     <div class="rexwConte">
                         <!-- 선택된영역이있을때:S -->
-                        <div
-                            class="fbOriStvsArea"
-                            v-if="Object.keys(vSelectedLists).length"
-                        >
+                        <div class="fbOriStvsArea" v-if="Object.keys(vSelectedLists).length">
                             <!-- foreach:S -->
-                            <template
-                                v-for="(
-                                    { code, name }, index
-                                ) in vSelectedLists"
-                                :key="index"
-                            >
-                                <Selected
-                                    :model-value="code"
-                                    :name="name"
-                                    @click="
-                                        $emit('update:selecteddelete', $event)
-                                    "
-                                    >{{ name }}</Selected
-                                >
+                            <template v-for="({ code, name }, index) in vSelectedLists" :key="index">
+                                <Selected :model-value="code" :name="name" @click="$emit('update:selecteddelete', $event)">{{ name }}</Selected>
                             </template>
                             <!-- foreach:E -->
                         </div>
                         <!-- 선택된영역이있을때:E -->
                         <!-- 선택된영역이없을때:S -->
-                        <Nullmsg v-else>{{
-                            `선택한 항목이 없습니다.`
-                        }}</Nullmsg>
+                        <Nullmsg v-else>{{ `선택한 항목이 없습니다.` }}</Nullmsg>
                         <!-- 선택된영역이없을때:E -->
                     </div>
                     <div class="rexwBte">
-                        <button
-                            type="button"
-                            class="jbbtns sm gray"
-                            @click="
-                                $emit('click:selectedInitializeButton', $event)
-                            "
-                        >
+                        <button type="button" class="jbbtns sm gray" @click="$emit('click:selectedInitializeButton', $event)">
                             <span class="intxtsw">초기화</span>
                         </button>
                     </div>

@@ -578,10 +578,9 @@
             <AddToggleBox
                 @click:AddToggleBox="workTimeAddEvent"
                 @click:MinToggleBox="workTimeMinEvent"
-                :toggleArray="workTimeToggleArray"
             >
                 <template v-slot:AddToggleBoxDivision>
-                    <Input v-model="asdfasdasf"  />
+                    <Input />
                 </template>
                 <template v-slot:AddToggleBoxButtonArea>
                     <Radio name="adf" value="true" v-model="enenen">ched</Radio>
@@ -592,8 +591,7 @@
                 </template>
             </AddToggleBox>
         </RowLayout>
-		{{asdfasdasf}}
-		{{enenen}}
+        {{ enenen }}
         <div class="jbLayoutLabs MT20">
             <div class="jblabs"><span class="ints">근무시간</span></div>
             <div class="jbDivs">
@@ -954,9 +952,16 @@ export default {
             workDayGubun: 1,
             workDayCheckCustom: false,
             //근무시간
-            workTimeToggleArray: [{}],
-			asdfasdasf:'임희재',
-			enenen:false
+            workTimeToggleArray: [
+                {
+                    vModel: "enx1",
+                },
+                {
+                    vModel: "enx2",
+                },
+            ],
+            asdfasdasf: "임희재",
+            enenen: false,
         };
     },
     computed: {
@@ -984,7 +989,9 @@ export default {
             this.workTimeToggleArray.push({});
         },
         workTimeMinEvent(e) {
-            this.workTimeToggleArray = this.workTimeToggleArray.filter((item,index)=>index != e.target.value);
+            this.workTimeToggleArray = this.workTimeToggleArray.filter(
+                (item, index) => index != e.target.value
+            );
         },
     },
     components: {

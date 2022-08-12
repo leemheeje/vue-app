@@ -12,12 +12,8 @@
                                 <!-- 이전공고 불러오기 selectbox:E -->
                                 <!-- 버튼그룹:S -->
                                 <div class="btnwWrap">
-                                    <button class="htd_btn outline">
-                                        미리보기
-                                    </button>
-                                    <button class="htd_btn org">
-                                        저장하기
-                                    </button>
+                                    <button class="htd_btn outline">미리보기</button>
+                                    <button class="htd_btn org">저장하기</button>
                                 </div>
                                 <!-- 버튼그룹:E -->
                             </div>
@@ -33,9 +29,7 @@
                                         <button class="inbt">모집분야1</button>
                                         <button class="inbt">모집분야2</button>
                                         <!-- foreach:E -->
-                                        <span class="tlbw"
-                                            >이 등록되지 않았습니다.</span
-                                        >
+                                        <span class="tlbw">이 등록되지 않았습니다.</span>
                                     </div>
                                 </div>
                             </div>

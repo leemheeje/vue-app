@@ -47,7 +47,7 @@ export default {
     created() {},
     methods: {
         visibleToggle() {
-            this.$emit('click:visibleToggle');
+            this.$emit("click:visibleToggle");
         },
     },
 };

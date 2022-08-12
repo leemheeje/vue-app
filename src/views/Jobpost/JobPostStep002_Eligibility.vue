@@ -28,11 +28,7 @@
         </RowLayout>
         <!-- 학력:E -->
         <!-- 외국어:S -->
-        <RowLayout
-            title="외국어"
-            :subtitle="`(${langageSelected.length}/6)`"
-            class="MT30"
-        >
+        <RowLayout title="외국어" :subtitle="`(${langageSelected.length}/6)`" class="MT30">
             <UiSelectedBox
                 title="외국어"
                 :selected="langageSelected"
@@ -57,19 +53,12 @@
                 <template v-slot:UiSelectedBox-favorite>
                     <UiSelectedBoxFavorite title="외국어">
                         <template v-slot:slot-favorite>
-                            <template
-                                v-for="(item, index) in langageFavorite"
-                                :key="index"
-                            >
+                            <template v-for="(item, index) in langageFavorite" :key="index">
                                 <Checkbox
                                     :addSelectButton="true"
                                     :name="item.name"
                                     :model-value="item.code"
-                                    :checked="
-                                        langageSelected.find(
-                                            ({ code }) => code === item.code
-                                        )
-                                    "
+                                    :checked="langageSelected.find(({ code }) => code === item.code)"
                                     @change="lanagebind"
                                     >{{ item.name }}</Checkbox
                                 >
@@ -86,9 +75,7 @@
                     :selectedLists="langageSelected"
                     :visible="isLangageDialogVisible"
                     @click:selectedInitializeButton="langageSelected = []"
-                    @click:dialogVisibleToggle="
-                        (isVisible) => (isLangageDialogVisible = isVisible)
-                    "
+                    @click:dialogVisibleToggle="(isVisible) => (isLangageDialogVisible = isVisible)"
                     @update:selectedbind="lanagebind"
                     @update:selecteddelete="
                         (e) =>
@@ -102,11 +89,7 @@
         </RowLayout>
         <!-- 외국어:E -->
         <!-- 자격증:S -->
-        <RowLayout
-            title="자격증"
-            :subtitle="`(${licenseSelected.length}/3)`"
-            class="MT30"
-        >
+        <RowLayout title="자격증" :subtitle="`(${licenseSelected.length}/3)`" class="MT30">
             <UiSelectedBox
                 title="자격증"
                 :selected="licenseSelected"
@@ -122,19 +105,12 @@
                 <template v-slot:UiSelectedBox-favorite>
                     <UiSelectedBoxFavorite title="자격증">
                         <template v-slot:slot-favorite>
-                            <template
-                                v-for="(item, index) in licenseFavorite"
-                                :key="index"
-                            >
+                            <template v-for="(item, index) in licenseFavorite" :key="index">
                                 <Checkbox
                                     :addSelectButton="true"
                                     :name="item.name"
                                     :model-value="item.code"
-                                    :checked="
-                                        licenseSelected.find(
-                                            ({ code }) => code === item.code
-                                        )
-                                    "
+                                    :checked="licenseSelected.find(({ code }) => code === item.code)"
                                     @change="licensebind"
                                     >{{ item.name }}</Checkbox
                                 >
@@ -153,9 +129,7 @@
                     :isDialogHeader="true"
                     :isDialogContent="false"
                     @click:selectedInitializeButton="licenseSelected = []"
-                    @click:dialogVisibleToggle="
-                        (isVisible) => (isLicenseDialogVisible = isVisible)
-                    "
+                    @click:dialogVisibleToggle="(isVisible) => (isLicenseDialogVisible = isVisible)"
                     @update:selectedbind="licensebind"
                     @update:selecteddelete="
                         (e) =>
@@ -166,23 +140,10 @@
                     "
                 >
                     <template v-slot:dialogHeader>
-                        <SearchBar
-                            placeholder="자격증명을 입력하세요."
-                            :modelValue="keyword"
-                            @update:modelValue="fnKeyword"
-                        >
+                        <SearchBar placeholder="자격증명을 입력하세요." :modelValue="keyword" @update:modelValue="fnKeyword">
                             <template v-slot:list>
-                                <template
-                                    v-for="(item, index) in keywordData"
-                                    :key="index"
-                                >
-                                    <SearchBarListItems
-                                        :id="`chk_${item.code}_${index}`"
-                                        :name="item.name"
-                                        :keyword="keyword"
-                                        :code="item.code"
-                                        @change="licensebind"
-                                    />
+                                <template v-for="(item, index) in keywordData" :key="index">
+                                    <SearchBarListItems :id="`chk_${item.code}_${index}`" :name="item.name" :keyword="keyword" :code="item.code" @change="licensebind" />
                                 </template>
                             </template>
                         </SearchBar>
@@ -208,19 +169,12 @@
                 <template v-slot:UiSelectedBox-favorite>
                     <UiSelectedBoxFavorite>
                         <template v-slot:slot-favorite>
-                            <template
-                                v-for="(item, index) in woodaeUniFavorite"
-                                :key="index"
-                            >
+                            <template v-for="(item, index) in woodaeUniFavorite" :key="index">
                                 <Checkbox
                                     :addSelectButton="true"
                                     :name="item.name"
                                     :value="item.code"
-                                    :checked="
-                                        woodaeUniSelected.find(
-                                            ({ code }) => item.code === code
-                                        )
-                                    "
+                                    :checked="woodaeUniSelected.find(({ code }) => item.code === code)"
                                     @change="woodaeUnibind"
                                     >{{ item.name }}</Checkbox
                                 >
@@ -247,54 +201,22 @@
             <Row class="FLEX ALIGN_ITEM_CENTER JUSTIFY_ITEM_CENTER">
                 <Col class="col00 MT10" style="margin-right: auto">
                     <RadioGroup>
-                        <Radio
-                            v-model="jenderGubun"
-                            name="jender_gubun"
-                            label="성별무관"
-                            value="99"
-                            checked
-                        />
-                        <Radio
-                            v-model="jenderGubun"
-                            name="jender_gubun"
-                            label="남자"
-                            cssClass="ML20"
-                            value="man"
-                        />
-                        <Radio
-                            v-model="jenderGubun"
-                            name="jender_gubun"
-                            label="여자"
-                            cssClass="ML20"
-                            value="woman"
-                        />
+                        <Radio v-model="jenderGubun" name="jender_gubun" label="성별무관" value="99" checked />
+                        <Radio v-model="jenderGubun" name="jender_gubun" label="남자" cssClass="ML20" value="man" />
+                        <Radio v-model="jenderGubun" name="jender_gubun" label="여자" cssClass="ML20" value="woman" />
                     </RadioGroup>
                 </Col>
                 <Col class="col00" style="margin-left: auto">
                     <div class="jbAntoTxts TXTR">
                         <span class="lbwx">성차별금지 - </span>
-                        <button
-                            class="antx"
-                            @click="ediDialogVisible001 = true"
-                        >
-                            남녀고용평등에 관한 법률보기
-                        </button>
+                        <button class="antx" @click="ediDialogVisible001 = true">남녀고용평등에 관한 법률보기</button>
                     </div>
-                    <Dialog
-                        title="성차별법금지 주요내용"
-                        :visible="ediDialogVisible001"
-                        @click:dialogVisibleToggle="ediDialogVisible001 = false"
-                        v-if="ediDialogVisible001"
-                    >
+                    <Dialog title="성차별법금지 주요내용" :visible="ediDialogVisible001" @click:dialogVisibleToggle="ediDialogVisible001 = false" v-if="ediDialogVisible001">
                         <div class="jbInfos tp2 MT10">
                             <div class="inf_tx noindent">
-                                모집.채용에서 남녀를 차별하거나, 여성근로자를
-                                채용할 때 직무 수행이 불필요한 용모, 키,
-                                체중등의 신체조건, 미혼조건을 제시 또는 요구하는
-                                경우 남녀고용평등과 일·가정 양립 지원에 관한
-                                법률 위반에 따른
-                                <span class="cb">500만원 이하의 벌금</span>이
-                                부과될 수 있습니다.
+                                모집.채용에서 남녀를 차별하거나, 여성근로자를 채용할 때 직무 수행이 불필요한 용모, 키, 체중등의 신체조건, 미혼조건을 제시 또는 요구하는 경우
+                                남녀고용평등과 일·가정 양립 지원에 관한 법률 위반에 따른
+                                <span class="cb">500만원 이하의 벌금</span>이 부과될 수 있습니다.
                             </div>
                         </div>
                         <div class="djCnTbl tleft MT25">
@@ -309,15 +231,9 @@
                                         <td>
                                             <div class="jbInfos tp2">
                                                 <div class="inf_tx noindent">
-                                                    남녀고용평등과 일·가정 양립
-                                                    지원에 관한 법률 제7조 1항에
-                                                    의거 근로자를 모집하거나
-                                                    채용 시 합리적인 이유없이
-                                                    남녀를 차별할 수 없음<br />
-                                                    <span class="cb"
-                                                        >&lt;차별 시 500만원
-                                                        이하 벌금&gt;</span
-                                                    >
+                                                    남녀고용평등과 일·가정 양립 지원에 관한 법률 제7조 1항에 의거 근로자를 모집하거나 채용 시 합리적인 이유없이 남녀를 차별할 수
+                                                    없음<br />
+                                                    <span class="cb">&lt;차별 시 500만원 이하 벌금&gt;</span>
                                                 </div>
                                             </div>
                                         </td>
@@ -327,24 +243,13 @@
                                         <td>
                                             <div class="jbInfos tp2">
                                                 <div class="inf_tx noindent">
-                                                    특정성을 지칭하는 직종명 등
-                                                    사용하는 경우, 특정성
-                                                    배제<br />
-                                                    <span class="cg"
-                                                        >- 남성 선반공, 병역필
-                                                        남, 여성 비서, 미용사
-                                                        &lt;여성 환영&gt;
-                                                        등</span
-                                                    >
+                                                    특정성을 지칭하는 직종명 등 사용하는 경우, 특정성 배제<br />
+                                                    <span class="cg">- 남성 선반공, 병역필 남, 여성 비서, 미용사 &lt;여성 환영&gt; 등</span>
                                                 </div>
                                                 <br />
                                                 <div class="inf_tx noindent">
                                                     직종 등 남녀 분리모집 등<br />
-                                                    <span class="cg"
-                                                        >- 관리·사무직 남성
-                                                        10명, 판매직 여성
-                                                        5명</span
-                                                    >
+                                                    <span class="cg">- 관리·사무직 남성 10명, 판매직 여성 5명</span>
                                                 </div>
                                             </div>
                                         </td>
@@ -354,27 +259,12 @@
                                         <td>
                                             <div class="jbInfos tp2">
                                                 <div class="inf_tx noindent">
-                                                    직무성질상 특정한 성이
-                                                    불가피한 경우<br />
-                                                    <span class="cg"
-                                                        >- 남성역할 위한
-                                                        배우·모델 등</span
-                                                    ><br />
-                                                    <span class="cg"
-                                                        >- 여성 목욕탕의 여성
-                                                        목욕관리사, 여성
-                                                        장애인·여성 환자의
-                                                        도우미 등</span
-                                                    ><br />
-                                                    <span class="cg"
-                                                        >- 여성 기숙사의
-                                                        여성사감 등</span
-                                                    ><br /><br />
+                                                    직무성질상 특정한 성이 불가피한 경우<br />
+                                                    <span class="cg">- 남성역할 위한 배우·모델 등</span><br />
+                                                    <span class="cg">- 여성 목욕탕의 여성 목욕관리사, 여성 장애인·여성 환자의 도우미 등</span><br />
+                                                    <span class="cg">- 여성 기숙사의 여성사감 등</span><br /><br />
 
-                                                    현존하는 차별 없애거나
-                                                    고용평등 촉진위해 잠정적으로
-                                                    특정성 우대하는 조치를 하는
-                                                    경우
+                                                    현존하는 차별 없애거나 고용평등 촉진위해 잠정적으로 특정성 우대하는 조치를 하는 경우
                                                 </div>
                                             </div>
                                         </td>
@@ -392,49 +282,23 @@
             <Row class="FLEX ALIGN_ITEM_CENTER">
                 <Col class="col00 MT10" style="margin-right: auto">
                     <RadioGroup>
-                        <Radio
-                            label="연령무관"
-                            name="limit_age_gubun"
-                            value="N"
-                            v-model="limitAgeGubun"
-                            checked
-                        />
-                        <Radio
-                            label="연령제한"
-                            name="limit_age_gubun"
-                            cssClass="ML20"
-                            value="Y"
-                            v-model="limitAgeGubun"
-                        />
+                        <Radio label="연령무관" name="limit_age_gubun" value="N" v-model="limitAgeGubun" checked />
+                        <Radio label="연령제한" name="limit_age_gubun" cssClass="ML20" value="Y" v-model="limitAgeGubun" />
                     </RadioGroup>
                 </Col>
                 <Col class="col00" style="margin-left: auto">
                     <div class="jbAntoTxts TXTR">
                         <span class="lbwx">연령별금지 - </span>
-                        <button
-                            class="antx"
-                            @click="ediDialogVisible002 = true"
-                        >
-                            고용상 연령차별 금지에 관한 법률보기
-                        </button>
+                        <button class="antx" @click="ediDialogVisible002 = true">고용상 연령차별 금지에 관한 법률보기</button>
                     </div>
-                    <Dialog
-                        title="연령차별금지 주요내용"
-                        :visible="ediDialogVisible002"
-                        @click:dialogVisibleToggle="ediDialogVisible002 = false"
-                        v-if="ediDialogVisible002"
-                    >
+                    <Dialog title="연령차별금지 주요내용" :visible="ediDialogVisible002" @click:dialogVisibleToggle="ediDialogVisible002 = false" v-if="ediDialogVisible002">
                         <div class="jbInfos tp2 MT10">
                             <div class="inf_tx noindent">
-                                채용공고에 합리적인 이유 없이 “○○세 이하“.
-                                “19○○년 이후 출생자”, “20○○년 졸업자”, “대학
-                                졸업 후 2년 이내”등 직·간적적인 연령제한을 할 수
-                                없게 되었습니다. 모집·채용에서
+                                채용공고에 합리적인 이유 없이 “○○세 이하“. “19○○년 이후 출생자”, “20○○년 졸업자”, “대학 졸업 후 2년 이내”등 직·간적적인 연령제한을 할 수 없게
+                                되었습니다. 모집·채용에서
                                 <span class="cb">불합리한 연령 제한 시</span>
-                                고용상 연령차별 금지 및 고령자 고용촉진에 관한
-                                법률 위반에 따른
-                                <span class="cb">500만원 이하의 벌금</span>이
-                                부과될 수 있습니다.
+                                고용상 연령차별 금지 및 고령자 고용촉진에 관한 법률 위반에 따른
+                                <span class="cb">500만원 이하의 벌금</span>이 부과될 수 있습니다.
                             </div>
                         </div>
                         <div class="djCnTbl tleft MT25">
@@ -449,22 +313,10 @@
                                         <td>
                                             <div class="jbInfos tp2">
                                                 <div class="inf_tx noindent">
-                                                    고용상 연령차별 금지 및
-                                                    고령자 고용촉진에 관한
-                                                    법률<br />
-                                                    제4조의 4 제1항 제1호의 의거
-                                                    근로자를 모집하거나 채용 시
-                                                    합리적인 이유 없이 연령을
-                                                    이유로 차별할 수 없음<br />
-                                                    <span class="cb"
-                                                        >&lt;차별 시 500만원
-                                                        이하 벌금&gt;</span
-                                                    ><br />
-                                                    <span class="cb"
-                                                        >&lt;시정명령 불이행 시
-                                                        3천만원 이하의 과태료
-                                                        부과&gt;</span
-                                                    >
+                                                    고용상 연령차별 금지 및 고령자 고용촉진에 관한 법률<br />
+                                                    제4조의 4 제1항 제1호의 의거 근로자를 모집하거나 채용 시 합리적인 이유 없이 연령을 이유로 차별할 수 없음<br />
+                                                    <span class="cb">&lt;차별 시 500만원 이하 벌금&gt;</span><br />
+                                                    <span class="cb">&lt;시정명령 불이행 시 3천만원 이하의 과태료 부과&gt;</span>
                                                 </div>
                                             </div>
                                         </td>
@@ -473,10 +325,7 @@
                                         <th>차별사례</th>
                                         <td>
                                             <div class="jbInfos tp2">
-                                                <div class="inf_tx noindent">
-                                                    원자의 나이를 제한하거나
-                                                    특정 연령층을 선호하는 경우
-                                                </div>
+                                                <div class="inf_tx noindent">원자의 나이를 제한하거나 특정 연령층을 선호하는 경우</div>
                                             </div>
                                         </td>
                                     </tr>
@@ -485,29 +334,12 @@
                                         <td>
                                             <div class="jbInfos tp2">
                                                 <div class="inf_tx noindent">
-                                                    직무 성질상 특정 연령기준이
-                                                    불가피한 경우
-                                                    (진정직업자격)<br />
-                                                    <span class="cg"
-                                                        >- 연극·영화에서 청년
-                                                        역할의 수행을 위한 연령
-                                                        제한 등</span
-                                                    ><br />
-                                                    <span class="cg"
-                                                        >- 여성 목욕탕의 여성
-                                                        목욕관리사,여성
-                                                        장애인·여성 환자의
-                                                        도우미 등</span
-                                                    ><br />
-                                                    <span class="cg"
-                                                        >- 여성 기숙사의
-                                                        여성사감 등</span
-                                                    ><br /><br />
+                                                    직무 성질상 특정 연령기준이 불가피한 경우 (진정직업자격)<br />
+                                                    <span class="cg">- 연극·영화에서 청년 역할의 수행을 위한 연령 제한 등</span><br />
+                                                    <span class="cg">- 여성 목욕탕의 여성 목욕관리사,여성 장애인·여성 환자의 도우미 등</span><br />
+                                                    <span class="cg">- 여성 기숙사의 여성사감 등</span><br /><br />
 
-                                                    현존하는 차별을 없애거나
-                                                    고용평등 촉진을 위해
-                                                    잠정적으로 특정성 우대하는
-                                                    조치를 하는 경우 등
+                                                    현존하는 차별을 없애거나 고용평등 촉진을 위해 잠정적으로 특정성 우대하는 조치를 하는 경우 등
                                                 </div>
                                             </div>
                                         </td>
@@ -626,18 +458,12 @@ export default {
         },
     },
     async created() {
-        await this.$http
-            .get(`${this.API_PATH_STATIC}/langage.json`)
-            .then(({ data, ...props }) => (this.langage = data));
-        await this.$http
-            .get(`${this.API_PATH_STATIC}/license.json`)
-            .then(({ data, ...props }) => {
-                this.license = data;
-                this.keywordData = data.data;
-            });
-        await this.$http
-            .get(`${this.API_PATH_STATIC}/woodae_univers.json`)
-            .then(({ data, ...props }) => (this.woodaeUni = data));
+        await this.$http.get(`${this.API_PATH_STATIC}/langage.json`).then(({ data, ...props }) => (this.langage = data));
+        await this.$http.get(`${this.API_PATH_STATIC}/license.json`).then(({ data, ...props }) => {
+            this.license = data;
+            this.keywordData = data.data;
+        });
+        await this.$http.get(`${this.API_PATH_STATIC}/woodae_univers.json`).then(({ data, ...props }) => (this.woodaeUni = data));
     },
     methods: {
         woodaeUnibind(e) {
@@ -663,10 +489,7 @@ export default {
         },
         lcFnBind(e, { seleted, selectedLengh, ...props }) {
             let __chkBind = this.__fnSelectBoxCheckBind(e);
-            let __limit = this.__fnIsLimitSelectBoxCheck(
-                this[seleted],
-                this[selectedLengh]
-            );
+            let __limit = this.__fnIsLimitSelectBoxCheck(this[seleted], this[selectedLengh]);
             if (e.target.checked) {
                 if (!__limit) {
                     __chkBind.isChecked((e, { code, name, ...props }) => {
@@ -684,24 +507,15 @@ export default {
                     alert(props.alertMsg);
                 }
             } else {
-                __chkBind.unChecked(
-                    (e, { code, name }) =>
-                        (this[seleted] = this[seleted].filter(
-                            (object) => object.code !== code
-                        ))
-                );
+                __chkBind.unChecked((e, { code, name }) => (this[seleted] = this[seleted].filter((object) => object.code !== code)));
             }
         },
         lcFnSelectedDelete({ code, seleted, ...props }) {
-            this[seleted] = this[seleted].filter(
-                (object) => object.code !== code
-            );
+            this[seleted] = this[seleted].filter((object) => object.code !== code);
         },
         fnKeyword(e) {
             let keyword = e.target.value;
-            this.keywordData = this.license.data.filter(
-                ({ name }, index) => name.indexOf(keyword) != -1
-            );
+            this.keywordData = this.license.data.filter(({ name }, index) => name.indexOf(keyword) != -1);
             this.keyword = keyword;
         },
         fnSearchListItems(e) {

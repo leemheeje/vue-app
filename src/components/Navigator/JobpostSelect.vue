@@ -9,15 +9,10 @@
                     <ul class="lst">
                         <!-- foreach:S -->
                         <li class="tp first">
-                            <a href="#" class="txt"
-                                >솔루션사업본부 기업영업팀 신입/경력 정규직 모집
-                                (2021년도)</a
-                            >
+                            <a href="#" class="txt">솔루션사업본부 기업영업팀 신입/경력 정규직 모집 (2021년도)</a>
                         </li>
                         <li class="tp last">
-                            <a href="#" class="txt"
-                                >021년도 상반기 바른손 컴퍼니 공개채용</a
-                            >
+                            <a href="#" class="txt">021년도 상반기 바른손 컴퍼니 공개채용</a>
                         </li>
                         <!-- foreach:E -->
                     </ul>
@@ -27,38 +22,22 @@
                     <ul class="lst">
                         <!-- foreach:S -->
                         <li class="tp first">
-                            <a href="#" class="txt"
-                                >등록된 채용 공고가 없습니다.</a
-                            >
+                            <a href="#" class="txt">등록된 채용 공고가 없습니다.</a>
                         </li>
                         <li class="tp">
-                            <a href="#" class="txt"
-                                >솔루션사업본부 기업영업팀 신입/경력 정규직 모집
-                                (2021년도)솔루션사업본부 기업영업팀 신입/경력
-                                정규직 모집 (2021년도)</a
-                            >
+                            <a href="#" class="txt">솔루션사업본부 기업영업팀 신입/경력 정규직 모집 (2021년도)솔루션사업본부 기업영업팀 신입/경력 정규직 모집 (2021년도)</a>
                         </li>
                         <li class="tp">
-                            <a href="#" class="txt"
-                                >2021년도 상반기 바른손 컴퍼니 공개채용</a
-                            >
+                            <a href="#" class="txt">2021년도 상반기 바른손 컴퍼니 공개채용</a>
                         </li>
                         <li class="tp">
-                            <a href="#" class="txt"
-                                >등록된 채용 공고가 없습니다.</a
-                            >
+                            <a href="#" class="txt">등록된 채용 공고가 없습니다.</a>
                         </li>
                         <li class="tp">
-                            <a href="#" class="txt"
-                                >솔루션사업본부 기업영업팀 신입/경력 정규직 모집
-                                (2021년도)솔루션사업본부 기업영업팀 신입/경력
-                                정규직 모집 (2021년도)</a
-                            >
+                            <a href="#" class="txt">솔루션사업본부 기업영업팀 신입/경력 정규직 모집 (2021년도)솔루션사업본부 기업영업팀 신입/경력 정규직 모집 (2021년도)</a>
                         </li>
                         <li class="tp last">
-                            <a href="#" class="txt"
-                                >2021년도 상반기 바른손 컴퍼니 공개채용</a
-                            >
+                            <a href="#" class="txt">2021년도 상반기 바른손 컴퍼니 공개채용</a>
                         </li>
                         <!-- foreach:E -->
                     </ul>

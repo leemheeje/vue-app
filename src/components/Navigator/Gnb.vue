@@ -13,7 +13,7 @@
                 </router-link>
             </div>
             <div class="tpsw_tp">
-				<router-link :to="{ path: '/WorkingConditions' }">
+                <router-link :to="{ path: '/WorkingConditions' }">
                     <button class="tbtw">근무조건</button>
                 </router-link>
             </div>
