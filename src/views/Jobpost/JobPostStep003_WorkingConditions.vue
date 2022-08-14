@@ -294,7 +294,7 @@
         <RowLayout title="근무지역" required class="MT20">
             <UiSelectedBox
                 title="근무지역"
-                :selected="workAdressSelected"
+                :selected="workAdressSelectedConv"
                 @click:afRightButtonBind="isWorkAdressDialogVisible = true"
                 @update:selectBindDelete="(e) => workAdressSelectedDelete(e.target.value)"
             />
@@ -302,7 +302,7 @@
                 title="근무지역"
                 subtitle="최대 6개까지 선택 가능"
                 :selectLists="workAdressList"
-                :selectedLists="workAdressSelected"
+                :selectedLists="workAdressSelectedConv"
                 :visible="isWorkAdressDialogVisible"
                 :isDialogHeader="true"
                 @click:dialogVisibleToggle="isWorkAdressDialogVisible = false"
@@ -317,9 +317,11 @@
                             <SearchBarListItems
                                 v-for="(item, index) in workAdressSearchBarList"
                                 :key="index"
+                                :id="`ck_${item.code}_${index}`"
                                 :keyword="workAdressSearchBarModel"
                                 :code="item.code"
-                                :name="item.name"
+                                :name="item.label ? `${item.label} > ${item.name}` : item.name"
+                                @change="workAdressbind"
                             />
                         </template>
                     </SearchBar>
@@ -441,14 +443,11 @@ import Input from "@/components/Form/Input";
 import Select from "@/components/Form/Select";
 import Checkbox from "@/components/Form/Checkbox";
 import UiSelectedBox from "@/components/UiComponents/UiSelectedBox";
-import UiSelectedBoxTooltip from "@/components/UiComponents/UiSelectedBoxTooltip";
-import UiSelectedBoxFavorite from "@/components/UiComponents/UiSelectedBoxFavorite";
 import UiSelectedBoxDialog from "@/components/UiComponents/UiSelectedBoxDialog";
 import SearchBar from "@/components/UiComponents/SearchBar";
 import SearchBarListItems from "@/components/UiComponents/SearchBarListItems";
 import RadioGroup from "@/components/Form/RadioGroup";
 import Radio from "@/components/Form/Radio";
-import Dialog from "@/components/Dialog/Dialog";
 import AddToggleBox from "@/components/UiComponents/AddToggleBox";
 import mixin from "@/mixin";
 export default {
@@ -458,41 +457,9 @@ export default {
             //연봉/급여
             chicAfterinterview: false,
             payGubunSelectbox: 1,
-            payGubunOptions: [
-                {
-                    value: 1,
-                    name: "연봉",
-                },
-                {
-                    value: 2,
-                    name: "월급",
-                },
-                {
-                    value: 3,
-                    name: "주급",
-                },
-                {
-                    value: 4,
-                    name: "일급",
-                },
-                {
-                    value: 5,
-                    name: "시급",
-                },
-                {
-                    value: 6,
-                    name: "건당",
-                },
-                {
-                    value: 99,
-                    name: "회사내규에 따름",
-                },
-            ],
+            payGubunOptions: undefined,
 
             //근무형태
-            //worktype_convert: false, 정규직전환가능
-            //worktype_during: false,  기간제
-            //worktype_eternal: false, 무기계약직
             workGubunChecked: [
                 {
                     value: 1,
@@ -594,104 +561,68 @@ export default {
                     },
                 },
             ],
-            workLange: [
-                {
-                    value: 0,
-                    name: "기간선택",
-                },
-                {
-                    value: 1,
-                    name: "1개월",
-                },
-                {
-                    value: 2,
-                    name: "2개월",
-                },
-                {
-                    value: 3,
-                    name: "3개월",
-                },
-                {
-                    value: 4,
-                    name: "4개월",
-                },
-                {
-                    value: 5,
-                    name: "5개월",
-                },
-                {
-                    value: 6,
-                    name: "6개월",
-                },
-                {
-                    value: 7,
-                    name: "7개월",
-                },
-                {
-                    value: 8,
-                    name: "8개월",
-                },
-                {
-                    value: 9,
-                    name: "9개월",
-                },
-                {
-                    value: 10,
-                    name: "10개월",
-                },
-                {
-                    value: 11,
-                    name: "11개월",
-                },
-                {
-                    value: 12,
-                    name: "12개월",
-                },
-                {
-                    value: 13,
-                    name: "1년 6개월",
-                },
-                {
-                    value: 14,
-                    name: "2년",
-                },
-                {
-                    value: 15,
-                    name: "협의 후 결정",
-                },
-            ],
+            workLange: [...new Array(16)].map((c, i) => {
+                return {
+                    value: i,
+                    name: ((_i) => {
+                        let nm = "";
+                        switch (_i) {
+                            case 0:
+                                nm = "기간선택";
+                                break;
+                            case 1:
+                                nm = "1개월";
+                                break;
+                            case 2:
+                                nm = "2개월";
+                                break;
+                            case 3:
+                                nm = "3개월";
+                                break;
+                            case 4:
+                                nm = "4개월";
+                                break;
+                            case 5:
+                                nm = "5개월";
+                                break;
+                            case 6:
+                                nm = "6개월";
+                                break;
+                            case 7:
+                                nm = "7개월";
+                                break;
+                            case 8:
+                                nm = "8개월";
+                                break;
+                            case 9:
+                                nm = "9개월";
+                                break;
+                            case 10:
+                                nm = "10개월";
+                                break;
+                            case 11:
+                                nm = "11개월";
+                                break;
+                            case 12:
+                                nm = "12개월";
+                                break;
+                            case 13:
+                                nm = "1년 6개월";
+                                break;
+                            case 14:
+                                nm = "2년";
+                                break;
+                            case 15:
+                                nm = "협의 후 결정";
+                                break;
+                        }
+                        return nm;
+                    })(i),
+                };
+            }),
 
             //근무요일
-            workWeekList: [
-                {
-                    value: 1,
-                    name: "월요일",
-                },
-                {
-                    value: 2,
-                    name: "화요일",
-                },
-                {
-                    value: 3,
-                    name: "수요일",
-                },
-                {
-                    value: 4,
-                    name: "목요일",
-                },
-                {
-                    value: 5,
-                    name: "금요일",
-                },
-                {
-                    value: 6,
-                    name: "토요일",
-                },
-                {
-                    value: 7,
-                    name: "일요일",
-                },
-            ],
+            workWeekList: undefined,
             workHourArray: [...new Array(24)].map((c, i) => i + 1),
             workMinuArray: [...new Array(6)].map((c, i) => i * 10),
             workDayGubun: 1,
@@ -725,6 +656,23 @@ export default {
         };
     },
     computed: {
+        workAdressSelectedConv() {
+            if (this.workAdressList) {
+                return this.workAdressSelected.map(({ code, name, label, ...props }) => {
+                    let _c = code.slice(0, 5); //AR009
+                    let _l = this.workAdressList.find((item) => item.code == _c);
+                    let spt = ">";
+                    return {
+                        code,
+                        name: name.indexOf(spt) == -1 ? `${_l.name} ${spt} ${name}` : name,
+                        origin_name: name,
+                        ...props,
+                    };
+                });
+            } else {
+                return this.workAdressSelected;
+            }
+        },
         workAdressSearchBarList() {
             let _d = this.workAdressList.map((item) => item.data).reduce((p, c) => [...p, ...c]);
             return _d.filter((item) => item.name.indexOf(this.workAdressSearchBarModel) != -1);
@@ -734,46 +682,35 @@ export default {
         },
     },
     async created() {
+        await this.$http.get(`${this.API_PATH_STATIC}/paygubun.json`).then(({ data }) => {
+            this.paygubun = data;
+        });
+        await this.$http.get(`${this.API_PATH_STATIC}/week.json`).then(({ data }) => {
+            this.workWeekList = data;
+        });
         await this.$http.get(`${this.API_PATH_STATIC}/area.json`).then(({ data }) => {
-            this.workAdressList = data;
+            let _d = data.map((item) => {
+                let label = item.name;
+                return {
+                    ...item,
+                    data: item.data.map((_item) => {
+                        return { label, ..._item };
+                    }),
+                };
+            });
+            this.workAdressList = _d;
         });
     },
-    mounted() {},
     methods: {
         workAdressbind(e) {
-            this.lcFnBind(e, {
+            this.__lcFnBind(e, {
                 seleted: "workAdressSelected",
                 selectedLengh: "limitWorkAdresselectedLength",
                 alertMsg: `근무지역은 ${this.limitWorkAdresselectedLength}개 까지 선택가능합니다.`,
             });
         },
         workAdressSelectedDelete(code) {
-            this.lcFnSelectedDelete({ code, seleted: "workAdressSelected" });
-        },
-        lcFnBind(e, { seleted, selectedLengh, ...props }) {
-            let __chkBind = this.__fnSelectBoxCheckBind(e);
-            let __limit = this.__fnIsLimitSelectBoxCheck(this[seleted], this[selectedLengh]);
-            if (e.target.checked) {
-                if (!__limit) {
-                    __chkBind.isChecked((e, { code, name }) => {
-                        this[seleted] = [
-                            ...this[seleted],
-                            {
-                                code,
-                                name,
-                            },
-                        ];
-                    });
-                } else {
-                    e.target.checked = false;
-                    alert(props.alertMsg);
-                }
-            } else {
-                __chkBind.unChecked((e, { code, name }) => (this[seleted] = this[seleted].filter((object) => object.code !== code)));
-            }
-        },
-        lcFnSelectedDelete({ code, seleted, ...props }) {
-            this[seleted] = this[seleted].filter((object) => object.code !== code);
+            this.__lcFnSelectedDelete({ code, seleted: "workAdressSelected" });
         },
         fnWorkGubunChecked(e) {
             let value = e.target.value ? JSON.parse(e.target.value) : {};
@@ -815,14 +752,11 @@ export default {
         Checkbox,
         RowLayout,
         UiSelectedBox,
-        UiSelectedBoxTooltip,
-        UiSelectedBoxFavorite,
         UiSelectedBoxDialog,
         SearchBar,
         SearchBarListItems,
         RadioGroup,
         Radio,
-        Dialog,
         AddToggleBox,
     },
 };

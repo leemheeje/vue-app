@@ -1,9 +1,19 @@
 <template>
     <div :class="`jbAutoSearchArea ${cssClass}`">
         <div class="inpArea">
-            <input type="text" :value="modelValue" id="" name="" :placeholder="placeholder" @input="$emit('update:modelValue', $event.target.value)" v-bind="$attrs" />
+            <input
+                type="text"
+                :value="modelValue"
+                id=""
+                name=""
+                :placeholder="placeholder"
+                @input="$emit('update:modelValue', $event.target.value)"
+                @focus="isInputFocus = true"
+                @blur="test"
+                v-bind="$attrs"
+            />
         </div>
-        <div class="resArea" v-if="modelValue">
+        <div class="resArea" v-if="modelValue && isInputFocus">
             <div class="reSinner">
                 <!-- 연관검색있을때:S -->
                 <slot name="list" />
@@ -27,8 +37,12 @@ export default {
         },
         modelValue: "",
         cssClass: "",
+        isInputFocus: false,
     },
     created() {},
+    methods: {
+        test() {},
+    },
 };
 </script>
 

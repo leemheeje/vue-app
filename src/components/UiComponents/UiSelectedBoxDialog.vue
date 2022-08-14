@@ -27,14 +27,33 @@
                             <div class="ltsLst">
                                 <!-- foreach:S -->
                                 <div class="tpw" v-for="(_item, i) in item.data" :key="i">
-                                    <Checkbox
+                                    <!-- 
+										근무조건>근무지역에서 아래처럼 컴포넌트를 호출하면 굉장히 느림. 
+										컴포넌트가 아닌 html노드를 호출하면 해결됨 이유는 뭐지? 단순히 데이타양이 많아서???
+										- 글로벌 컴포넌트로 등록해서 사용해도 느림
+										- 로컬 컴포넌트 직접입력 compns:{test:{template:'test'}} 해도 느림
+										- chk 컴포넌트에서 아무것도 리턴안해도 느림
+									-->
+                                    <!-- <Checkbox
                                         id=""
                                         :name="_item.name"
                                         :model-value="_item.code"
                                         :checked="selectedLists.find(({ code }) => code === _item.code)"
                                         @change="$emit('update:selectedbind', $event)"
                                         >{{ _item.name }}</Checkbox
-                                    >
+                                    > -->
+                                    <div :class="`jbForm sm`">
+                                        <label>
+                                            <input
+                                                type="checkbox"
+                                                :name="_item.name"
+                                                :value="_item.code"
+                                                :checked="selectedLists.find(({ code }) => code === _item.code)"
+                                                @change="$emit('update:selectedbind', $event)"
+                                            />
+                                            <span class="lb">{{ _item.name }}</span>
+                                        </label>
+                                    </div>
                                 </div>
                                 <!-- foreach:E -->
                             </div>
@@ -134,7 +153,7 @@ export default {
             }
         },
     },
-    created() {},
-    methods: {},
+    created() {
+    },
 };
 </script>

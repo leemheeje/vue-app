@@ -35,7 +35,7 @@
                 @click:afRightButtonBind="isLangageDialogVisible = true"
                 @update:selectBindDelete="
                     (e) =>
-                        lcFnSelectedDelete({
+                        __lcFnSelectedDelete({
                             code: e.target.value,
                             seleted: 'langageSelected',
                         })
@@ -44,7 +44,7 @@
                 :jumsuList="langageSelected"
                 @click:jumsuListDelete="
                     (e) =>
-                        lcFnSelectedDelete({
+                        __lcFnSelectedDelete({
                             code: e.target.value,
                             seleted: 'langageSelected',
                         })
@@ -79,7 +79,7 @@
                     @update:selectedbind="lanagebind"
                     @update:selecteddelete="
                         (e) =>
-                            lcFnSelectedDelete({
+                            __lcFnSelectedDelete({
                                 code: e.target.value,
                                 seleted: 'langageSelected',
                             })
@@ -96,7 +96,7 @@
                 @click:afRightButtonBind="isLicenseDialogVisible = true"
                 @update:selectBindDelete="
                     (e) =>
-                        lcFnSelectedDelete({
+                        __lcFnSelectedDelete({
                             code: e.target.value,
                             seleted: 'licenseSelected',
                         })
@@ -133,7 +133,7 @@
                     @update:selectedbind="licensebind"
                     @update:selecteddelete="
                         (e) =>
-                            lcFnSelectedDelete({
+                            __lcFnSelectedDelete({
                                 code: e.target.value,
                                 seleted: 'licenseSelected',
                             })
@@ -160,7 +160,7 @@
                 @click:afRightButtonBind="isWoodaeUniDialogVisible = true"
                 @update:selectBindDelete="
                     (e) =>
-                        lcFnSelectedDelete({
+                        __lcFnSelectedDelete({
                             code: e.target.value,
                             seleted: 'woodaeUniSelected',
                         })
@@ -467,51 +467,25 @@ export default {
     },
     methods: {
         woodaeUnibind(e) {
-            this.lcFnBind(e, {
+            this.__lcFnBind(e, {
                 seleted: "woodaeUniSelected",
                 selectedLengh: "limitWoodaeUniSelectedLength",
                 alertMsg: `우대전공은 ${this.limitWoodaeUniSelectedLength}개 까지 선택가능합니다.`,
             });
         },
         licensebind(e) {
-            this.lcFnBind(e, {
+            this.__lcFnBind(e, {
                 seleted: "licenseSelected",
                 selectedLengh: "limitLicenseSelectedLength",
                 alertMsg: `자격증은 ${this.limitLicenseSelectedLength}개 까지 선택가능합니다.`,
             });
         },
         lanagebind(e) {
-            this.lcFnBind(e, {
+            this.__lcFnBind(e, {
                 seleted: "langageSelected",
                 selectedLengh: "limitLangageSelectedLength",
                 alertMsg: `외국어는 ${this.limitLangageSelectedLength}개 까지 선택가능합니다.`,
             });
-        },
-        lcFnBind(e, { seleted, selectedLengh, ...props }) {
-            let __chkBind = this.__fnSelectBoxCheckBind(e);
-            let __limit = this.__fnIsLimitSelectBoxCheck(this[seleted], this[selectedLengh]);
-            if (e.target.checked) {
-                if (!__limit) {
-                    __chkBind.isChecked((e, { code, name, ...props }) => {
-                        this[seleted] = [
-                            ...this[seleted],
-                            {
-                                code,
-                                name,
-                                ...props,
-                            },
-                        ];
-                    });
-                } else {
-                    e.target.checked = false;
-                    alert(props.alertMsg);
-                }
-            } else {
-                __chkBind.unChecked((e, { code, name }) => (this[seleted] = this[seleted].filter((object) => object.code !== code)));
-            }
-        },
-        lcFnSelectedDelete({ code, seleted, ...props }) {
-            this[seleted] = this[seleted].filter((object) => object.code !== code);
         },
         fnKeyword(e) {
             let keyword = e;

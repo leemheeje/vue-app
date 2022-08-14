@@ -275,49 +275,24 @@ export default {
     mounted() {},
     methods: {
         woodaebind(e) {
-            this.lcFnBind(e, {
+            this.__lcFnBind(e, {
                 seleted: "woodaeSelected",
                 selectedLengh: "limitWoodaeSelectedLength",
                 alertMsg: `우대사항은 ${this.limitWoodaeSelectedLength}개 까지 선택가능합니다.`,
             });
         },
         jcjgbind(e) {
-            this.lcFnBind(e, {
+            this.__lcFnBind(e, {
                 seleted: "jcjgSelected",
                 selectedLengh: "limitJcJgSelectedLength",
                 alertMsg: `직급/직책은 ${this.limitJcJgSelectedLength}개 까지 선택가능합니다.`,
             });
         },
-        lcFnBind(e, { seleted, selectedLengh, ...props }) {
-            let __chkBind = this.__fnSelectBoxCheckBind(e);
-            let __limit = this.__fnIsLimitSelectBoxCheck(this[seleted], this[selectedLengh]);
-            if (e.target.checked) {
-                if (!__limit) {
-                    __chkBind.isChecked((e, { code, name }) => {
-                        this[seleted] = [
-                            ...this[seleted],
-                            {
-                                code,
-                                name,
-                            },
-                        ];
-                    });
-                } else {
-                    e.target.checked = false;
-                    alert(props.alertMsg);
-                }
-            } else {
-                __chkBind.unChecked((e, { code, name }) => (this[seleted] = this[seleted].filter((object) => object.code !== code)));
-            }
-        },
-        lcFnSelectedDelete({ code, seleted, ...props }) {
-            this[seleted] = this[seleted].filter((object) => object.code !== code);
-        },
         jcjgSelectedDelete(code) {
-            this.lcFnSelectedDelete({ code, seleted: "jcjgSelected" });
+            this.__lcFnSelectedDelete({ code, seleted: "jcjgSelected" });
         },
         woodaeSelectedDelete(code) {
-            this.lcFnSelectedDelete({ code, seleted: "woodaeSelected" });
+            this.__lcFnSelectedDelete({ code, seleted: "woodaeSelected" });
         },
     },
 };

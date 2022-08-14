@@ -42,6 +42,31 @@ export default {
 				},
 			}
 		},
+		__lcFnBind(e, { seleted, selectedLengh, ...props }) {
+            let __chkBind = this.__fnSelectBoxCheckBind(e);
+            let __limit = this.__fnIsLimitSelectBoxCheck(this[seleted], this[selectedLengh]);
+            if (e.target.checked) {
+                if (!__limit) {
+                    __chkBind.isChecked((e, { code, name }) => {
+                        this[seleted] = [
+                            ...this[seleted],
+                            {
+                                code,
+                                name,
+                            },
+                        ];
+                    });
+                } else {
+                    e.target.checked = false;
+                    alert(props.alertMsg);
+                }
+            } else {
+                __chkBind.unChecked((e, { code, name }) => (this[seleted] = this[seleted].filter((object) => object.code !== code)));
+            }
+        },
+		__lcFnSelectedDelete({ code, seleted, ...props }) {
+            this[seleted] = this[seleted].filter((object) => object.code !== code);
+        },
 
 	}
 }
