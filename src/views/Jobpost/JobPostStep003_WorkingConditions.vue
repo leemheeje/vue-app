@@ -188,12 +188,13 @@
                                 </Col>
                             </Row>
                             <Row v-else>
-                                <Col class="col45" style="width: 200px">
+                               <Col class="col12" style="width: 400px;">
                                     <Select>
                                         <option value="">국가선택</option>
+										<option v-for="(item,index) in partAdressCountryCode" :key="index" :value="item.ISO">{{item.name}}</option>
                                     </Select>
                                 </Col>
-                                <Col class="col45" style="width: 545px">
+                                <Col class="col45 MT05" style="width: 825px">
                                     <Input placeholder="해외 근무지역의 상세주소를 입력해 주세요." />
                                 </Col>
                             </Row>
@@ -642,6 +643,7 @@ export default {
                     sq_code: 0,
                 },
             ],
+			partAdressCountryCode:[],
             zip: "",
             addr1: "",
             addr2: "",
@@ -709,6 +711,9 @@ export default {
         },
     },
     async created() {
+        await this.$http.get(`${this.API_PATH_STATIC}/country.json`).then(({ data }) => {
+            this.partAdressCountryCode = data;
+        });
         await this.$http.get(`${this.API_PATH_STATIC}/paygubun.json`).then(({ data }) => {
             this.paygubun = data;
         });
