@@ -320,7 +320,8 @@
                                 :id="`ck_${item.code}_${index}`"
                                 :keyword="workAdressSearchBarModel"
                                 :code="item.code"
-                                :name="item.label ? `${item.label} > ${item.name}` : item.name"
+                                :name="item.name"
+                                :data-label="item.label"
                                 @change="workAdressbind"
                             />
                         </template>
@@ -330,7 +331,84 @@
         </RowLayout>
         <!-- 근무지역:E -->
         <!-- 인근지하철:S -->
-        <RowLayout title="인근지하철" class="MT20"> </RowLayout>
+        <RowLayout title="인근지하철" :subtitle="`(${subwaySelected.length}/5)`" class="MT20">
+            <UiSelectedBox
+                title="인근지하철"
+                :selected="subwaySelectedConv"
+                @click:afRightButtonBind="isSubwayDialogVisible = true"
+                @update:selectBindDelete="(e) => subwaySelectedDelete(e.target.value)"
+            />
+            <UiSelectedBoxDialog
+                title="인근지하철"
+                :subtitle="`최대 ${limitSubwaySelectedLength}개까지 선택 가능`"
+                :isDialogHeader="true"
+                :isDialogContent="false"
+                :visible="isSubwayDialogVisible"
+                :selectLists="subwaySelectedConv"
+                @click:dialogVisibleToggle="isSubwayDialogVisible = false"
+                @click:selectedInitializeButton="subwaySelected = []"
+            >
+                <template v-slot:dialogHeader>
+                    <SearchBar v-model="subwayKeyword" placeholder="지하철명을 입력하세요." @keyup="fnSubwayKeyupBind">
+                        <template v-slot:list>
+                            <!-- subwaySearchBarList = [{
+								"subwayRouteName": "공항",
+								"subwayStationId": "MTRARA1A01",
+								"subwayStationName": "서울역"
+							}] -->
+                            <SearchBarListItems
+                                v-for="({ subwayRouteName, subwayStationId, subwayStationName, ...props }, index) in subwaySearchBarList"
+                                :id="`ck_${subwayStationId}_${index}`"
+                                :key="index"
+                                :keyword="subwayKeyword"
+                                :code="subwayStationId"
+                                :name="subwayStationName"
+                                :data-label="`${subwayRouteName} > `"
+                                @change="subwaybind"
+                            />
+                        </template>
+                    </SearchBar>
+                </template>
+                <template v-slot:isFooterTemplate>
+                    <!-- 선택된영역이있을때:S -->
+                    <div class="jbAddFormArea lglb MT10" v-if="Object.keys(subwaySelectedConv).length">
+                        <!-- foreach:S -->
+                        <div class="jbTps" v-for="({ label, code, name, ...props }, index) in subwaySelectedConv" :key="index">
+                            <div class="jblts">
+                                <span class="intx">{{ `${label}${name}` }}</span>
+                            </div>
+                            <div class="jbcots">
+                                <div class="jbForm inline MR10" style="width: 80px">
+                                    <input type="text" value="" name="" id="" class="TXTR" />
+                                </div>
+                                <span class="jbStatText MR10">번 출구</span>
+                                <div class="jbForm inline MR10" style="width: 160px">
+                                    <select>
+                                        <option value="">거리선택</option>
+                                    </select>
+                                </div>
+                                <span class="jbStatText">이내</span>
+                                <button
+                                    class="jbls_de"
+                                    title="삭제"
+                                    :value="code"
+                                    @click="
+                                        (e) => {
+                                            this.subwaySelected = this.subwaySelected.filter((item) => item.subwayStationId !== e.target.value && item.code !== e.target.value);
+                                        }
+                                    "
+                                ></button>
+                            </div>
+                        </div>
+                        <!-- foreach:E -->
+                    </div>
+                    <!-- 선택된영역이있을때:E -->
+                    <!-- 선택된영역이없을때:S -->
+                    <Nullmsg v-else>{{ `선택한 항목이 없습니다.` }}</Nullmsg>
+                    <!-- 선택된영역이없을때:E -->
+                </template>
+            </UiSelectedBoxDialog>
+        </RowLayout>
         <!-- 인근지하철:E -->
         <!-- 근무요일:S -->
         <RowLayout title="근무요일" class="MT20">
@@ -449,7 +527,10 @@ import SearchBarListItems from "@/components/UiComponents/SearchBarListItems";
 import RadioGroup from "@/components/Form/RadioGroup";
 import Radio from "@/components/Form/Radio";
 import AddToggleBox from "@/components/UiComponents/AddToggleBox";
+import Nullmsg from "@/components/Form/Nullmsg";
 import mixin from "@/mixin";
+import { debounce } from "lodash";
+import { SUBWAY_INFO_KEY } from "@/config";
 export default {
     mixins: [mixin],
     data() {
@@ -653,19 +734,39 @@ export default {
             isWorkAdressDialogVisible: false,
             limitWorkAdresselectedLength: 6,
             workAdressSearchBarModel: "",
+
+            //인근지하철
+            subwaySelected: [
+                {
+                    subwayRouteName: "공항",
+                    subwayStationId: "MTRARA1A01",
+                    subwayStationName: "서울역",
+                },
+            ],
+            limitSubwaySelectedLength: 5,
+            isSubwayDialogVisible: false,
+            subwayKeyword: "",
+            subwaySearchBarList: [],
         };
     },
     computed: {
+        subwaySelectedConv() {
+            return this.subwaySelected.map(({ subwayRouteName, subwayStationId, subwayStationName, ...props }) => ({
+                label: `${subwayRouteName} > `,
+                code: subwayStationId,
+                name: subwayStationName,
+                ...props,
+            }));
+        },
         workAdressSelectedConv() {
             if (this.workAdressList) {
-                return this.workAdressSelected.map(({ code, name, label, ...props }) => {
+                return this.workAdressSelected.map(({ code, name, ...props }) => {
                     let _c = code.slice(0, 5); //AR009
                     let _l = this.workAdressList.find((item) => item.code == _c);
-                    let spt = ">";
                     return {
                         code,
-                        name: name.indexOf(spt) == -1 ? `${_l.name} ${spt} ${name}` : name,
-                        origin_name: name,
+                        name,
+                        label: `${_l.name} > `,
                         ...props,
                     };
                 });
@@ -690,7 +791,7 @@ export default {
         });
         await this.$http.get(`${this.API_PATH_STATIC}/area.json`).then(({ data }) => {
             let _d = data.map((item) => {
-                let label = item.name;
+                let label = `${item.name} > `;
                 return {
                     ...item,
                     data: item.data.map((_item) => {
@@ -702,12 +803,40 @@ export default {
         });
     },
     methods: {
+        fnSubwayKeyupBind: debounce(async function () {
+            await this.$http.get(`${this.API_PATH_SUBWAY_INFO}?serviceKey=${SUBWAY_INFO_KEY}&_type=json&subwayStationName=${this.subwayKeyword}`).then(
+                ({
+                    data: {
+                        response: {
+                            header: { resultCode },
+                            body: { items },
+                        },
+                    },
+                }) => {
+                    if (resultCode === "00" && items && items.item.length) {
+                        this.subwaySearchBarList = items.item;
+                    } else {
+                        this.subwaySearchBarList = [];
+                    }
+                }
+            );
+        }, 300),
+        subwaybind(e) {
+            this.__lcFnBind(e, {
+                seleted: "subwaySelected",
+                selectedLengh: "limitSubwaySelectedLength",
+                alertMsg: `지하철역은 ${this.limitSubwaySelectedLength}개 까지 선택가능합니다.`,
+            });
+        },
         workAdressbind(e) {
             this.__lcFnBind(e, {
                 seleted: "workAdressSelected",
                 selectedLengh: "limitWorkAdresselectedLength",
                 alertMsg: `근무지역은 ${this.limitWorkAdresselectedLength}개 까지 선택가능합니다.`,
             });
+        },
+        subwaySelectedDelete(code) {
+            this.__lcFnSelectedDelete({ code, seleted: "subwaySelected" });
         },
         workAdressSelectedDelete(code) {
             this.__lcFnSelectedDelete({ code, seleted: "workAdressSelected" });
@@ -758,6 +887,7 @@ export default {
         RadioGroup,
         Radio,
         AddToggleBox,
+        Nullmsg,
     },
 };
 </script>

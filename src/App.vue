@@ -62,5 +62,6 @@ export default {
         Gnb,
         JobpostSelect,
     },
+	created(){}
 };
 </script>

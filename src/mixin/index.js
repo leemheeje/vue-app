@@ -26,11 +26,13 @@ export default {
 		},
 		__fnSelectBoxCheckBind(e) {
 			let obj = function () {
+				console.log(this.target);
 				return {
 					target: this.target,
 					code: this.target.value,
 					name: this.target.name || this.target.dataset.name,
 					checked: this.target.checked,
+					label: this.target.label || this.target.dataset.label
 				};
 			}.call(e);
 			return {
@@ -47,12 +49,13 @@ export default {
             let __limit = this.__fnIsLimitSelectBoxCheck(this[seleted], this[selectedLengh]);
             if (e.target.checked) {
                 if (!__limit) {
-                    __chkBind.isChecked((e, { code, name }) => {
+                    __chkBind.isChecked((e, { code, name,label }) => {
                         this[seleted] = [
                             ...this[seleted],
                             {
                                 code,
                                 name,
+                                label,
                             },
                         ];
                     });

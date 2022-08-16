@@ -7,8 +7,8 @@
                 <!-- 선택된영역이있을때:S -->
                 <div class="fbOriStvsArea">
                     <!-- foreach:S -->
-                    <template v-for="(item, index) in selected" :key="index">
-                        <Selected :value="item.code" @click="selectBindDelete">{{ item.name }}</Selected>
+                    <template v-for="({ code, name, label, ...props }, index) in selected" :key="index">
+                        <Selected :value="code" @click="selectBindDelete">{{ label ? label+name : name }}</Selected>
                     </template>
                     <!-- foreach:E -->
                 </div>

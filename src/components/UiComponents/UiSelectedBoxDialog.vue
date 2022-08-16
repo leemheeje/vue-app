@@ -48,6 +48,7 @@
                                                 type="checkbox"
                                                 :name="_item.name"
                                                 :value="_item.code"
+												:data-label="_item.label"
                                                 :checked="selectedLists.find(({ code }) => code === _item.code)"
                                                 @change="$emit('update:selectedbind', $event)"
                                             />
@@ -63,12 +64,14 @@
             </div>
             <div class="jbcRowsRest" v-if="isDialogFooter">
                 <div class="jbresInner">
-                    <div class="rexwConte">
+                    <div class="rexwConte" v-if="!$slots.isFooterTemplate">
                         <!-- 선택된영역이있을때:S -->
                         <div class="fbOriStvsArea" v-if="Object.keys(vSelectedLists).length">
                             <!-- foreach:S -->
-                            <template v-for="({ code, name }, index) in vSelectedLists" :key="index">
-                                <Selected :model-value="code" :name="name" @click="$emit('update:selecteddelete', $event)">{{ name }}</Selected>
+                            <template v-for="({ code, name, label, ...props }, index) in vSelectedLists" :key="index">
+                                <Selected :model-value="code" :name="name" @click="$emit('update:selecteddelete', $event)">{{
+                                    label ? label+name : name
+                                }}</Selected>
                             </template>
                             <!-- foreach:E -->
                         </div>
@@ -76,6 +79,9 @@
                         <!-- 선택된영역이없을때:S -->
                         <Nullmsg v-else>{{ `선택한 항목이 없습니다.` }}</Nullmsg>
                         <!-- 선택된영역이없을때:E -->
+                    </div>
+                    <div class="rexwConte" v-else>
+                        <slot name="isFooterTemplate"/>
                     </div>
                     <div class="rexwBte">
                         <button type="button" class="jbbtns sm gray" @click="$emit('click:selectedInitializeButton', $event)">
@@ -153,7 +159,6 @@ export default {
             }
         },
     },
-    created() {
-    },
+    created() {},
 };
 </script>
