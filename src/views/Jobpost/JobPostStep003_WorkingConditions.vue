@@ -160,135 +160,48 @@
         </RowLayout>
         <!-- 근무형태:E -->
         <!-- 근무지 주소:S -->
-        <div class="jbLayoutLabs required MT30">
-            <div class="jblabs smpadding">
-                <span class="ints">근무지 주소</span>
-            </div>
-            <div class="jbDivs">
-                <div class="row">
-                    <div class="col00">
-                        <div class="jbForm inline MR25">
-                            <label>
-                                <input type="radio" id="" name="chk3" value="" checked />
-                                <span class="lb">국내</span>
-                            </label>
-                        </div>
-                        <div class="jbForm jbForm inline MR25">
-                            <label>
-                                <input type="radio" id="" name="chk3" value="" />
-                                <span class="lb">해외</span>
-                            </label>
-                        </div>
-                        <div class="jbForm jbForm inline MR25">
-                            <label>
-                                <input type="checkbox" id="" name="" value="" />
-                                <span class="lb">재택근무 가능</span>
-                            </label>
-                        </div>
-                    </div>
-                </div>
-                <div class="jbAddMinArea MT20">
-                    <!-- foreach:S -->
-                    <div class="amSectListsArea">
-                        <div class="amSectDivAre">
-                            <div class="row">
-                                <div class="col45" style="width: 300px">
-                                    <div class="jbForm">
-                                        <input type="text" placeholder="주소를 입력해 주세요" id="" name="" value="" readonly />
-                                    </div>
-                                </div>
-                                <div class="col45" style="width: 300px">
-                                    <div class="jbForm">
-                                        <input type="text" placeholder="상세 주소 입력" id="" name="" value="" />
-                                    </div>
-                                </div>
-                                <div class="col00" style="width: 145px">
-                                    <a href="#" target="_blank" class="jbbtns">
-                                        <span class="intxtsw">지도위치확인</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="amSectBtnAre">
-                            <button class="ansbtn ad" title="추가"></button>
-                        </div>
-                    </div>
-                    <div class="amSectListsArea">
-                        <div class="amSectDivAre">
-                            <div class="row">
-                                <div class="col45" style="width: 300px">
-                                    <div class="jbForm">
-                                        <input type="text" placeholder="주소를 입력해 주세요" id="" name="" value="" readonly />
-                                    </div>
-                                </div>
-                                <div class="col45" style="width: 300px">
-                                    <div class="jbForm">
-                                        <input type="text" placeholder="상세 주소 입력" id="" name="" value="" />
-                                    </div>
-                                </div>
-                                <div class="col00" style="width: 145px">
-                                    <a href="#" target="_blank" class="jbbtns">
-                                        <span class="intxtsw">지도위치확인</span>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="amSectBtnAre">
-                            <button class="ansbtn ad" title="추가"></button>
-                            <button class="ansbtn mn" title="삭제"></button>
-                        </div>
-                    </div>
-                    <!-- foreach:E -->
-                </div>
-                <div class="jbAddMinArea MT20">
-                    <!-- foreach:S -->
-                    <div class="amSectListsArea">
-                        <div class="amSectDivAre">
-                            <div class="row">
-                                <div class="col45" style="width: 200px">
-                                    <div class="jbForm">
-                                        <select name="">
-                                            <option value="">국가선택</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col45" style="width: 545px">
-                                    <div class="jbForm">
-                                        <input type="text" placeholder="해외 근무지역의 상세주소를 입력해 주세요." id="" name="" value="" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="amSectBtnAre">
-                            <button class="ansbtn ad" title="추가"></button>
-                        </div>
-                    </div>
-                    <div class="amSectListsArea">
-                        <div class="amSectDivAre">
-                            <div class="row">
-                                <div class="col45" style="width: 200px">
-                                    <div class="jbForm">
-                                        <select name="">
-                                            <option value="">국가선택</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="col45" style="width: 545px">
-                                    <div class="jbForm">
-                                        <input type="text" placeholder="해외 근무지역의 상세주소를 입력해 주세요." id="" name="" value="" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="amSectBtnAre">
-                            <button class="ansbtn ad" title="추가"></button>
-                            <button class="ansbtn mn" title="삭제"></button>
-                        </div>
-                    </div>
-                    <!-- foreach:E -->
-                </div>
-            </div>
-        </div>
+        <RowLayout title="근무지 주소" required class="MT20">
+            <Row>
+                <Col class="col00 MT15">
+                    <RadioGroup>
+                        <Radio name="partAdressGubun" value="1" v-model="partAdressGubun" checked label="국내" />
+                        <Radio name="partAdressGubun" value="99" v-model="partAdressGubun" label="해외" cssClass="ML25" />
+                    </RadioGroup>
+                </Col>
+                <Col class="col00 MT15 ML15">
+                    <Checkbox size="lg">재택근무 가능</Checkbox>
+                </Col>
+            </Row>
+            <Row>
+                <Col class="col12 MT20">
+                    <AddToggleBox>
+                        <template v-slot:AddToggleBoxDivision>
+                            <Row v-if="partAdressGubun == 1">
+                                <Col class="col12" style="width: 500px;">
+                                    <Input placeholder="주소를 입력해 주세요" @click="showApi" v-model="addr1" readonly />
+                                </Col>
+                                <Col class="col9 MT05">
+                                    <Input placeholder="상세 주소 입력" v-model="addr2"/>
+                                </Col>
+                                <Col class="col3 MT05">
+                                    <Button :href="`https://map.kakao.com/?q=${addr1} ${addr2}`" target="_blank">지도위치확인</Button>
+                                </Col>
+                            </Row>
+                            <Row v-else>
+                                <Col class="col45" style="width: 200px">
+                                    <Select>
+                                        <option value="">국가선택</option>
+                                    </Select>
+                                </Col>
+                                <Col class="col45" style="width: 545px">
+                                    <Input placeholder="해외 근무지역의 상세주소를 입력해 주세요." />
+                                </Col>
+                            </Row>
+                        </template>
+                    </AddToggleBox>
+                </Col>
+            </Row>
+        </RowLayout>
         <!-- 근무지 주소:E -->
         <!-- 근무지역:S -->
         <RowLayout title="근무지역" required class="MT20">
@@ -528,6 +441,7 @@ import RadioGroup from "@/components/Form/RadioGroup";
 import Radio from "@/components/Form/Radio";
 import AddToggleBox from "@/components/UiComponents/AddToggleBox";
 import Nullmsg from "@/components/Form/Nullmsg";
+import Button from "@/components/Form/Button";
 import mixin from "@/mixin";
 import { debounce } from "lodash";
 import { SUBWAY_INFO_KEY } from "@/config";
@@ -719,6 +633,18 @@ export default {
                     end_minu: 0,
                 },
             ],
+
+            //근무지 주소
+            partAdressGubun: 1, //국내:1,해외99
+            partAdressToggleLength: 5,
+            partAdressToggleArray: [
+                {
+                    sq_code: 0,
+                },
+            ],
+            zip: "",
+            addr1: "",
+            addr2: "",
             //근무지역
             workAdressList: undefined, //axios
             workAdressSelected: [
@@ -871,6 +797,40 @@ export default {
         workTimeMinEvent(code) {
             this.workTimeToggleArray = this.workTimeToggleArray.filter((item, index) => item.sq_code != code);
         },
+        showApi() {
+            new window.daum.Postcode({
+                oncomplete: (data) => {
+                    // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
+
+                    // 도로명 주소의 노출 규칙에 따라 주소를 조합한다.
+                    // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
+                    let fullRoadAddr = data.roadAddress; // 도로명 주소 변수
+                    let extraRoadAddr = ""; // 도로명 조합형 주소 변수
+
+                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+                    if (data.bname !== "" && /[동|로|가]$/g.test(data.bname)) {
+                        extraRoadAddr += data.bname;
+                    }
+                    // 건물명이 있고, 공동주택일 경우 추가한다.
+                    if (data.buildingName !== "" && data.apartment === "Y") {
+                        extraRoadAddr += extraRoadAddr !== "" ? ", " + data.buildingName : data.buildingName;
+                    }
+                    // 도로명, 지번 조합형 주소가 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+                    if (extraRoadAddr !== "") {
+                        extraRoadAddr = " (" + extraRoadAddr + ")";
+                    }
+                    // 도로명, 지번 주소의 유무에 따라 해당 조합형 주소를 추가한다.
+                    if (fullRoadAddr !== "") {
+                        fullRoadAddr += extraRoadAddr;
+                    }
+
+                    // 우편번호와 주소 정보를 해당 필드에 넣는다.
+                    this.zip = data.zonecode; //5자리 새우편번호 사용
+                    this.addr1 = fullRoadAddr;
+                },
+            }).open()
+        },
     },
     components: {
         RowLayout,
@@ -888,6 +848,7 @@ export default {
         Radio,
         AddToggleBox,
         Nullmsg,
+        Button,
     },
 };
 </script>
