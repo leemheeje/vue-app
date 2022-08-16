@@ -6,11 +6,6 @@ module.exports = defineConfig({
 	},
 	devServer: {
 		proxy: {
-			"/subwayInfo": {
-				target: process.env.VUE_APP_SUBWAY_API_PATH,
-				changeOrigin: true,
-				pathRewrite: { '^/subwayInfo': '/'}
-			},
 			"/realstnx": {
 				target: 'https://jsonplaceholder.typicode.com',
 				changeOrigin: true,
@@ -18,6 +13,6 @@ module.exports = defineConfig({
 			}
 		}
 	},
-	publicPath: process.env.NODE_ENV === 'production' ? './' : '/'
+	//publicPath: process.env.NODE_ENV === 'production' ? './' : '/'
 })
 

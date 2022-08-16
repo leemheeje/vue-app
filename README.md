@@ -1,5 +1,10 @@
 # vue-app
 
+## /src/config.js 생성
+```
+export const SUBWAY_INFO_KEY = `API_KEY`
+```
+
 ## Project setup
 ```
 npm install

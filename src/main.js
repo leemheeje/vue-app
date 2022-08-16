@@ -12,5 +12,5 @@ import '@/assets/css/common.css'
 const app = createApp(App);
 app.config.globalProperties.$http = axios
 app.config.globalProperties.API_PATH_STATIC = '//localhost:5500/static_api'
-app.config.globalProperties.API_PATH_SUBWAY_INFO = `/subwayInfo/1613000/SubwayInfoService/getKwrdFndSubwaySttnList`
+app.config.globalProperties.API_PATH_SUBWAY_INFO = `${process.env.VUE_APP_SUBWAY_API_PATH}/1613000/SubwayInfoService/getKwrdFndSubwaySttnList`
 app.use(store).use(router).mount('#app')
