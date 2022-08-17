@@ -62,6 +62,8 @@ export default {
         Gnb,
         JobpostSelect,
     },
-	created(){}
+	created(){
+		console.log(this.$store.state.isAuth);
+	}
 };
 </script>

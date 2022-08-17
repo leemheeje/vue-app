@@ -710,9 +710,6 @@ export default {
         };
     },
     computed: {
-        partAdressGubunasdf() {
-            console.log(this.partAdressGubun);
-        },
         subwaySelectedConv() {
             return this.subwaySelected.map(({ subwayRouteName, subwayStationId, subwayStationName, ...props }) => ({
                 label: `${subwayRouteName} > `,
@@ -750,7 +747,7 @@ export default {
             this.partAdressCountryCode = data;
         });
         await this.$http.get(`${this.API_PATH_STATIC}/paygubun.json`).then(({ data }) => {
-            this.paygubun = data;
+            this.payGubunOptions = data;
         });
         await this.$http.get(`${this.API_PATH_STATIC}/week.json`).then(({ data }) => {
             this.workWeekList = data;
