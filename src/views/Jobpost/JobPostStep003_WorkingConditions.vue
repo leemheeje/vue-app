@@ -169,37 +169,59 @@
                     </RadioGroup>
                 </Col>
                 <Col class="col00 MT15 ML15">
-                    <Checkbox size="lg">재택근무 가능</Checkbox>
+                    <Checkbox size="lg" :checked="partAdressHomeworking" @change="(e) => (partAdressHomeworking = e.target.checked)">재택근무 가능</Checkbox>
                 </Col>
             </Row>
             <Row>
-                <Col class="col12 MT20">
-                    <AddToggleBox>
+                <Col class="col12 MT20" v-if="partAdressGubun == 1">
+                    <!-- 국내:S -->
+                    <AddToggleBox
+                        v-for="(item, index) in partAdressToggleArray"
+                        :key="index"
+                        :sq_code="item.sq_code"
+                        @click:AddToggleBox="partAdressToggleAdd.call(null, 'partAdressToggleArray')"
+                        @click:MinToggleBox="(code) => partAdressToggleMin.call(null, code, 'partAdressToggleArray')"
+                    >
                         <template v-slot:AddToggleBoxDivision>
-                            <Row v-if="partAdressGubun == 1">
-                                <Col class="col12" style="width: 500px;">
-                                    <Input placeholder="주소를 입력해 주세요" @click="__kakaoPostCodeShow" v-model="__kakaoPostCodes.addr1" readonly />
+                            <Row>
+                                <Col class="col12" style="width: 500px">
+                                    <Input placeholder="주소를 입력해 주세요" @click="kakaoPostCodeShow" :data-sq-code="item.sq_code" v-model="item.addr1" readonly />
                                 </Col>
-                                <Col class="col9 MT05">
-                                    <Input placeholder="상세 주소 입력" v-model="__kakaoPostCodes.addr2"/>
+                                <Col class="col9 MT05" style="width: 580px">
+                                    <Input placeholder="상세 주소 입력" v-model="item.addr2" />
                                 </Col>
                                 <Col class="col3 MT05">
-                                    <Button :href="__kakaoPostCodeHref" target="_blank">지도위치확인</Button>
-                                </Col>
-                            </Row>
-                            <Row v-else>
-                               <Col class="col12" style="width: 400px;">
-                                    <Select>
-                                        <option value="">국가선택</option>
-										<option v-for="(item,index) in partAdressCountryCode" :key="index" :value="item.ISO">{{item.name}}</option>
-                                    </Select>
-                                </Col>
-                                <Col class="col45 MT05" style="width: 825px">
-                                    <Input placeholder="해외 근무지역의 상세주소를 입력해 주세요." />
+                                    <Button :href="`https://map.kakao.com/?q=${item.addr1} ${item.addr2}`" target="_blank">지도위치확인</Button>
                                 </Col>
                             </Row>
                         </template>
                     </AddToggleBox>
+                    <!-- 국내:E -->
+                </Col>
+                <Col class="col12 MT20" v-else>
+                    <!-- 해외:S -->
+                    <AddToggleBox
+                        v-for="(item, index) in partGlobalAdressToggleArray"
+                        :key="index"
+                        :sq_code="item.sq_code"
+                        @click:AddToggleBox="partAdressToggleAdd.call(null, 'partGlobalAdressToggleArray')"
+                        @click:MinToggleBox="(code) => partAdressToggleMin.call(null, code, 'partGlobalAdressToggleArray')"
+                    >
+                        <template v-slot:AddToggleBoxDivision>
+                            <Row>
+                                <Col class="col12" style="width: 400px">
+                                    <Select v-model="item.country_code" :data-name="item.country_name">
+                                        <option value="">국가선택</option>
+                                        <option v-for="(item, index) in partAdressCountryCode" :key="index" :value="item.ISO">{{ item.name }}</option>
+                                    </Select>
+                                </Col>
+                                <Col class="col45 MT05" style="width: 580px">
+                                    <Input placeholder="해외 근무지역의 상세주소를 입력해 주세요." v-model="item.addr2" />
+                                </Col>
+                            </Row>
+                        </template>
+                    </AddToggleBox>
+                    <!-- 해외:E -->
                 </Col>
             </Row>
         </RowLayout>
@@ -638,15 +660,25 @@ export default {
             //근무지 주소
             partAdressGubun: 1, //국내:1,해외99
             partAdressToggleLength: 5,
+            partAdressHomeworking: true,
             partAdressToggleArray: [
                 {
                     sq_code: 0,
+                    zip: "",
+                    addr1: "123",
+                    addr2: "3",
+                    href: "",
                 },
             ],
-			partAdressCountryCode:[],
-            zip: "",
-            addr1: "",
-            addr2: "",
+            partGlobalAdressToggleArray: [
+                {
+                    country_code: "328",
+                    country_name: "가이아나",
+                    sq_code: 0,
+                    addr2: "3",
+                },
+            ],
+            partAdressCountryCode: [], //axios
             //근무지역
             workAdressList: undefined, //axios
             workAdressSelected: [
@@ -678,6 +710,9 @@ export default {
         };
     },
     computed: {
+        partAdressGubunasdf() {
+            console.log(this.partAdressGubun);
+        },
         subwaySelectedConv() {
             return this.subwaySelected.map(({ subwayRouteName, subwayStationId, subwayStationName, ...props }) => ({
                 label: `${subwayRouteName} > `,
@@ -800,7 +835,56 @@ export default {
             }
         },
         workTimeMinEvent(code) {
-            this.workTimeToggleArray = this.workTimeToggleArray.filter((item, index) => item.sq_code != code);
+            this.workTimeToggleArray = this.workTimeToggleArray.filter((item) => item.sq_code != code);
+        },
+        kakaoPostCodeShow(e) {
+            let target = e.target;
+            let sq_code = target.dataset.sqCode;
+            let _data = this.partAdressToggleArray.find((item) => item.sq_code == sq_code);
+            this.__kakaoPostCodeShow().then(({ zip, addr1, addr2, href }) => {
+                this.partAdressToggleArray = this.partAdressToggleArray.map((item) => {
+                    if (item.sq_code == _data.sq_code) {
+                        return (item = {
+                            ...item,
+                            zip,
+                            addr1,
+                            addr2,
+                            href,
+                        });
+                    } else {
+                        return item;
+                    }
+                });
+            });
+        },
+        partAdressToggleAdd(params) {
+            let cr_lns = this[params].length;
+            let sq_code = this[params].findLast((ar) => ar);
+            let lm_lns = this.limitWorkAdresselectedLength;
+
+            if (cr_lns < lm_lns) {
+                this[params].push(
+                    this[params] === this.partAdressToggleArray
+                        ? {
+                              sq_code: sq_code.sq_code + 1,
+                              zip: "",
+                              addr1: "",
+                              addr2: "",
+                              href: "",
+                          }
+                        : {
+                              sq_code: sq_code.sq_code + 1,
+                              country_code: "",
+                              country_name: "",
+                              addr2: "",
+                          }
+                );
+            } else {
+                alert(`근무지역 추가는 ${lm_lns}개 까지만 가능합니다.`);
+            }
+        },
+        partAdressToggleMin(code, params) {
+            this[params] = this[params].filter((item) => item.sq_code != code);
         },
     },
     components: {
