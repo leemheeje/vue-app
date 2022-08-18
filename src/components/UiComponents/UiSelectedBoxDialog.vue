@@ -100,7 +100,6 @@ import Dialog from "@/components/Dialog/Dialog";
 import Checkbox from "@/components/Form/Checkbox";
 import Selected from "@/components/Form/Selected";
 import Nullmsg from "@/components/Form/Nullmsg";
-import mixin from "@/mixin";
 export default {
     components: {
         Dialog,
@@ -108,7 +107,6 @@ export default {
         Selected,
         Nullmsg,
     },
-    mixins: [mixin],
     props: {
         title: {
             type: String,

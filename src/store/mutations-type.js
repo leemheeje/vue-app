@@ -1,0 +1,21 @@
+
+
+//jobpost - 모집분야
+//모집분야 타이틀
+export const SET_MOZIPBUNYA_TITLE = 'SET_MOZIPBUNYA_TITLE';
+//모집분야 모집인원
+export const SET_MOZIPBUNYA_LENGTH = 'SET_MOZIPBUNYA_LENGTH';
+//모집분야 경력여부 신입
+export const SET_MOZIPBUNYA_NEWCOMER = 'SET_MOZIPBUNYA_NEWCOMER';
+//모집분야 경력여부 
+export const SET_MOZIPBUNYA_CAREER = 'SET_MOZIPBUNYA_CAREER';
+//모집분야 경력여부 경력년차
+export const SET_MOZIPBUNYA_CAREER_RANGE = 'SET_MOZIPBUNYA_CAREER_RANGE';
+//모집분야 경력여부 경력무관
+export const SET_MOZIPBUNYA_CAREER_ABSOLUTE = 'SET_MOZIPBUNYA_CAREER_ABSOLUTE';
+//모집분야 담당업무
+export const SET_MOZIPBUNYA_RESPONS = 'SET_MOZIPBUNYA_RESPONS';
+//모집분야 근무부서
+export const SET_MOZIPBUNYA_PARTNAME = 'SET_MOZIPBUNYA_PARTNAME';
+//모집분야 선택하기
+export const SET_MOZIPBUNYA_SELETED = 'SET_MOZIPBUNYA_SELETED';

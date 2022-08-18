@@ -1,15 +1,13 @@
-import { createStore } from 'vuex'
+import { createStore } from 'vuex';
+import { jobpost } from '@/store/module';
+
 
 export default createStore({
-  state: {
-	isAuth : true
-  },
-  getters: {
-  },
-  mutations: {
-  },
-  actions: {
-  },
-  modules: {
-  }
+	state: {},
+	getters: {},
+	mutations: {},
+	actions: {},
+	modules: {
+		jobpost: jobpost
+	}
 })
