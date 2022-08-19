@@ -192,9 +192,9 @@ import {
     SET_JOBPOST_SELETED,
     SET_JOBPOST_UNSELETED,
 } from "@/store/mutations-type";
+import { ELIGIBILITY } from "@/router/router-type";
 import { mapActions, mapMutations, mapGetters, mapState } from "vuex";
 import { jobpost } from "@/mixin";
-import { provide,inject, toRefs, reactive,ref,computed } from "vue";
 
 export default {
     name: "모집분야",
@@ -285,10 +285,10 @@ export default {
             setSession: `jobpost/setSession`,
             getSession: `jobpost/getSession`,
         }),
-        woodaebind(e) {
+        woodaebind(event) {
             this.SET_JOBPOST_SELETED({
                 event,
-                seleted: "mzby_woodae_selected",
+                selected: "mzby_woodae_selected",
                 selectedLengh: this.limitWoodaeSelectedLength,
                 alertMsg: `우대사항은 ${this.limitWoodaeSelectedLength}개 까지 선택가능합니다.`,
             });
@@ -296,35 +296,34 @@ export default {
         jcjgbind(event) {
             this.SET_JOBPOST_SELETED({
                 event,
-                seleted: "mzby_jcjg_seleted",
+                selected: "mzby_jcjg_seleted",
                 selectedLengh: this.limitJcJgSelectedLength,
                 alertMsg: `직급/직책은 ${this.limitJcJgSelectedLength}개 까지 선택가능합니다.`,
             });
         },
         jcjgSelectedDelete(code) {
-            this[SET_JOBPOST_UNSELETED]({ code, seleted: "mzby_jcjg_seleted" });
+            this[SET_JOBPOST_UNSELETED]({ code, selected: "mzby_jcjg_seleted" });
         },
         woodaeSelectedDelete(code) {
-            this[SET_JOBPOST_UNSELETED]({ code, seleted: "mzby_woodae_selected" });
+            this[SET_JOBPOST_UNSELETED]({ code, selected: "mzby_woodae_selected" });
         },
         lcSetSession() {
             this.setSession({
                 session_name: this.$options.name,
                 session_value: {
-						mzby_title: this.mzby_title,
-						mzby_length: this.mzby_length,
-						mzby_newcomer: this.mzby_newcomer,
-						mzby_career: this.mzby_career,
-						mzby_career_range: this.mzby_career_range,
-						mzby_career_absolute: this.mzby_career_absolute,
-						mzby_respons: this.mzby_respons,
-						mzby_partname: this.mzby_partname,
-						mzby_jcjg_seleted: this.mzby_jcjg_seleted,
-						mzby_woodae_selected: this.mzby_woodae_selected,
-					} 
+                    mzby_title: this.mzby_title,
+                    mzby_length: this.mzby_length,
+                    mzby_newcomer: this.mzby_newcomer,
+                    mzby_career: this.mzby_career,
+                    mzby_career_range: this.mzby_career_range,
+                    mzby_career_absolute: this.mzby_career_absolute,
+                    mzby_respons: this.mzby_respons,
+                    mzby_partname: this.mzby_partname,
+                    mzby_jcjg_seleted: this.mzby_jcjg_seleted,
+                    mzby_woodae_selected: this.mzby_woodae_selected,
+                },
             }).then(() => {
-                console.log(this.$options.name);
-                console.log(window.localStorage.getItem(this.$options.name));
+                this.$router.push({ name: ELIGIBILITY });
             });
         },
     },

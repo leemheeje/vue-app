@@ -8,7 +8,8 @@
         <RowLayout title="학력">
             <Row class="FLEX">
                 <Col class="col35">
-                    <Select v-model="hckGubun">
+                    <Select :model-value="ziwon_hckGubun" @change="(e) => SET_ZIWON_EDUCATION_SELECT(e.target.value)">
+                        <option value="">학력선택</option>
                         <option value="0">학력무관</option>
                         <option value="6">고등학교 미만 졸업</option>
                         <option value="1">고등학교 졸업</option>
@@ -19,34 +20,34 @@
                     </Select>
                 </Col>
                 <Col class="col00" style="width: 350px">
-                    <Input placeholder="(선택) 기타 학력사항" />
+                    <Input placeholder="(선택) 기타 학력사항" :model-value="ziwon_hckGubun_input" @input="(e) => SET_ZIWON_EDUCATION_INPUT(e.target.value)" />
                 </Col>
                 <Col class="col00 ML15 FLEX ALIGN_ITEM_CENTER">
-                    <Checkbox size="lg">졸업예정자 가능</Checkbox>
+                    <Checkbox size="lg" :checked="ziwon_hckGubun_check" @change="(e) => SET_ZIWON_EDUCATION_CHECK(e.target.checked)">졸업예정자 가능</Checkbox>
                 </Col>
             </Row>
         </RowLayout>
         <!-- 학력:E -->
         <!-- 외국어:S -->
-        <RowLayout title="외국어" :subtitle="`(${langageSelected.length}/6)`" class="MT30">
+        <RowLayout title="외국어" :subtitle="`(${ziwon_langage_selected.length}/6)`" class="MT30">
             <UiSelectedBox
                 title="외국어"
-                :selected="langageSelected"
+                :selected="ziwon_langage_selected"
                 @click:afRightButtonBind="isLangageDialogVisible = true"
                 @update:selectBindDelete="
                     (e) =>
-                        __lcFnSelectedDelete({
+                        SET_JOBPOST_UNSELETED({
                             code: e.target.value,
-                            seleted: 'langageSelected',
+                            selected: 'ziwon_langage_selected',
                         })
                 "
                 :isJumsuTemplate="true"
-                :jumsuList="langageSelected"
+                :jumsuList="ziwon_langage_selected"
                 @click:jumsuListDelete="
                     (e) =>
-                        __lcFnSelectedDelete({
+                        SET_JOBPOST_UNSELETED({
                             code: e.target.value,
-                            seleted: 'langageSelected',
+                            selected: 'ziwon_langage_selected',
                         })
                 "
             >
@@ -58,7 +59,7 @@
                                     :addSelectButton="true"
                                     :name="item.name"
                                     :model-value="item.code"
-                                    :checked="langageSelected.find(({ code }) => code === item.code)"
+                                    :checked="ziwon_langage_selected.find(({ code }) => code === item.code)"
                                     @change="lanagebind"
                                     >{{ item.name }}</Checkbox
                                 >
@@ -72,16 +73,16 @@
                     title="외국어"
                     subtitle="최대 6개까지 선택 가능"
                     :selectLists="langage"
-                    :selectedLists="langageSelected"
+                    :selectedLists="ziwon_langage_selected"
                     :visible="isLangageDialogVisible"
-                    @click:selectedInitializeButton="langageSelected = []"
+                    @click:selectedInitializeButton="ziwon_langage_selected = []"
                     @click:dialogVisibleToggle="(isVisible) => (isLangageDialogVisible = isVisible)"
                     @update:selectedbind="lanagebind"
                     @update:selecteddelete="
                         (e) =>
-                            __lcFnSelectedDelete({
+                            SET_JOBPOST_UNSELETED({
                                 code: e.target.value,
-                                seleted: 'langageSelected',
+                                selected: 'ziwon_langage_selected',
                             })
                     "
                 />
@@ -89,16 +90,16 @@
         </RowLayout>
         <!-- 외국어:E -->
         <!-- 자격증:S -->
-        <RowLayout title="자격증" :subtitle="`(${licenseSelected.length}/3)`" class="MT30">
+        <RowLayout title="자격증" :subtitle="`(${ziwon_license_selected.length}/3)`" class="MT30">
             <UiSelectedBox
                 title="자격증"
-                :selected="licenseSelected"
+                :selected="ziwon_license_selected"
                 @click:afRightButtonBind="isLicenseDialogVisible = true"
                 @update:selectBindDelete="
                     (e) =>
-                        __lcFnSelectedDelete({
+                        SET_JOBPOST_UNSELETED({
                             code: e.target.value,
-                            seleted: 'licenseSelected',
+                            selected: 'ziwon_license_selected',
                         })
                 "
             >
@@ -110,7 +111,7 @@
                                     :addSelectButton="true"
                                     :name="item.name"
                                     :model-value="item.code"
-                                    :checked="licenseSelected.find(({ code }) => code === item.code)"
+                                    :checked="ziwon_license_selected.find(({ code }) => code === item.code)"
                                     @change="licensebind"
                                     >{{ item.name }}</Checkbox
                                 >
@@ -124,18 +125,18 @@
                     title="자격증"
                     subtitle="최대 3개까지 선택 가능"
                     :selectLists="license"
-                    :selectedLists="licenseSelected"
+                    :selectedLists="ziwon_license_selected"
                     :visible="isLicenseDialogVisible"
                     :isDialogHeader="true"
                     :isDialogContent="false"
-                    @click:selectedInitializeButton="licenseSelected = []"
+                    @click:selectedInitializeButton="ziwon_license_selected = []"
                     @click:dialogVisibleToggle="(isVisible) => (isLicenseDialogVisible = isVisible)"
                     @update:selectedbind="licensebind"
                     @update:selecteddelete="
                         (e) =>
-                            __lcFnSelectedDelete({
+                            SET_JOBPOST_UNSELETED({
                                 code: e.target.value,
-                                seleted: 'licenseSelected',
+                                selected: 'ziwon_license_selected',
                             })
                     "
                 >
@@ -153,16 +154,16 @@
         </RowLayout>
         <!-- 자격증:E -->
         <!-- 우대전공:S -->
-        <RowLayout title="우대전공" class="MT30">
+        <RowLayout title="우대전공" :subtitle="`(${ziwon_woodaeuni_selected.length}/6)`" class="MT30">
             <UiSelectedBox
                 title="우대전공"
-                :selected="woodaeUniSelected"
+                :selected="ziwon_woodaeuni_selected"
                 @click:afRightButtonBind="isWoodaeUniDialogVisible = true"
                 @update:selectBindDelete="
                     (e) =>
-                        __lcFnSelectedDelete({
+                        SET_JOBPOST_UNSELETED({
                             code: e.target.value,
-                            seleted: 'woodaeUniSelected',
+                            selected: 'ziwon_woodaeuni_selected',
                         })
                 "
             >
@@ -174,7 +175,7 @@
                                     :addSelectButton="true"
                                     :name="item.name"
                                     :value="item.code"
-                                    :checked="woodaeUniSelected.find(({ code }) => item.code === code)"
+                                    :checked="ziwon_woodaeuni_selected.find(({ code }) => item.code === code)"
                                     @change="woodaeUnibind"
                                     >{{ item.name }}</Checkbox
                                 >
@@ -188,10 +189,17 @@
                 subtitle="6개까지 입력 가능"
                 :visible="isWoodaeUniDialogVisible"
                 :selectLists="woodaeUni"
-                :selectedLists="woodaeUniSelected"
+                :selectedLists="ziwon_woodaeuni_selected"
                 @click:dialogVisibleToggle="isWoodaeUniDialogVisible = false"
-                @click:selectedInitializeButton="woodaeUniSelected = []"
+                @click:selectedInitializeButton="ziwon_woodaeuni_selected = []"
                 @update:selectedbind="woodaeUnibind"
+                @update:selecteddelete="
+                    (e) =>
+                        SET_JOBPOST_UNSELETED({
+                            code: e.target.value,
+                            selected: 'ziwon_woodaeuni_selected',
+                        })
+                "
             />
         </RowLayout>
 
@@ -201,9 +209,16 @@
             <Row class="FLEX ALIGN_ITEM_CENTER JUSTIFY_ITEM_CENTER">
                 <Col class="col00 MT10" style="margin-right: auto">
                     <RadioGroup>
-                        <Radio v-model="jenderGubun" name="jender_gubun" label="성별무관" value="99" checked />
-                        <Radio v-model="jenderGubun" name="jender_gubun" label="남자" cssClass="ML20" value="man" />
-                        <Radio v-model="jenderGubun" name="jender_gubun" label="여자" cssClass="ML20" value="woman" />
+                        <Radio
+                            v-for="(item, index) in ziwonJenderArray"
+                            :key="index"
+                            :label="item.label"
+                            :model-value="item.value"
+                            :checked="ziwon_jender == item.value"
+                            @change="(e) => SET_ZIWON_JENDER(e.target.value)"
+                            cssClass="MR20"
+                            name="jender_gubun"
+                        />
                     </RadioGroup>
                 </Col>
                 <Col class="col00" style="margin-left: auto">
@@ -282,8 +297,16 @@
             <Row class="FLEX ALIGN_ITEM_CENTER">
                 <Col class="col00 MT10" style="margin-right: auto">
                     <RadioGroup>
-                        <Radio label="연령무관" name="limit_age_gubun" value="N" v-model="limitAgeGubun" checked />
-                        <Radio label="연령제한" name="limit_age_gubun" cssClass="ML20" value="Y" v-model="limitAgeGubun" />
+                        <Radio
+                            v-for="(item, index) in ziwonAgeArray"
+                            :key="index"
+                            :label="item.label"
+                            :model-value="item.value"
+                            :checked="ziwon_age == item.value"
+                            @change="(e) => SET_ZIWON_AGE(e.target.value)"
+                            cssClass="MR20"
+                            name="limit_age_gubun"
+                        />
                     </RadioGroup>
                 </Col>
                 <Col class="col00" style="margin-left: auto">
@@ -350,15 +373,15 @@
                     </Dialog>
                 </Col>
             </Row>
-            <Row class="MT15" v-if="limitAgeGubun == 'Y'">
+            <Row class="MT15" v-if="ziwon_age == '99'">
                 <Col class="col00">
-                    <Input type="number" placeholder="숫자" />
+                    <Input type="number" placeholder="숫자" data-index="0" :model-value="ziwon_age_ln[0]" @input="(e) => SET_ZIWON_AGE_LN(e.target)" />
                 </Col>
                 <Col class="col00">
                     <span class="jbStatText MT15">세 이상 ~</span>
                 </Col>
                 <Col class="col00">
-                    <Input type="number" placeholder="숫자" />
+                    <Input type="number" placeholder="숫자" data-index="1" :model-value="ziwon_age_ln[1]" @input="(e) => SET_ZIWON_AGE_LN(e.target)" />
                 </Col>
                 <Col class="col00">
                     <span class="jbStatText MT15">세 이하</span>
@@ -366,83 +389,88 @@
             </Row>
         </RowLayout>
         <!-- 연령제한:E -->
+        <button class="jbSectAddButton MT20" @click="lcSetSession">다음</button>
     </div>
     <!-- 지원자격:E -->
 </template>
 
 <script>
-import RowLayout from "@/components/Layout/RowLayout";
-import Row from "@/components/Layout/Row";
-import Col from "@/components/Layout/Col";
-import Input from "@/components/Form/Input";
-import Select from "@/components/Form/Select";
-import Checkbox from "@/components/Form/Checkbox";
-import UiSelectedBox from "@/components/UiComponents/UiSelectedBox";
-import UiSelectedBoxTooltip from "@/components/UiComponents/UiSelectedBoxTooltip";
-import UiSelectedBoxFavorite from "@/components/UiComponents/UiSelectedBoxFavorite";
-import UiSelectedBoxDialog from "@/components/UiComponents/UiSelectedBoxDialog";
-import SearchBar from "@/components/UiComponents/SearchBar";
-import SearchBarListItems from "@/components/UiComponents/SearchBarListItems";
-import RadioGroup from "@/components/Form/RadioGroup";
-import Radio from "@/components/Form/Radio";
-import Dialog from "@/components/Dialog/Dialog";
-import mixin from "@/mixin";
+import { jobpost } from "@/mixin";
+import {
+    SET_JOBPOST_SELETED,
+    SET_JOBPOST_UNSELETED,
+    SET_ZIWON_EDUCATION_SELECT,
+    SET_ZIWON_EDUCATION_INPUT,
+    SET_ZIWON_EDUCATION_CHECK,
+    SET_ZIWON_JENDER,
+    SET_ZIWON_AGE,
+    SET_ZIWON_AGE_LN,
+} from "@/store/mutations-type";
+import { WORKINGCONDITIONS } from "@/router/router-type";
+import { mapState, mapActions, mapMutations } from "vuex";
+
 export default {
-    mixins: [mixin],
+    name: "지원자격",
+    mixins: [jobpost],
     data() {
         return {
-            //학력
-            hckGubun: 0,
             //외국어
             langage: undefined,
-            langageSelected: [
-                {
-                    code: "LA003001",
-                    name: "HSK",
-                    required: false,
-                    rate: 3,
-                },
-                {
-                    code: "LA002003",
-                    name: "JLRT",
-                    required: true,
-                    rate: 2,
-                },
-            ],
             isLangageDialogVisible: false,
             limitLangageSelectedLength: 6,
-            license: undefined,
-            licenseSelected: [
-                {
-                    name: "IBA세계경호협회-특수경호실무사(경호 1,2,3급)",
-                    code: "LIC0165",
-                },
-                {
-                    name: "(재)종이문화재단-고지공예지도사(마스터, 1,2급)",
-                    code: "LIC0166",
-                },
-            ],
-            isLicenseDialogVisible: false,
-            limitLicenseSelectedLength: 3,
-
             //우대전공
             woodaeUni: undefined,
-            woodaeUniSelected: [],
             isWoodaeUniDialogVisible: false,
             limitWoodaeUniSelectedLength: 6,
-
-            //성차별법금지
-            ediDialogVisible001: false,
-            ediDialogVisible002: false,
-            limitAgeGubun: "N",
-            jenderGubun: "99",
-
-            //테스트
+            //자격증
+            license: undefined,
+            isLicenseDialogVisible: false,
+            limitLicenseSelectedLength: 3,
+			//자격증 > 연관검색
             keywordData: undefined,
             keyword: "",
+            //연령제한
+            ziwonAgeArray: [
+                {
+                    label: "연령무관",
+                    value: "1",
+                },
+                {
+                    label: "연령제한",
+                    value: "99",
+                },
+            ],
+            ziwonJenderArray: [
+                {
+                    label: "성별무관",
+                    value: "99",
+                },
+                {
+                    label: "남자",
+                    value: "man",
+                },
+                {
+                    label: "여자",
+                    value: "woman",
+                },
+            ],
+            //성차별법금지 팝업visible
+            ediDialogVisible001: false,
+            ediDialogVisible002: false,
         };
     },
     computed: {
+        ...mapState({
+            ziwon_hckGubun: (state) => state.jobpost.ziwon_hckGubun,
+            ziwon_hckGubun_input: (state) => state.jobpost.ziwon_hckGubun_input,
+            ziwon_hckGubun_check: (state) => state.jobpost.ziwon_hckGubun_check,
+            ziwon_jender: (state) => state.jobpost.ziwon_jender,
+            ziwon_age: (state) => state.jobpost.ziwon_age,
+            ziwon_age_ln: (state) => state.jobpost.ziwon_age_ln,
+            ziwon_langage_selected: (state) => state.jobpost.ziwon_langage_selected,
+            ziwon_woodaeuni_selected: (state) => state.jobpost.ziwon_woodaeuni_selected,
+            ziwon_license_selected: (state) => state.jobpost.ziwon_license_selected,
+        }),
         langageFavorite() {
             return this.__fnComputeFavorite("langage");
         },
@@ -457,34 +485,74 @@ export default {
             }
         },
     },
-    async created() {
-        await this.$http.get(`${this.API_PATH_STATIC}/langage.json`).then(({ data, ...props }) => (this.langage = data));
-        await this.$http.get(`${this.API_PATH_STATIC}/license.json`).then(({ data, ...props }) => {
+    created() {
+		this.getSession({
+			session_name: this.$options.name,
+			commit_name: 'setMoxipbunyaSession'
+		})
+        this.fetchStaticData(this.API_PATH_STATIC_LANGAGE).then(({ data, ...props }) => (this.langage = data));
+        this.fetchStaticData(this.API_PATH_STATIC_WOODAE_UNIVERS).then(({ data, ...props }) => (this.woodaeUni = data));
+        this.fetchStaticData(this.API_PATH_STATIC_LICENSE).then(({ data, ...props }) => {
             this.license = data;
             this.keywordData = data.data;
         });
-        await this.$http.get(`${this.API_PATH_STATIC}/woodae_univers.json`).then(({ data, ...props }) => (this.woodaeUni = data));
     },
     methods: {
-        woodaeUnibind(e) {
-            this.__lcFnBind(e, {
-                seleted: "woodaeUniSelected",
-                selectedLengh: "limitWoodaeUniSelectedLength",
+        ...mapMutations({
+            [SET_JOBPOST_SELETED]: `jobpost/${SET_JOBPOST_SELETED}`,
+            [SET_JOBPOST_UNSELETED]: `jobpost/${SET_JOBPOST_UNSELETED}`,
+            [SET_ZIWON_EDUCATION_SELECT]: `jobpost/${SET_ZIWON_EDUCATION_SELECT}`,
+            [SET_ZIWON_EDUCATION_INPUT]: `jobpost/${SET_ZIWON_EDUCATION_INPUT}`,
+            [SET_ZIWON_EDUCATION_CHECK]: `jobpost/${SET_ZIWON_EDUCATION_CHECK}`,
+            [SET_ZIWON_JENDER]: `jobpost/${SET_ZIWON_JENDER}`,
+            [SET_ZIWON_AGE]: `jobpost/${SET_ZIWON_AGE}`,
+            [SET_ZIWON_AGE_LN]: `jobpost/${SET_ZIWON_AGE_LN}`,
+        }),
+        ...mapActions({
+            fetchStaticData: "jobpost/fetchStaticData",
+            setSession: "jobpost/setSession",
+            getSession: "jobpost/getSession",
+        }),
+        woodaeUnibind(event) {
+            this.SET_JOBPOST_SELETED({
+                event,
+                selected: "ziwon_woodaeuni_selected",
+                selectedLengh: this.limitWoodaeUniSelectedLength,
                 alertMsg: `우대전공은 ${this.limitWoodaeUniSelectedLength}개 까지 선택가능합니다.`,
             });
         },
-        licensebind(e) {
-            this.__lcFnBind(e, {
-                seleted: "licenseSelected",
-                selectedLengh: "limitLicenseSelectedLength",
+        licensebind(event) {
+            this.SET_JOBPOST_SELETED({
+                event,
+                selected: "ziwon_license_selected",
+                selectedLengh: this.limitLicenseSelectedLength,
                 alertMsg: `자격증은 ${this.limitLicenseSelectedLength}개 까지 선택가능합니다.`,
             });
         },
-        lanagebind(e) {
-            this.__lcFnBind(e, {
-                seleted: "langageSelected",
-                selectedLengh: "limitLangageSelectedLength",
+        lanagebind(event) {
+            this.SET_JOBPOST_SELETED({
+                event,
+                selected: "ziwon_langage_selected",
+                selectedLengh: this.limitLangageSelectedLength,
                 alertMsg: `외국어는 ${this.limitLangageSelectedLength}개 까지 선택가능합니다.`,
+            });
+        },
+        lcSetSession() {
+            this.setSession({
+                session_name: this.$options.name,
+                session_value: {
+                    ziwon_hckGubun: this.ziwon_hckGubun,
+                    ziwon_hckGubun_input: this.ziwon_hckGubun_input,
+                    ziwon_hckGubun_check: this.ziwon_hckGubun_check,
+                    ziwon_jender: this.ziwon_jender,
+                    ziwon_age: this.ziwon_age,
+                    ziwon_age_ln: this.ziwon_age_ln,
+                    ziwon_langage_selected: this.ziwon_langage_selected,
+                    ziwon_woodaeuni_selected: this.ziwon_woodaeuni_selected,
+                    ziwon_license_selected: this.ziwon_license_selected,
+                },
+            }).then(() => {
+                this.$router.push({ name: WORKINGCONDITIONS });
             });
         },
         fnKeyword(e) {
@@ -495,24 +563,6 @@ export default {
         fnSearchListItems(e) {
             console.log(e);
         },
-    },
-    components: {
-        RowLayout,
-        Row,
-        Col,
-        Input,
-        Select,
-        Checkbox,
-        RowLayout,
-        UiSelectedBox,
-        UiSelectedBoxTooltip,
-        UiSelectedBoxFavorite,
-        UiSelectedBoxDialog,
-        SearchBar,
-        SearchBarListItems,
-        RadioGroup,
-        Radio,
-        Dialog,
     },
 };
 </script>

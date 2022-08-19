@@ -6,10 +6,10 @@ module.exports = defineConfig({
 	},
 	devServer: {
 		proxy: {
-			"/realstnx": {
-				target: 'https://jsonplaceholder.typicode.com',
+			"/subway": {
+				target: 'http://apis.data.go.kr',
 				changeOrigin: true,
-				pathRewrite: { '^/realstnx': '/'}
+				pathRewrite: { '^/subway': '/'}
 			}
 		}
 	},

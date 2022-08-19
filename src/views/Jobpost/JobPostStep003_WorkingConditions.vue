@@ -8,7 +8,7 @@
         <RowLayout title="연봉/급여" required class="MT45">
             <Row class="FLEX ALIGN_ITEM_CENTER">
                 <Col class="col3">
-                    <Select v-model="payGubunSelectbox">
+                    <Select :model-value="wkcond_paygubun" @change="(e) => SET_WKCOND_PAYGUBUN(e.target.value)">
                         <option :value="value" v-for="({ value, name, ...props }, index) in payGubunOptions" :key="index">
                             {{ name }}
                         </option>
@@ -16,94 +16,76 @@
                 </Col>
                 <Col class="col00">
                     <!-- 연봉선택시 :S -->
-                    <Select style="width: 300px" v-if="payGubunSelectbox == 1" :disabled="chicAfterinterview">
+                    <Select
+                        v-if="wkcond_paygubun == 1"
+                        :model-value="wkcond_paygubun_price"
+                        @change="(e) => SET_WKCOND_PAYGUBUN_PRICE(e.target.value)"
+                        :disabled="wkcond_paygubun_check"
+                        style="width: 300px"
+                    >
                         <option value="">선택해주세요</option>
-                        <option value="">2,200~2,500</option>
+                        <option value="2,200~2,500">2,200~2,500</option>
                     </Select>
                     <!-- 연봉선택시 :E -->
                     <!-- 월급선택시:S -->
-                    <Input type="number" v-if="payGubunSelectbox == 2" :disabled="chicAfterinterview">
+                    <Input
+                        type="number"
+                        v-else-if="wkcond_paygubun != 99"
+                        :model-value="wkcond_paygubun_price"
+                        @input="(e) => SET_WKCOND_PAYGUBUN_PRICE(e.target.value)"
+                        :disabled="wkcond_paygubun_check"
+                    >
                         <template v-slot:inl>
-                            <label class="inl">만원</label>
+                            <label class="inl">{{ wkcond_paygubun == 2 ? "만" : "" }}원</label>
                         </template>
                     </Input>
                     <!-- 월급선택시:E -->
-                    <!-- 주급선택시:S -->
-                    <Input type="number" v-if="payGubunSelectbox == 3" :disabled="chicAfterinterview">
-                        <template v-slot:inl>
-                            <label class="inl">원</label>
-                        </template>
-                    </Input>
-                    <!-- 주급선택시:E -->
-                    <!-- 일급선택시:S -->
-                    <Input type="number" v-if="payGubunSelectbox == 4" :disabled="chicAfterinterview">
-                        <template v-slot:inl>
-                            <label class="inl">원</label>
-                        </template>
-                    </Input>
-                    <!-- 일급선택시:E -->
-                    <!-- 시급선택시:S -->
-                    <Input type="number" v-if="payGubunSelectbox == 5" :disabled="chicAfterinterview">
-                        <template v-slot:inl>
-                            <label class="inl">원</label>
-                        </template>
-                    </Input>
-                    <!-- 시급선택시:E -->
-                    <!-- 건당선택시:S -->
-                    <Input type="number" v-if="payGubunSelectbox == 6" :disabled="chicAfterinterview">
-                        <template v-slot:inl>
-                            <label class="inl">원</label>
-                        </template>
-                    </Input>
-                    <!-- 건당선택시:E -->
                 </Col>
                 <Col class="col00 ML10">
-                    <Checkbox :checked="chicAfterinterview" size="lg" @change="$event.target.checked ? (chicAfterinterview = true) : (chicAfterinterview = false)"
-                        >면접 후 결정
-                    </Checkbox>
+                    <Checkbox size="lg" :checked="wkcond_paygubun_check" @change="(e) => SET_WKCOND_PAYGUBUN_CHECK(e.target.checked)">면접 후 결정 </Checkbox>
                 </Col>
             </Row>
             <Row>
                 <Col class="col12">
                     <div class="jbAntoTxts MT10">
                         <!-- 연봉일때 보여지는 영역:S -->
-                        <div class="FWB" v-if="payGubunSelectbox == 1">
+                        <div class="FWB" v-if="wkcond_paygubun == 1">
                             최저시급 8,720원, 주 40시간 기준, 최저연봉 약 21,869,760원
                             <a href="http://www.minimumwage.go.kr/index.jsp" target="_blank" class="antx FWN ML10">최저 임금제도 안내</a>
                         </div>
                         <!-- 연봉일때 보여지는 영역:E -->
                         <!-- 월급일때 보여지는 영역:S -->
-                        <div class="FWB" v-if="payGubunSelectbox == 2">
+                        <div class="FWB" v-if="wkcond_paygubun == 2">
                             주 40시간 기준, 최저 월급 약 1,822,480원
                             <a href="http://www.minimumwage.go.kr/index.jsp" target="_blank" class="antx FWN ML10">최저 임금제도 안내</a>
                         </div>
                         <!-- 월급일때 보여지는 영역:E -->
                         <!-- 주급일때 보여지는 영역:S -->
-                        <div class="FWB" v-if="payGubunSelectbox == 3">
+                        <div class="FWB" v-if="wkcond_paygubun == 3">
                             주 40시간 기준, 최저 주급 약 348,800원
                             <a href="http://www.minimumwage.go.kr/index.jsp" target="_blank" class="antx FWN ML10">최저 임금제도 안내</a>
                         </div>
                         <!-- 주급일때 보여지는 영역:E -->
                         <!-- 일급일때 보여지는 영역:S -->
-                        <div class="FWB" v-if="payGubunSelectbox == 4">
+                        <div class="FWB" v-if="wkcond_paygubun == 4">
                             일 8시간 기준, 최저 일급 약 69,760원
                             <a href="http://www.minimumwage.go.kr/index.jsp" target="_blank" class="antx FWN ML10">최저 임금제도 안내</a>
                         </div>
                         <!-- 일급일때 보여지는 영역:E -->
                         <!-- 시급일때 보여지는 영역:S -->
-                        <div class="FWB" v-if="payGubunSelectbox == 5">
+                        <div class="FWB" v-if="wkcond_paygubun == 5">
                             최저시급 8,720원
                             <a href="http://www.minimumwage.go.kr/index.jsp" target="_blank" class="antx FWN ML10">최저 임금제도 안내</a>
                         </div>
                         <!-- 시급일때 보여지는 영역:E -->
                         <!-- 건당일때 보여지는 영역:S -->
-                        <div class="FWB" v-if="payGubunSelectbox == 6">
+                        <div class="FWB" v-if="wkcond_paygubun == 6">
                             최저시급 8,720원
                             <a href="http://www.minimumwage.go.kr/index.jsp" target="_blank" class="antx FWN ML10">최저 임금제도 안내</a>
                         </div>
                         <!-- 건당일때 보여지는 영역:E -->
                         <!-- 회사내규에 따름일때 보여지는 영역:S -->
-                        <div class="FWB" v-if="payGubunSelectbox == 99">
+                        <div class="FWB" v-if="wkcond_paygubun == 99">
                             최저시급 8,720원, 주 40시간 기준, 최저연봉 약 21,869,760원
                             <a href="http://www.minimumwage.go.kr/index.jsp" target="_blank" class="antx FWN ML10">최저 임금제도 안내</a>
                         </div>
@@ -118,38 +100,86 @@
         <RowLayout title="근무형태" required class="MT20">
             <Row>
                 <Col :class="`${item.value != 13 ? 'col2' : 'col12'} MT15`" v-for="(item, index) in workGubunCheckbox" :key="index">
-                    <Checkbox :value="JSON.stringify(item)" :checked="workGubunChecked.find(({ value }) => value === item.value)" @change="fnWorkGubunChecked" size="lg">
+                    <Checkbox
+                        :value="JSON.stringify(item)"
+                        :checked="wkcond_work_mode.find(({ value }) => value === item.value)"
+                        @change="(e) => SET_WKCOND_WORK_MODE({ event: e, item })"
+                        size="lg"
+                    >
                         {{ item.name }}
                         <span class="lbe" v-if="item.value == 13"> 출산·육아에 따른 대체인력을 채용형태 </span>
                     </Checkbox>
                 </Col>
             </Row>
             <!-- 근무형태 별 추가입력폼:S -->
-            <div class="jbAddFormArea MT10 MB10" v-if="Object.keys(workGubunChecked).length">
+            {{ wkcond_work_mode }}
+            <div class="jbAddFormArea MT10 MB10" v-if="Object.keys(wkcond_work_mode_filter).length">
                 <div class="jbaFormInners">
                     <!-- foreach:S -->
-                    <template v-for="({ add_form, name, ...props }, index) in workGubunFilterAddForm" :key="index">
-                        <div class="jbTps" v-if="workGubunChecked.find(({ value }) => value === props.value)">
+                    <template v-for="({ add_form, value, name, ...props }, index) in wkcond_work_mode_filter" :key="index">
+                        <div class="jbTps" v-if="wkcond_work_mode.find((d) => d.value === value)">
                             <div class="jblts">
                                 <span class="intx">ㆍ{{ name }} 근무기간</span>
                             </div>
                             <div class="jbcots">
                                 <div class="jbForm inline MR20" style="width: 180px" v-if="add_form.hasOwnProperty('work_lange')">
-                                    <Select :value="0">
+                                    <Select
+                                        :model-value="add_form.work_lange"
+                                        @change="
+                                            (e) =>
+                                                SET_WKCOND_WORK_MODE_DETAIL({
+                                                    value,
+                                                    add_form: { ...add_form, work_lange: e.target.value },
+                                                })
+                                        "
+                                    >
                                         <option :value="item.value" v-for="(item, index) in workLange" :key="index">
                                             {{ item.name }}
                                         </option>
                                     </Select>
                                 </div>
-                                <div class="jbForm inline MR20" v-if="add_form.hasOwnProperty('worktype_convert')">
-                                    <label><input type="checkbox" id="" name="" value="" /><span class="lb">정규직 전환가능</span></label>
-                                </div>
-                                <div class="jbForm inline MR20" v-if="add_form.hasOwnProperty('worktype_during')">
-                                    <label><input type="checkbox" id="" name="" value="" /><span class="lb">기간제</span></label>
-                                </div>
-                                <div class="jbForm inline MR20" v-if="add_form.hasOwnProperty('worktype_eternal')">
-                                    <label><input type="checkbox" id="" name="" value="" /><span class="lb">무기계약직</span></label>
-                                </div>
+                                <Checkbox
+                                    v-if="add_form.hasOwnProperty('worktype_convert')"
+                                    :checked="add_form.worktype_convert"
+                                    @change="
+                                        (e) =>
+                                            SET_WKCOND_WORK_MODE_DETAIL({
+                                                value,
+                                                add_form: { ...add_form, worktype_convert: e.target.checked },
+                                            })
+                                    "
+                                    cssClass="MR20 inline"
+									size="lg"
+                                    >정규직 전환가능</Checkbox
+                                >
+                                <Checkbox
+                                    v-if="add_form.hasOwnProperty('worktype_during')"
+                                    :checked="add_form.worktype_during"
+                                    @change="
+                                        (e) =>
+                                            SET_WKCOND_WORK_MODE_DETAIL({
+                                                value,
+                                                add_form: { ...add_form, worktype_during: e.target.checked },
+                                            })
+                                    "
+                                    cssClass="MR20 inline"
+									size="lg"
+                                    >기간제</Checkbox
+                                >
+                                <Checkbox
+                                    v-if="add_form.hasOwnProperty('worktype_eternal')"
+                                    :checked="add_form.worktype_eternal"
+                                    @change="
+                                        (e) =>
+                                            SET_WKCOND_WORK_MODE_DETAIL({
+                                                value,
+                                                add_form: { ...add_form, worktype_eternal: e.target.checked },
+                                            })
+                                    "
+                                    cssClass="MR20 inline"
+									size="lg"
+                                    >무기계약직</Checkbox
+                                >
                             </div>
                         </div>
                     </template>
@@ -285,7 +315,7 @@
                 @click:selectedInitializeButton="subwaySelected = []"
             >
                 <template v-slot:dialogHeader>
-                    <SearchBar v-model="subwayKeyword" placeholder="지하철명을 입력하세요." @keyup="fnSubwayKeyupBind">
+                    <SearchBar placeholder="지하철명을 입력하세요." @keyup="(e) => searchSubwaykey(e.target.value)">
                         <template v-slot:list>
                             <!-- subwaySearchBarList = [{
 								"subwayRouteName": "공항",
@@ -293,7 +323,7 @@
 								"subwayStationName": "서울역"
 							}] -->
                             <SearchBarListItems
-                                v-for="({ subwayRouteName, subwayStationId, subwayStationName, ...props }, index) in subwaySearchBarList"
+                                v-for="({ subwayRouteName, subwayStationId, subwayStationName, ...props }, index) in wkcond_subway_search"
                                 :id="`ck_${subwayStationId}_${index}`"
                                 :key="index"
                                 :keyword="subwayKeyword"
@@ -450,33 +480,25 @@
 </template>
 
 <script>
-import RowLayout from "@/components/Layout/RowLayout";
-import Row from "@/components/Layout/Row";
-import Col from "@/components/Layout/Col";
-import Input from "@/components/Form/Input";
-import Select from "@/components/Form/Select";
-import Checkbox from "@/components/Form/Checkbox";
-import UiSelectedBox from "@/components/UiComponents/UiSelectedBox";
-import UiSelectedBoxDialog from "@/components/UiComponents/UiSelectedBoxDialog";
-import SearchBar from "@/components/UiComponents/SearchBar";
-import SearchBarListItems from "@/components/UiComponents/SearchBarListItems";
-import RadioGroup from "@/components/Form/RadioGroup";
-import Radio from "@/components/Form/Radio";
-import AddToggleBox from "@/components/UiComponents/AddToggleBox";
-import Nullmsg from "@/components/Form/Nullmsg";
-import Button from "@/components/Form/Button";
-import mixin from "@/mixin";
-import { debounce } from "lodash";
-import { SUBWAY_INFO_KEY } from "@/config";
+import { mapState, mapActions, mapMutations, mapGetters } from "vuex";
+import {
+    SET_JOBPOST_SELETED,
+    SET_JOBPOST_UNSELETED,
+    SET_WKCOND_PAYGUBUN,
+    SET_WKCOND_PAYGUBUN_PRICE,
+    SET_WKCOND_PAYGUBUN_CHECK,
+    SET_WKCOND_WORK_MODE,
+    SET_WKCOND_WORK_MODE_DETAIL,
+} from "@/store/mutations-type";
+import { jobpost } from "@/mixin";
+
 export default {
-    mixins: [mixin],
+    mixins: [jobpost],
     data() {
         return {
             //연봉/급여
             chicAfterinterview: false,
-            payGubunSelectbox: 1,
             payGubunOptions: undefined,
-
             //근무형태
             workGubunChecked: [
                 {
@@ -497,88 +519,7 @@ export default {
                     },
                 },
             ],
-            workGubunCheckbox: [
-                {
-                    value: 1,
-                    name: "정규직",
-                    add_form: {
-                        work_lange: 0,
-                    },
-                },
-                {
-                    value: 2,
-                    name: "계약직",
-                    add_form: {
-                        work_lange: 0,
-                        worktype_convert: false,
-                        worktype_during: false,
-                        worktype_eternal: false,
-                    },
-                },
-                {
-                    value: 3,
-                    name: "인턴",
-                    add_form: {
-                        work_lange: 0,
-                        worktype_convert: false,
-                    },
-                },
-                {
-                    value: 4,
-                    name: "파견직",
-                    add_form: {
-                        work_lange: 0,
-                        worktype_convert: false,
-                    },
-                },
-                {
-                    value: 5,
-                    name: "프리랜서",
-                    add_form: {
-                        work_lange: 0,
-                        worktype_convert: false,
-                    },
-                },
-                {
-                    value: 6,
-                    name: "파트타임",
-                },
-                {
-                    value: 7,
-                    name: "위촉직",
-                },
-                {
-                    value: 8,
-                    name: "아르바이트",
-                    add_form: {
-                        work_lange: 0,
-                    },
-                },
-                {
-                    value: 9,
-                    name: "병역특례",
-                },
-                {
-                    value: 10,
-                    name: "전임",
-                },
-                {
-                    value: 11,
-                    name: "교육생",
-                },
-                {
-                    value: 12,
-                    name: "해외취업",
-                },
-                {
-                    value: 13,
-                    name: "대체인력",
-                    add_form: {
-                        work_lange: 0,
-                        worktype_convert: false,
-                    },
-                },
-            ],
+            workGubunCheckbox: undefined,
             workLange: [...new Array(16)].map((c, i) => {
                 return {
                     value: i,
@@ -638,7 +579,6 @@ export default {
                     })(i),
                 };
             }),
-
             //근무요일
             workWeekList: undefined,
             workHourArray: [...new Array(24)].map((c, i) => i + 1),
@@ -656,9 +596,8 @@ export default {
                     end_minu: 0,
                 },
             ],
-
             //근무지 주소
-            partAdressGubun: 1, //국내:1,해외99
+            partAdressGubun: 1,
             partAdressToggleLength: 5,
             partAdressHomeworking: true,
             partAdressToggleArray: [
@@ -678,9 +617,9 @@ export default {
                     addr2: "3",
                 },
             ],
-            partAdressCountryCode: [], //axios
+            partAdressCountryCode: [],
             //근무지역
-            workAdressList: undefined, //axios
+            workAdressList: undefined,
             workAdressSelected: [
                 {
                     code: "AR020051",
@@ -694,7 +633,6 @@ export default {
             isWorkAdressDialogVisible: false,
             limitWorkAdresselectedLength: 6,
             workAdressSearchBarModel: "",
-
             //인근지하철
             subwaySelected: [
                 {
@@ -706,10 +644,20 @@ export default {
             limitSubwaySelectedLength: 5,
             isSubwayDialogVisible: false,
             subwayKeyword: "",
-            subwaySearchBarList: [],
         };
     },
     computed: {
+        ...mapState({
+            wkcond_paygubun: (state) => state.jobpost.wkcond_paygubun,
+            wkcond_paygubun_price: (state) => state.jobpost.wkcond_paygubun_price,
+            wkcond_paygubun_check: (state) => state.jobpost.wkcond_paygubun_check,
+            wkcond_subway_selected: (state) => state.jobpost.wkcond_subway_selected,
+            wkcond_subway_search: (state) => state.jobpost.wkcond_subway_search,
+            wkcond_work_mode: (state) => state.jobpost.wkcond_work_mode,
+        }),
+        ...mapGetters({
+            wkcond_work_mode_filter: "jobpost/wkcond_work_mode_filter",
+        }),
         subwaySelectedConv() {
             return this.subwaySelected.map(({ subwayRouteName, subwayStationId, subwayStationName, ...props }) => ({
                 label: `${subwayRouteName} > `,
@@ -739,57 +687,53 @@ export default {
             return _d.filter((item) => item.name.indexOf(this.workAdressSearchBarModel) != -1);
         },
         workGubunFilterAddForm() {
-            return this.workGubunCheckbox.filter(({ add_form, ...props }) => add_form);
+            return this.wkcond_work_mode.filter(({ add_form, ...props }) => add_form);
         },
     },
-    async created() {
-        await this.$http.get(`${this.API_PATH_STATIC}/country.json`).then(({ data }) => {
-            this.partAdressCountryCode = data;
-        });
-        await this.$http.get(`${this.API_PATH_STATIC}/paygubun.json`).then(({ data }) => {
-            this.payGubunOptions = data;
-        });
-        await this.$http.get(`${this.API_PATH_STATIC}/week.json`).then(({ data }) => {
-            this.workWeekList = data;
-        });
-        await this.$http.get(`${this.API_PATH_STATIC}/area.json`).then(({ data }) => {
-            let _d = data.map((item) => {
-                let label = `${item.name} > `;
-                return {
-                    ...item,
-                    data: item.data.map((_item) => {
-                        return { label, ..._item };
-                    }),
-                };
-            });
-            this.workAdressList = _d;
-        });
-    },
     methods: {
-        fnSubwayKeyupBind: debounce(async function () {
-            await this.$http.get(`${this.API_PATH_SUBWAY_INFO}?serviceKey=${SUBWAY_INFO_KEY}&_type=json&subwayStationName=${this.subwayKeyword}`).then(
-                ({
-                    data: {
-                        response: {
-                            header: { resultCode },
-                            body: { items },
-                        },
-                    },
-                }) => {
-                    if (resultCode === "00" && items && items.item.length) {
-                        this.subwaySearchBarList = items.item;
-                    } else {
-                        this.subwaySearchBarList = [];
-                    }
-                }
-            );
-        }, 300),
-        subwaybind(e) {
-            this.__lcFnBind(e, {
+        ...mapMutations({
+            [SET_JOBPOST_SELETED]: `jobpost/${SET_JOBPOST_SELETED}`,
+            [SET_JOBPOST_UNSELETED]: `jobpost/${SET_JOBPOST_UNSELETED}`,
+            [SET_WKCOND_PAYGUBUN]: `jobpost/${SET_WKCOND_PAYGUBUN}`,
+            [SET_WKCOND_PAYGUBUN_PRICE]: `jobpost/${SET_WKCOND_PAYGUBUN_PRICE}`,
+            [SET_WKCOND_PAYGUBUN_CHECK]: `jobpost/${SET_WKCOND_PAYGUBUN_CHECK}`,
+            [SET_WKCOND_WORK_MODE]: `jobpost/${SET_WKCOND_WORK_MODE}`,
+            [SET_WKCOND_WORK_MODE_DETAIL]: `jobpost/${SET_WKCOND_WORK_MODE_DETAIL}`,
+        }),
+        ...mapActions({
+            fetchStaticData: "jobpost/fetchStaticData",
+            searchSubwaykey: "jobpost/searchSubwaykey",
+        }),
+        // fnSubwayKeyupBind: debounce(async function () {
+        //     await this.$http.get(`${this.API_PATH_SUBWAY_INFO}?serviceKey=${SUBWAY_INFO_KEY}&_type=json&subwayStationName=${this.subwayKeyword}`).then(
+        //         ({
+        //             data: {
+        //                 response: {
+        //                     header: { resultCode },
+        //                     body: { items },
+        //                 },
+        //             },
+        //         }) => {
+        //             if (resultCode === "00" && items && items.item.length) {
+        //                 this.subwaySearchBarList = items.item;
+        //             } else {
+        //                 this.subwaySearchBarList = [];
+        //             }
+        //         }
+        //     );
+        // }, 300),
+        subwaybind(event) {
+            this.SET_JOBPOST_SELETED({
+                event,
                 seleted: "subwaySelected",
-                selectedLengh: "limitSubwaySelectedLength",
+                selectedLengh: this.limitSubwaySelectedLength,
                 alertMsg: `지하철역은 ${this.limitSubwaySelectedLength}개 까지 선택가능합니다.`,
             });
+            // this.__lcFnBind(e, {
+            //     seleted: "subwaySelected",
+            //     selectedLengh: "limitSubwaySelectedLength",
+            //     alertMsg: `지하철역은 ${this.limitSubwaySelectedLength}개 까지 선택가능합니다.`,
+            // });
         },
         workAdressbind(e) {
             this.__lcFnBind(e, {
@@ -858,7 +802,6 @@ export default {
             let cr_lns = this[params].length;
             let sq_code = this[params].findLast((ar) => ar);
             let lm_lns = this.limitWorkAdresselectedLength;
-
             if (cr_lns < lm_lns) {
                 this[params].push(
                     this[params] === this.partAdressToggleArray
@@ -884,23 +827,31 @@ export default {
             this[params] = this[params].filter((item) => item.sq_code != code);
         },
     },
-    components: {
-        RowLayout,
-        Row,
-        Col,
-        Input,
-        Select,
-        Checkbox,
-        RowLayout,
-        UiSelectedBox,
-        UiSelectedBoxDialog,
-        SearchBar,
-        SearchBarListItems,
-        RadioGroup,
-        Radio,
-        AddToggleBox,
-        Nullmsg,
-        Button,
+    async created() {
+        await this.fetchStaticData(this.API_PATH_STATIC_COUNTRY).then(({ data }) => {
+            this.partAdressCountryCode = data;
+        });
+        await this.fetchStaticData(this.API_PATH_STATIC_WORK_MODE).then(({ data }) => {
+            this.workGubunCheckbox = data;
+        });
+        await this.fetchStaticData(this.API_PATH_STATIC_PAYGUBUN).then(({ data }) => {
+            this.payGubunOptions = data;
+        });
+        await this.fetchStaticData(this.API_PATH_STATIC_WEEK).then(({ data }) => {
+            this.workWeekList = data;
+        });
+        await this.fetchStaticData(this.API_PATH_STATIC_AREA).then(({ data }) => {
+            let _d = data.map((item) => {
+                let label = `${item.name} > `;
+                return {
+                    ...item,
+                    data: item.data.map((_item) => {
+                        return { label, ..._item };
+                    }),
+                };
+            });
+            this.workAdressList = _d;
+        });
     },
 };
 </script>
