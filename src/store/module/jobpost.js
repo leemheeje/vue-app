@@ -7,8 +7,10 @@ import {
 	SET_MOZIPBUNYA_CAREER_ABSOLUTE,
 	SET_MOZIPBUNYA_RESPONS,
 	SET_MOZIPBUNYA_PARTNAME,
-	SET_MOZIPBUNYA_SELETED,
+	SET_JOBPOST_SELETED,
+	SET_JOBPOST_UNSELETED,
 } from '@/store/mutations-type';
+import { createFunctionExpression } from '@vue/compiler-core';
 import axios from 'axios';
 export const jobpost = {
 	state() {
@@ -36,31 +38,7 @@ export const jobpost = {
 		},
 	},
 	mutations: {
-		[SET_MOZIPBUNYA_TITLE](state, payload) {
-			state.mzby_title = payload;
-		},
-		[SET_MOZIPBUNYA_LENGTH](state, payload) {
-			state.mzby_length = payload;
-		},
-		[SET_MOZIPBUNYA_NEWCOMER](state, { target }) {
-			state.mzby_newcomer = target.checked;
-		},
-		[SET_MOZIPBUNYA_CAREER](state, { target }) {
-			state.mzby_career = target.checked;
-		},
-		[SET_MOZIPBUNYA_CAREER_RANGE](state, payload) {
-			state.mzby_career_range = payload;
-		},
-		[SET_MOZIPBUNYA_CAREER_ABSOLUTE](state, { target }) {
-			state.mzby_career_absolute = target.checked;
-		},
-		[SET_MOZIPBUNYA_RESPONS](state, payload) {
-			state.mzby_respons = payload;
-		},
-		[SET_MOZIPBUNYA_PARTNAME](state, payload) {
-			state.mzby_partname = payload;
-		},
-		[SET_MOZIPBUNYA_SELETED](state, {
+		[SET_JOBPOST_SELETED](state, {
 			event,
 			selectedLengh,
 			seleted,
@@ -93,6 +71,40 @@ export const jobpost = {
 				state[seleted] = state[seleted].filter((object) => object.code !== code);
 			}
 		},
+		[SET_JOBPOST_UNSELETED](state, { code, seleted }) {
+			state[seleted] = state[seleted].filter((object) => object.code !== code);
+		},
+		[SET_MOZIPBUNYA_TITLE](state, payload) {
+			state.mzby_title = payload;
+		},
+		[SET_MOZIPBUNYA_LENGTH](state, payload) {
+			state.mzby_length = payload;
+		},
+		[SET_MOZIPBUNYA_NEWCOMER](state, { target }) {
+			state.mzby_newcomer = target.checked;
+		},
+		[SET_MOZIPBUNYA_CAREER](state, { target }) {
+			state.mzby_career = target.checked;
+		},
+		[SET_MOZIPBUNYA_CAREER_RANGE](state, payload) {
+			state.mzby_career_range = payload;
+		},
+		[SET_MOZIPBUNYA_CAREER_ABSOLUTE](state, { target }) {
+			state.mzby_career_absolute = target.checked;
+		},
+		[SET_MOZIPBUNYA_RESPONS](state, payload) {
+			state.mzby_respons = payload;
+		},
+		[SET_MOZIPBUNYA_PARTNAME](state, payload) {
+			state.mzby_partname = payload;
+		},
+		setMoxipbunyaSession(state, payload) {
+			if (typeof payload === 'object') {
+				for (let key in payload) {
+					state[key] = payload[key];
+				}
+			}
+		}
 	},
 	actions: {
 		fetchStaticData({ commit }, url) {
@@ -102,6 +114,25 @@ export const jobpost = {
 				}).catch((err) => reject(err));
 			});
 		},
+		setSession({ }, { session_name, session_value }) {
+			return new Promise(resolve => {
+				window.localStorage.setItem(session_name, JSON.stringify(session_value));
+				resolve(session_name, session_value);
+			})
+		},
+		getSession({ commit }, { session_name, commit_name }) {
+			return new Promise((resolve, reject) => {
+				let _d = window.localStorage.getItem(session_name);
+				let _data = undefined;
+				if (_d) {
+					_data = JSON.parse(_d);
+					commit(commit_name, _data);
+					resolve(commit_name, _data);
+				} else {
+					reject();
+				}
+			})
+		}
 	},
 	namespaced: true,
 };

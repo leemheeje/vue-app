@@ -3,6 +3,7 @@ import { jobpost } from '@/store/module';
 
 
 export default createStore({
+	strict: process.env.NODE_ENV !== 'production',
 	state: {},
 	getters: {},
 	mutations: {},

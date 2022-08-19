@@ -1,6 +1,11 @@
 
 
 //jobpost - 모집분야
+//공고등록 관련 선택하기
+export const SET_JOBPOST_SELETED = 'SET_JOBPOST_SELETED';
+//공고등록 관련 삭제하기
+export const SET_JOBPOST_UNSELETED = 'SET_JOBPOST_UNSELETED';
+
 //모집분야 타이틀
 export const SET_MOZIPBUNYA_TITLE = 'SET_MOZIPBUNYA_TITLE';
 //모집분야 모집인원
@@ -17,5 +22,3 @@ export const SET_MOZIPBUNYA_CAREER_ABSOLUTE = 'SET_MOZIPBUNYA_CAREER_ABSOLUTE';
 export const SET_MOZIPBUNYA_RESPONS = 'SET_MOZIPBUNYA_RESPONS';
 //모집분야 근무부서
 export const SET_MOZIPBUNYA_PARTNAME = 'SET_MOZIPBUNYA_PARTNAME';
-//모집분야 선택하기
-export const SET_MOZIPBUNYA_SELETED = 'SET_MOZIPBUNYA_SELETED';

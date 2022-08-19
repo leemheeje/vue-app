@@ -10,6 +10,11 @@ export const jobpost = {
 				return [];
 			}
 		},
+
+
+
+
+		//아래까지는 삭제예정 vuex로 이동 /store/module/jobpost.js
 		__fnIsLimitSelectBoxCheck(o = [], n = 0) {
 			if (n && o.length >= n) {
 				return true;

@@ -89,7 +89,7 @@
                                                 :model-value="item.code"
                                                 :data-name="item.name"
                                                 :checked="mzby_jcjg_seleted.find((d, i) => item.code === d.code)"
-                                                @change="(e) => SET_MOZIPBUNYA_SELETED(e)"
+                                                @change="jcjgbind"
                                                 >{{ item.name }}</Checkbox
                                             >
                                         </div>
@@ -173,7 +173,7 @@
         <!-- 모집분야 토글영역:E -->
 
         <!-- 모집분야 추가 버튼:S -->
-        <button class="jbSectAddButton MT20">+모집분야 추가</button>
+        <button class="jbSectAddButton MT20" @click="lcSetSession">+모집분야 추가</button>
         <!-- 모집분야 추가 버튼:E -->
     </div>
     <!-- 모집분야:E -->
@@ -189,12 +189,15 @@ import {
     SET_MOZIPBUNYA_CAREER_ABSOLUTE,
     SET_MOZIPBUNYA_RESPONS,
     SET_MOZIPBUNYA_PARTNAME,
-    SET_MOZIPBUNYA_SELETED,
+    SET_JOBPOST_SELETED,
+    SET_JOBPOST_UNSELETED,
 } from "@/store/mutations-type";
 import { mapActions, mapMutations, mapGetters, mapState } from "vuex";
 import { jobpost } from "@/mixin";
+import { provide,inject, toRefs, reactive,ref,computed } from "vue";
 
 export default {
+    name: "모집분야",
     mixins: [jobpost],
     data() {
         return {
@@ -238,6 +241,10 @@ export default {
         },
     },
     created() {
+        this.getSession({
+            session_name: this.$options.name,
+            commit_name: "setMoxipbunyaSession",
+        });
         this.fetchStaticData(this.API_PATH_STATIC_JC).then((response) => {
             if (response && response.data) {
                 this.mzby_jc = response.data;
@@ -270,13 +277,16 @@ export default {
             [SET_MOZIPBUNYA_CAREER_ABSOLUTE]: `jobpost/${SET_MOZIPBUNYA_CAREER_ABSOLUTE}`,
             [SET_MOZIPBUNYA_RESPONS]: `jobpost/${SET_MOZIPBUNYA_RESPONS}`,
             [SET_MOZIPBUNYA_PARTNAME]: `jobpost/${SET_MOZIPBUNYA_PARTNAME}`,
-            [SET_MOZIPBUNYA_SELETED]: `jobpost/${SET_MOZIPBUNYA_SELETED}`,
+            [SET_JOBPOST_SELETED]: `jobpost/${SET_JOBPOST_SELETED}`,
+            [SET_JOBPOST_UNSELETED]: `jobpost/${SET_JOBPOST_UNSELETED}`,
         }),
         ...mapActions({
             fetchStaticData: `jobpost/fetchStaticData`,
+            setSession: `jobpost/setSession`,
+            getSession: `jobpost/getSession`,
         }),
         woodaebind(e) {
-            this.SET_MOZIPBUNYA_SELETED({
+            this.SET_JOBPOST_SELETED({
                 event,
                 seleted: "mzby_woodae_selected",
                 selectedLengh: this.limitWoodaeSelectedLength,
@@ -284,7 +294,7 @@ export default {
             });
         },
         jcjgbind(event) {
-            this.SET_MOZIPBUNYA_SELETED({
+            this.SET_JOBPOST_SELETED({
                 event,
                 seleted: "mzby_jcjg_seleted",
                 selectedLengh: this.limitJcJgSelectedLength,
@@ -292,10 +302,30 @@ export default {
             });
         },
         jcjgSelectedDelete(code) {
-            this.__lcFnSelectedDelete({ code, seleted: "jcjgSelected" });
+            this[SET_JOBPOST_UNSELETED]({ code, seleted: "mzby_jcjg_seleted" });
         },
         woodaeSelectedDelete(code) {
-            this.__lcFnSelectedDelete({ code, seleted: "mzby_woodae_selected" });
+            this[SET_JOBPOST_UNSELETED]({ code, seleted: "mzby_woodae_selected" });
+        },
+        lcSetSession() {
+            this.setSession({
+                session_name: this.$options.name,
+                session_value: {
+						mzby_title: this.mzby_title,
+						mzby_length: this.mzby_length,
+						mzby_newcomer: this.mzby_newcomer,
+						mzby_career: this.mzby_career,
+						mzby_career_range: this.mzby_career_range,
+						mzby_career_absolute: this.mzby_career_absolute,
+						mzby_respons: this.mzby_respons,
+						mzby_partname: this.mzby_partname,
+						mzby_jcjg_seleted: this.mzby_jcjg_seleted,
+						mzby_woodae_selected: this.mzby_woodae_selected,
+					} 
+            }).then(() => {
+                console.log(this.$options.name);
+                console.log(window.localStorage.getItem(this.$options.name));
+            });
         },
     },
 };
