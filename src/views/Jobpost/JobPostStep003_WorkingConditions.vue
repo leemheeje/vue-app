@@ -112,7 +112,6 @@
                 </Col>
             </Row>
             <!-- 근무형태 별 추가입력폼:S -->
-            {{ wkcond_work_mode }}
             <div class="jbAddFormArea MT10 MB10" v-if="Object.keys(wkcond_work_mode_filter).length">
                 <div class="jbaFormInners">
                     <!-- foreach:S -->
@@ -194,12 +193,24 @@
             <Row>
                 <Col class="col00 MT15">
                     <RadioGroup>
-                        <Radio name="partAdressGubun" value="1" v-model="partAdressGubun" checked label="국내" />
-                        <Radio name="partAdressGubun" value="99" v-model="partAdressGubun" label="해외" cssClass="ML25" />
+						{{wkcond_work_isglobal}}
+                        <Radio 
+						v-for="({name, value},index) in partAdressArray"
+						:key="index"
+						name="partAdressGubun" 
+						:model-value="value"
+						:checked="value == wkcond_work_isglobal"
+						:label="name" 
+						@change="(e) => SET_WKCOND_WORK_ISGLOBAL(e.target.value)"
+						/>
                     </RadioGroup>
                 </Col>
                 <Col class="col00 MT15 ML15">
-                    <Checkbox size="lg" :checked="partAdressHomeworking" @change="(e) => (partAdressHomeworking = e.target.checked)">재택근무 가능</Checkbox>
+                    <Checkbox 
+					:checked="wkcond_work_ishomework"
+					@change="(e)=>SET_WKCOND_WORK_ISHOMEWORK(e.target.checked)"
+					size="lg"
+					 >재택근무 가능</Checkbox>
                 </Col>
             </Row>
             <Row>
@@ -489,11 +500,13 @@ import {
     SET_WKCOND_PAYGUBUN_CHECK,
     SET_WKCOND_WORK_MODE,
     SET_WKCOND_WORK_MODE_DETAIL,
+    SET_WKCOND_WORK_ISGLOBAL,
+    SET_WKCOND_WORK_ISHOMEWORK,
 } from "@/store/mutations-type";
-import { jobpost } from "@/mixin";
+import { jobpost, postcode } from "@/mixin";
 
 export default {
-    mixins: [jobpost],
+    mixins: [jobpost,postcode],
     data() {
         return {
             //연봉/급여
@@ -598,6 +611,16 @@ export default {
             ],
             //근무지 주소
             partAdressGubun: 1,
+			partAdressArray:[
+				{
+					name: '국내',
+					value:1
+				}, 
+				{
+					name: '해외',
+					value:99
+				}
+			],
             partAdressToggleLength: 5,
             partAdressHomeworking: true,
             partAdressToggleArray: [
@@ -654,6 +677,8 @@ export default {
             wkcond_subway_selected: (state) => state.jobpost.wkcond_subway_selected,
             wkcond_subway_search: (state) => state.jobpost.wkcond_subway_search,
             wkcond_work_mode: (state) => state.jobpost.wkcond_work_mode,
+            wkcond_work_isglobal: (state) => state.jobpost.wkcond_work_isglobal,
+            wkcond_work_ishomework: (state) => state.jobpost.wkcond_work_ishomework,
         }),
         ...mapGetters({
             wkcond_work_mode_filter: "jobpost/wkcond_work_mode_filter",
@@ -699,29 +724,13 @@ export default {
             [SET_WKCOND_PAYGUBUN_CHECK]: `jobpost/${SET_WKCOND_PAYGUBUN_CHECK}`,
             [SET_WKCOND_WORK_MODE]: `jobpost/${SET_WKCOND_WORK_MODE}`,
             [SET_WKCOND_WORK_MODE_DETAIL]: `jobpost/${SET_WKCOND_WORK_MODE_DETAIL}`,
+            [SET_WKCOND_WORK_ISGLOBAL]: `jobpost/${SET_WKCOND_WORK_ISGLOBAL}`,
+            [SET_WKCOND_WORK_ISHOMEWORK]: `jobpost/${SET_WKCOND_WORK_ISHOMEWORK}`,
         }),
         ...mapActions({
             fetchStaticData: "jobpost/fetchStaticData",
             searchSubwaykey: "jobpost/searchSubwaykey",
         }),
-        // fnSubwayKeyupBind: debounce(async function () {
-        //     await this.$http.get(`${this.API_PATH_SUBWAY_INFO}?serviceKey=${SUBWAY_INFO_KEY}&_type=json&subwayStationName=${this.subwayKeyword}`).then(
-        //         ({
-        //             data: {
-        //                 response: {
-        //                     header: { resultCode },
-        //                     body: { items },
-        //                 },
-        //             },
-        //         }) => {
-        //             if (resultCode === "00" && items && items.item.length) {
-        //                 this.subwaySearchBarList = items.item;
-        //             } else {
-        //                 this.subwaySearchBarList = [];
-        //             }
-        //         }
-        //     );
-        // }, 300),
         subwaybind(event) {
             this.SET_JOBPOST_SELETED({
                 event,

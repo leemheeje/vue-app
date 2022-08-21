@@ -22,6 +22,8 @@ import {
 	SET_WKCOND_PAYGUBUN_CHECK,
 	SET_WKCOND_WORK_MODE,
 	SET_WKCOND_WORK_MODE_DETAIL,
+	SET_WKCOND_WORK_ISGLOBAL,
+	SET_WKCOND_WORK_ISHOMEWORK,
 } from '@/store/mutations-type';
 import { SUBWAY_INFO_KEY } from "@/config";
 import { debounce } from "lodash";
@@ -60,6 +62,8 @@ export const jobpost = {
 			wkcond_subway_selected: [],						//인근지하철 선택된거
 			wkcond_subway_search: [],						//인근지하철 검색API리스트
 			wkcond_work_mode: [],							//근무형태 체크박스들
+			wkcond_work_isglobal: 1,						//근무지 주소 국내||해외
+			wkcond_work_ishomework: false,					//근무지 주소 재택근무
 		}
 	},
 	getters: {
@@ -182,6 +186,12 @@ export const jobpost = {
 				return item;
 			});
 		},
+		[SET_WKCOND_WORK_ISGLOBAL](state, payload) {
+			state.wkcond_work_isglobal = payload;
+		},
+		[SET_WKCOND_WORK_ISHOMEWORK](state, payload) {
+			state.wkcond_work_ishomework = payload;
+		},
 		setMoxipbunyaSession(state, payload) {
 			if (typeof payload === 'object') {
 				for (let key in payload) {
@@ -190,7 +200,7 @@ export const jobpost = {
 			}
 		},
 		setSearchSubwaykey(state, payload) {
-			state.wkcond_subway_search = payload;
+			state.wkcond_work_isglobal = payload;
 		}
 	},
 	actions: {

@@ -50,6 +50,10 @@ export const SET_WKCOND_PAYGUBUN_CHECK = 'SET_WKCOND_PAYGUBUN_CHECK';
 export const SET_WKCOND_WORK_MODE = 'SET_WKCOND_WORK_MODE';
 //근무조건 근무형태 체크박스 이후 입력
 export const SET_WKCOND_WORK_MODE_DETAIL = 'SET_WKCOND_WORK_MODE_DETAIL';
+//근무조건 근무지 주소 국내||해외
+export const SET_WKCOND_WORK_ISGLOBAL = 'SET_WKCOND_WORK_ISGLOBAL';
+//근무조건 근무지 주소 재택근무
+export const SET_WKCOND_WORK_ISHOMEWORK = 'SET_WKCOND_WORK_ISHOMEWORK';
 
 
 
