@@ -222,7 +222,7 @@ export const jobpost = {
 		},
 		searchSubwaykey: debounce(function ({ commit }, keyword) {
 			return new Promise((resolve, reject) => {
-				axios.get(`/subway?serviceKey=${SUBWAY_INFO_KEY}&_type=json&subwayStationName=${keyword}`).then(
+				axios.get(`/subway/1613000/SubwayInfoService/getKwrdFndSubwaySttnList?serviceKey=${SUBWAY_INFO_KEY}&_type=json&subwayStationName=${keyword}`).then(
 					({
 						data: {
 							response: {
